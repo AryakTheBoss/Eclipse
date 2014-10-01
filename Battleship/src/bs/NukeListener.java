@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  * @author UnityBoss
  *
  */
-public class ItemUseListener implements ActionListener{
+public class NukeListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

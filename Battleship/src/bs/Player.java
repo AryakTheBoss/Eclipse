@@ -1159,14 +1159,19 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 				Battleship.inv.removeAll();
 				Battleship.mEN = new JMenuItem("Nukes: "+Battleship.en.decrypt(Battleship.udata.get(NUKE)));		
 				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN.addActionListener(new NukeListener());  
 				Battleship.mEN = new JMenuItem("Confusion Rays: "+Battleship.en.decrypt(Battleship.udata.get(CONF)));		
 				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN.addActionListener(new RayListener());
 				Battleship.mEN = new JMenuItem("Ship Finders: "+Battleship.en.decrypt(Battleship.udata.get(SF)));		
 				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN.addActionListener(new SFListener());
 				Battleship.mEN = new JMenuItem("Torpedoes: "+Battleship.en.decrypt(Battleship.udata.get(TOR)));		
 				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN.addActionListener(new TorpedoListener());
 				Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
 				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN.addActionListener(new FragListener());
 				}catch(Exception e){
 					
 					e.printStackTrace();
