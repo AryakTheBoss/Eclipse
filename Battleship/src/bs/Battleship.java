@@ -52,18 +52,25 @@ public class Battleship extends JFrame
 						  opts,//used for options menu
 						  inputpanel;//for manually inputting ships
 	private static Container b,c,d;//board and input panel 
+	private static final int NUKE = 2;
+	private static final int CONF = 4;
+	private static final int SF = 6;
+	private static final int TOR = 8;
+	private static final int FRAG = 10;
 	private static String LOOKANDFEEL,THEME;
-	public static double cash;
+	public static int cash;
 	public static JButton nuke,conf,sf,tor,frag,cancel;
 	public static JLabel display = new JLabel("Mouse Over the Products to See Info on them!");
 	public static JPanel pane2 = new JPanel();
+	private static JPanel com;
+	private static JLabel many;
 	public static JComboBox<Integer> amt = new JComboBox<Integer>();
 	public static JLabel totl = new JLabel("BOOTY");
 	public static JFrame frr = new JFrame("Buy Items");
 	public static JButton shopB = new JButton("SHOP");
 	public static Encryptor en = new Encryptor();
 	private JPanel input;//input bar	
-	private static JMenuItem m,pvp,pvc,cvc;//menu items	
+	public static JMenuItem mEN,pvp,pvc,cvc;//menu items	
 	private static String[] cletters = {" ","A","B","C","D","E","F","G","H","I","J"},
 	//array of letters used for combo boxes
 			    	 cnumbers = {" ","1","2","3","4","5","6","7","8","9","10"},
@@ -101,7 +108,7 @@ public class Battleship extends JFrame
 	public static File userData;
 	public static JLabel bal = new JLabel("Balance:");
 	public static ArrayList<String> udata = new ArrayList<String>();
-	public static JMenu powerUps,inv;
+	public static JMenu inv;
 	
 	private static int w=0,a=0,s=0,t=0,e=0;//counters to track the use of all ships
 	//private static String[][] shiphit=new String[10][10];
@@ -116,7 +123,66 @@ public class Battleship extends JFrame
     public static void initSave()throws Exception{
     	
     
+ // System.out.println(en.encrypt("130000"));
     	
+
+    	
+    	display.setHorizontalAlignment((int) JLabel.CENTER_ALIGNMENT);
+    	
+    	 com = new JPanel();
+    	 com.setLayout(new GridLayout(1,4)); 
+     many = new JLabel("How Many Do You Want?");
+        totl = new JLabel("Total Cost: $"); //TODO THREAD
+    	
+    	 amt = new JComboBox<Integer>();
+    	
+    	for(int u=1;u<101;u++){
+    		
+    		amt.addItem(u);
+    		
+    	}
+    	
+    	com.add(many);
+    	com.add(amt);
+    	com.add(totl);
+    	
+    	
+    	nuke = new JButton("Nuke");
+    	conf = new JButton("Confusion Ray");
+    	sf = new JButton("Ship Finder");
+    	tor = new JButton("Torpedo");
+    	frag = new JButton("Frag Bomb");			
+    	cancel = new JButton("Cancel");
+    	//frr = new JFrame("Shop");
+    	
+    	frr.setLayout(new BorderLayout()); 
+    	frr.add(display);
+    	pane2.add(nuke);
+    	pane2.add(conf);
+    	pane2.add(sf);
+    	pane2.add(tor);
+    	pane2.add(frag);
+    	
+    	pane2.add(cancel);
+    	pane2.setSize(600,50);
+    	frr.setSize(600, 200);
+    	frr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+    	frr.add(pane2, BorderLayout.SOUTH);
+    	
+    	try {
+    		Thread.sleep(50);
+    	} catch (InterruptedException e1) {
+    		// TODO Auto-generated catch block
+    		e1.printStackTrace();
+    	}
+    	pane2.setVisible(true);
+    	 frr.setLocationRelativeTo(null);
+    	 try {
+    			Thread.sleep(50);
+    		} catch (InterruptedException e1) {
+    			// TODO Auto-generated catch block
+    			e1.printStackTrace();
+    		}
     	
     	
     	if(System.getProperty("os.name").compareToIgnoreCase("mac os x") == 0){
@@ -151,21 +217,23 @@ public class Battleship extends JFrame
        udata = read(userData);
        
        
-       cash = Double.parseDouble(en.decrypt(udata.get(0)));
+       cash = Integer.parseInt(en.decrypt(udata.get(0)));
 			
 		}else{
 			
-			cash = 0.0;
+			cash = 0;
 			
 			dir.mkdirs();
 		
 			userData.createNewFile();
 			
 			//write new data TODO
-			udata.add(en.encrypt("0.0"));
+			udata.add(en.encrypt("0"));
 			udata.add(en.encrypt("Nuke"));
 			udata.add(en.encrypt("0"));
 			udata.add(en.encrypt("Confusion Ray"));
+			udata.add(en.encrypt("0"));
+			udata.add(en.encrypt("Ship Finder"));
 			udata.add(en.encrypt("0"));
 			udata.add(en.encrypt("Torpedo"));
 			udata.add(en.encrypt("0"));
@@ -442,7 +510,15 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 	//creates Game menu and submenus
 	public JMenuBar createMenuBar()
 	{
-		JMenu menu,inv;//menu
+		
+		try {
+			initSave();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JMenu menu;//menu
       
 		// create the menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -453,41 +529,54 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		
 		menuBar.add(menu);
 		menuBar.add(inv);
-		m = new JMenu("New Game");		
-		menu.add(m);
+		mEN = new JMenu("New Game");		
+		menu.add(mEN);
 		
 		//submenu of New Game
 		GameListener stuff = new GameListener();
 		pvp = new JMenuItem("Player vs. Player");		
 		pvp.addActionListener(stuff);
-		m.add(pvp);
+		mEN.add(pvp);
 	pvc = new JMenuItem("Player vs. Computer");
 		pvc.addActionListener(stuff);
-		m.add(pvc);
+		mEN.add(pvc);
 		cvc = new JMenuItem("Computer vs. Computer");
 		cvc.addActionListener(stuff);
-		m.add(cvc);
+		mEN.add(cvc);
 		
 		pvp.setEnabled(false);
 		cvc.setEnabled(false);
 		
-		m = new JMenuItem("Rules");
-		m.addActionListener(new RulesListener());
-		menu.add(m);
-		m = new JMenuItem("Statistics");
-		m.addActionListener(new StatsListener());		
-		menu.add(m);
-		m = new JMenuItem("Options");
-		m.addActionListener(new OptionsListener());		
-		menu.add(m);
-		m = new JMenuItem("Exit");
-		m.addActionListener(new ExitListener());
-		menu.add(m);	
+		mEN = new JMenuItem("Rules");
+		mEN.addActionListener(new RulesListener());
+		menu.add(mEN);
+		mEN = new JMenuItem("Statistics");
+		mEN.addActionListener(new StatsListener());		
+		menu.add(mEN);
+		mEN = new JMenuItem("Options");
+		mEN.addActionListener(new OptionsListener());		
+		menu.add(mEN);
+		mEN = new JMenuItem("Exit");
+		mEN.addActionListener(new ExitListener());
+		menu.add(mEN);	
 		
+		try{
 		
-		m = new JMenuItem("Buy Items in the Shop!");		
-		inv.add(m);
-		
+		mEN = new JMenuItem("Nukes: "+en.decrypt(udata.get(NUKE)));		
+		inv.add(mEN);
+		mEN = new JMenuItem("Confusion Rays: "+en.decrypt(udata.get(CONF)));		
+		inv.add(mEN);
+		mEN = new JMenuItem("Ship Finders: "+en.decrypt(udata.get(SF)));		
+		inv.add(mEN);
+		mEN = new JMenuItem("Torpedoes: "+en.decrypt(udata.get(TOR)));		
+		inv.add(mEN);
+		mEN = new JMenuItem("Frag Bombs: "+en.decrypt(udata.get(FRAG)));		
+		inv.add(mEN);
+		}catch(Exception e){
+			
+			e.printStackTrace();
+			
+		}
 		
 		
 		
@@ -772,65 +861,6 @@ public static void openShop() throws Exception{//TODO hjk
 	
 	
 	
-	System.out.println("Pressed");
-	
-	System.out.println("nuke is null");
-	display.setHorizontalAlignment((int) JLabel.CENTER_ALIGNMENT);
-	
-	JPanel com = new JPanel();
-	 com.setLayout(new GridLayout(1,4)); 
-	JLabel many = new JLabel("How Many Do You Want?");
-    totl = new JLabel("Total Cost: $"); //TODO THREAD
-	
-	 amt = new JComboBox<Integer>();
-	
-	for(int u=1;u<101;u++){
-		
-		amt.addItem(u);
-		
-	}
-	
-	com.add(many);
-	com.add(amt);
-	com.add(totl);
-	
-	
-	nuke = new JButton("Nuke");
-	conf = new JButton("Confusion Ray");
-	sf = new JButton("Ship Finder");
-	tor = new JButton("Torpedo");
-	frag = new JButton("Frag Bomb");			
-	cancel = new JButton("Cancel");
-	//frr = new JFrame("Shop");
-	
-	frr.setLayout(new BorderLayout()); 
-	frr.add(display);
-	pane2.add(nuke);
-	pane2.add(conf);
-	pane2.add(sf);
-	pane2.add(tor);
-	pane2.add(frag);
-	
-	pane2.add(cancel);
-	pane2.setSize(600,50);
-	frr.setSize(600, 200);
-	frr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
-	frr.add(pane2, BorderLayout.SOUTH);
-	
-	try {
-		Thread.sleep(50);
-	} catch (InterruptedException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-	pane2.setVisible(true);
-	 frr.setLocationRelativeTo(null);
-	 try {
-			Thread.sleep(50);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	frr.setVisible(true);
 	try {
 		Thread.sleep(50);
@@ -893,12 +923,12 @@ public static void openShop() throws Exception{//TODO hjk
 	
 	if(nuke.getModel().isPressed() == true){
   		 // com.setVisible(true);  
-		TotalThread.updateItemCost(20000.0);  
+		TotalThread.updateItemCost(20000);  
 		nuke.getModel().setPressed(false);
   	int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);  
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 20000.0){
+  			   if(cash < 20000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
@@ -906,32 +936,33 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   				   cash -= TotalThread.getCost();
   				   
-  				      Player.saveGame(cash, "Nuke", 1);  
+  				      Player.saveGame(cash, "Nuke", amt.getSelectedIndex()+1);  
   				   
   				   //add to inv
   				 
-  				   return;
+  				  // return;
   				   
   			   }
   			   
   		   }
   		  
   	  }else if(conf.getModel().isPressed() == true){
-  		  
+  		TotalThread.updateItemCost(12000);
   		conf.getModel().setPressed(false);
   		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Confusion Ray for $12,000?","Buy", JOptionPane.YES_NO_OPTION);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 12000.0){
+  			   if(cash < 12000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
   			   }else{
   				   
-  				   cash -= 12000.0;
-  				   //add to inv
+  				 cash -= TotalThread.getCost();
+				   
+				      Player.saveGame(cash, "Confusion Ray", amt.getSelectedIndex()+1);
   				 
-  				   return;
+  				  // return;
   				   
   			   }
   			   
@@ -939,28 +970,29 @@ public static void openShop() throws Exception{//TODO hjk
   	
   		  
   	  }else if(sf.getModel().isPressed() == true){
-  		  
+  		TotalThread.updateItemCost(5000);
   		sf.getModel().setPressed(false);
   		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Ship Finder for $5000?","Buy", JOptionPane.YES_NO_OPTION);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 5000.0){
+  			   if(cash < 5000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
   			   }else{
   				   
-  				   cash -= 5000.0;
-  				   //add to inv
+  				 cash -= TotalThread.getCost();
+				   
+				      Player.saveGame(cash, "Ship Finder", amt.getSelectedIndex()+1);
   				 
-  				  return;
+  				 // return;
   			   }
   			   
   		   }
   		
   		  
   	  }else if(tor.getModel().isPressed() == true){
-  		  
+  		TotalThread.updateItemCost(5000);
   		tor.getModel().setPressed(false);
   		
   		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Torpedo for $5000?","Buy", JOptionPane.YES_NO_OPTION);
@@ -972,10 +1004,11 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   			   }else{
   				   
-  				   cash -= 5000.0;
-  				   //add to inv
+  				 cash -= TotalThread.getCost();
+				   
+				      Player.saveGame(cash, "Torpedo", amt.getSelectedIndex()+1);
   				
-  				 return;
+  				 //return;
   				   
   			   }
   			   
@@ -983,7 +1016,7 @@ public static void openShop() throws Exception{//TODO hjk
   	
   		  
   	  }else if(frag.getModel().isPressed() == true){
-  		  
+  		TotalThread.updateItemCost(2000);
   		frag.getModel().setPressed(false);
   		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Frag Bomb for $2000?","Buy", JOptionPane.YES_NO_OPTION);
   		   if(yy == JOptionPane.YES_OPTION){
@@ -994,9 +1027,10 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   			   }else{
   				   
-  				   cash -= 2000.0;
-  				  //add to inv
-  				 return;
+  				 cash -= TotalThread.getCost();
+				   
+				      Player.saveGame(cash, "Frag Bomb", amt.getSelectedIndex()+1);
+  				// return;
   				   
   			   }
   			   
@@ -1006,8 +1040,8 @@ public static void openShop() throws Exception{//TODO hjk
   	  }else if(cancel.getModel().isPressed() == true){
   		  
   		cancel.getModel().setPressed(false);
-  		  frr.dispose();
-  		  
+  		  frr.setVisible(false);
+  		  //FIXME
   		
   		 return;
   		  
@@ -1443,12 +1477,7 @@ public static void openShop() throws Exception{//TODO hjk
 	   
 		Battleship gui= new Battleship();
 		
-		try {
-			initSave();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 		//hjk();
 		while (gui.isActive())
 		{

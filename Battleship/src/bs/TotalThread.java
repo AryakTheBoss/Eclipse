@@ -9,7 +9,7 @@ package bs;
  */
 public class TotalThread implements Runnable{
 
-	private static double cos=0.0;
+	private static int cos=0;
 	
 	@Override
 	public void run() {
@@ -25,7 +25,7 @@ public class TotalThread implements Runnable{
 			
 			
 			
-			Battleship.totl.setText("Total Cost: $"+Double.toString(cos*(Battleship.amt.getSelectedIndex()+1)));
+			Battleship.totl.setText("Total Cost: $"+Integer.toString(cos*(Battleship.amt.getSelectedIndex()+1)));
 			
 			
 			
@@ -37,7 +37,7 @@ public class TotalThread implements Runnable{
 	}
 
 	public static void start(){new Thread(new TotalThread()).start();}
-	public static void updateItemCost(double cost){cos = cost;}
-	public static double getCost(){return cos*Battleship.amt.getSelectedIndex();}
+	public static void updateItemCost(int cost){cos = cost;}
+	public static int getCost(){return cos*(Battleship.amt.getSelectedIndex()+1);}
 	
 }

@@ -1096,14 +1096,14 @@ public class Player
 	
 	
 	
-public static void saveGame(double cash, String itemID,int quantity)throws Exception{
+public static void saveGame(int cash, String itemID,int quantity)throws Exception{
 		
 	int temp = 0;
-	double tempo = 0.0;
+	int tempo = 0;
 		try {
-			tempo = Double.parseDouble(Battleship.udata.get(0));
+			tempo = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(0)));
 			tempo += cash;
-			Battleship.udata.set(0,Battleship.en.encrypt(Double.toString(tempo)));
+			Battleship.udata.set(0,Battleship.en.encrypt(Integer.toString(tempo)));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -1154,6 +1154,24 @@ public static void saveGame(double cash, String itemID,int quantity)throws Excep
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			try{
+				Battleship.inv.removeAll();
+				Battleship.mEN = new JMenuItem("Nukes: "+Battleship.en.decrypt(Battleship.udata.get(NUKE)));		
+				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN = new JMenuItem("Confusion Rays: "+Battleship.en.decrypt(Battleship.udata.get(CONF)));		
+				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN = new JMenuItem("Ship Finders: "+Battleship.en.decrypt(Battleship.udata.get(SF)));		
+				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN = new JMenuItem("Torpedoes: "+Battleship.en.decrypt(Battleship.udata.get(TOR)));		
+				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
+				Battleship.inv.add(Battleship.mEN);
+				}catch(Exception e){
+					
+					e.printStackTrace();
+					
+				}
 		
 		
 		
