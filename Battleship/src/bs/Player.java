@@ -400,27 +400,27 @@ public class Player
 						
 						kl = "You Lost $250";
 						
-						Battleship.cash -= 250.0;
+						Battleship.cash -= 250;
 						
 					}else if(this.boats[f].getName().matches("Battleship")){
 						
 						kl = "You Lost $500";
-						Battleship.cash -= 500.0;
+						Battleship.cash -= 500;
 						
 					}else if(this.boats[f].getName().matches("Submarine")){
 						
 						kl = "You Lost $700";
-						Battleship.cash -= 700.0;
+						Battleship.cash -= 700;
 						
 					}else if(this.boats[f].getName().matches("Destroyer")){
 						
 						kl = "You Lost $700";
-						Battleship.cash -= 700.0;
+						Battleship.cash -= 700;
 						
 					}else if(this.boats[f].getName().matches("Patrol Boat")){
 						
 						kl = "You Lost $1000";
-						Battleship.cash -= 1000.0;
+						Battleship.cash -= 1000;
 						
 					}else{
 						
@@ -445,27 +445,27 @@ public class Player
 				if(this.boats[f].getName().matches("Carrier")){
 					
 					kl = "You Earned $350!";
-					Battleship.cash += 350.0;
+					Battleship.cash += 350;
 					
 				}else if(this.boats[f].getName().matches("Battleship")){
 					
 					kl = "You Earned $600!";
-					Battleship.cash += 600.0;
+					Battleship.cash += 600;
 					
 				}else if(this.boats[f].getName().matches("Submarine")){
 					
 					kl = "You Earned $800!";
-					Battleship.cash += 800.0;
+					Battleship.cash += 800;
 					
 				}else if(this.boats[f].getName().matches("Destroyer")){
 					
 					kl = "You Earned $800!";
-					Battleship.cash += 800.0;
+					Battleship.cash += 800;
 					
 				}else if(this.boats[f].getName().matches("Patrol Boat")){
 					
 					kl = "You Earned $1100!";
-					Battleship.cash += 1100.0;
+					Battleship.cash += 1100;
 					
 				}else{
 					
@@ -1076,7 +1076,7 @@ public class Player
 	public static void saveGame(double cash){
 		double temp = 0;
 		try {
-			temp = Double.parseDouble(Battleship.udata.get(0));
+			temp = Double.parseDouble(Battleship.en.decrypt(Battleship.udata.get(0)));
 			temp += cash;
 			Battleship.udata.set(0,Battleship.en.encrypt(Double.toString(temp)));
 		} catch (Exception e1) {

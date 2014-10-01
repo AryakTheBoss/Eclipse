@@ -65,7 +65,7 @@ public class Battleship extends JFrame
 	private static JPanel com;
 	private static JLabel many;
 	public static JComboBox<Integer> amt = new JComboBox<Integer>();
-	public static JLabel totl = new JLabel("BOOTY");
+	public static JLabel totl = new JLabel("TEMP");
 	public static JFrame frr = new JFrame("Buy Items");
 	public static JButton shopB = new JButton("SHOP");
 	public static Encryptor en = new Encryptor();
@@ -553,9 +553,11 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Statistics");
 		mEN.addActionListener(new StatsListener());		
 		menu.add(mEN);
+		mEN.setEnabled(false);
 		mEN = new JMenuItem("Options");
 		mEN.addActionListener(new OptionsListener());		
 		menu.add(mEN);
+		mEN.setEnabled(false);
 		mEN = new JMenuItem("Exit");
 		mEN.addActionListener(new ExitListener());
 		menu.add(mEN);	
@@ -949,7 +951,7 @@ public static void openShop() throws Exception{//TODO hjk
   	  }else if(conf.getModel().isPressed() == true){
   		TotalThread.updateItemCost(12000);
   		conf.getModel().setPressed(false);
-  		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Confusion Ray for $12,000?","Buy", JOptionPane.YES_NO_OPTION);
+  		int yy =  JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
   			   if(cash < 12000){
@@ -972,7 +974,7 @@ public static void openShop() throws Exception{//TODO hjk
   	  }else if(sf.getModel().isPressed() == true){
   		TotalThread.updateItemCost(5000);
   		sf.getModel().setPressed(false);
-  		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Ship Finder for $5000?","Buy", JOptionPane.YES_NO_OPTION);
+  		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
   			   if(cash < 5000){
@@ -995,7 +997,7 @@ public static void openShop() throws Exception{//TODO hjk
   		TotalThread.updateItemCost(5000);
   		tor.getModel().setPressed(false);
   		
-  		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Torpedo for $5000?","Buy", JOptionPane.YES_NO_OPTION);
+  		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
   			   if(cash < 5000.0){
@@ -1018,7 +1020,7 @@ public static void openShop() throws Exception{//TODO hjk
   	  }else if(frag.getModel().isPressed() == true){
   		TotalThread.updateItemCost(2000);
   		frag.getModel().setPressed(false);
-  		int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a Frag Bomb for $2000?","Buy", JOptionPane.YES_NO_OPTION);
+  		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
   			   if(cash < 2000.0){
