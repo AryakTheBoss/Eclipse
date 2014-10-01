@@ -55,6 +55,7 @@ public class Battleship extends JFrame
 	private static final int NUKE = 2;
 	private static final int CONF = 4;
 	private static final int SF = 6;
+	public static boolean allowedItems = false;
 	private static final int TOR = 8;
 	private static final int FRAG = 10;
 	private static String LOOKANDFEEL,THEME;
@@ -566,14 +567,19 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		
 		mEN = new JMenuItem("Nukes: "+en.decrypt(udata.get(NUKE)));		
 		inv.add(mEN);
+		mEN.addActionListener(new NukeListener());
 		mEN = new JMenuItem("Confusion Rays: "+en.decrypt(udata.get(CONF)));		
 		inv.add(mEN);
+		mEN.addActionListener(new RayListener());
 		mEN = new JMenuItem("Ship Finders: "+en.decrypt(udata.get(SF)));		
 		inv.add(mEN);
+		mEN.addActionListener(new SFListener());
 		mEN = new JMenuItem("Torpedoes: "+en.decrypt(udata.get(TOR)));		
 		inv.add(mEN);
+		mEN.addActionListener(new TorpedoListener());
 		mEN = new JMenuItem("Frag Bombs: "+en.decrypt(udata.get(FRAG)));		
 		inv.add(mEN);
+		mEN.addActionListener(new FragListener());
 		}catch(Exception e){
 			
 			e.printStackTrace();
@@ -1362,6 +1368,7 @@ public static void openShop() throws Exception{//TODO hjk
 			JOptionPane.YES_NO_OPTION);
 			if (r==0)
 			{	
+				allowedItems = true;
 				w=0;
 				a=0;
 				s=0;

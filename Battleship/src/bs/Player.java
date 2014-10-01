@@ -174,6 +174,8 @@ public class Player
 	public void setBboard(int i,int j, Color k)
 	{
 		
+		//TODO possible i++ until end of board
+		
 		
 			this.bboard[i][j].setOpaque(true);
 		this.bboard[i][j].setBackground(k);	
