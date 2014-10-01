@@ -1,0 +1,43 @@
+/**
+ * 
+ */
+package bs;
+
+/**
+ * @author UnityBoss
+ *
+ */
+public class TotalThread implements Runnable{
+
+	private static double cos=0.0;
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+		for(;;){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			Battleship.totl.setText("Total Cost: $"+Double.toString(cos*(Battleship.amt.getSelectedIndex()+1)));
+			
+			
+			
+					
+				
+			}
+		
+		
+	}
+
+	public static void start(){new Thread(new TotalThread()).start();}
+	public static void updateItemCost(double cost){cos = cost;}
+	public static double getCost(){return cos*Battleship.amt.getSelectedIndex();}
+	
+}

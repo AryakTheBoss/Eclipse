@@ -57,6 +57,8 @@ public class Battleship extends JFrame
 	public static JButton nuke,conf,sf,tor,frag,cancel;
 	public static JLabel display = new JLabel("Mouse Over the Products to See Info on them!");
 	public static JPanel pane2 = new JPanel();
+	public static JComboBox<Integer> amt = new JComboBox<Integer>();
+	public static JLabel totl = new JLabel("BOOTY");
 	public static JFrame frr = new JFrame("Buy Items");
 	public static JButton shopB = new JButton("SHOP");
 	public static Encryptor en = new Encryptor();
@@ -159,7 +161,7 @@ public class Battleship extends JFrame
 		
 			userData.createNewFile();
 			
-			//write new data
+			//write new data TODO
 			udata.add(en.encrypt("0.0"));
 			udata.add(en.encrypt("Nuke"));
 			udata.add(en.encrypt("0"));
@@ -766,7 +768,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 	
 	
 	
-public static void openShop(){//TODO hjk
+public static void openShop() throws Exception{//TODO hjk 
 	
 	
 	
@@ -774,6 +776,23 @@ public static void openShop(){//TODO hjk
 	
 	System.out.println("nuke is null");
 	display.setHorizontalAlignment((int) JLabel.CENTER_ALIGNMENT);
+	
+	JPanel com = new JPanel();
+	 com.setLayout(new GridLayout(1,4)); 
+	JLabel many = new JLabel("How Many Do You Want?");
+    totl = new JLabel("Total Cost: $"); //TODO THREAD
+	
+	 amt = new JComboBox<Integer>();
+	
+	for(int u=1;u<101;u++){
+		
+		amt.addItem(u);
+		
+	}
+	
+	com.add(many);
+	com.add(amt);
+	com.add(totl);
 	
 	
 	nuke = new JButton("Nuke");
@@ -867,15 +886,16 @@ public static void openShop(){//TODO hjk
 		  
 	  }else{
 		  
-		  display.setText("<html>Mouse Over the Products to See Info on them!<br/>Current Balance: "+cash+"</html>");
+		  display.setText("<html>Mouse Over the Products to See Info on them!<br/>Current Balance: $"+cash+"</html>");
 		  
 	  }
 	
 	
 	if(nuke.getModel().isPressed() == true){
-  		  
+  		 // com.setVisible(true);  
+		TotalThread.updateItemCost(20000.0);  
 		nuke.getModel().setPressed(false);
-  	int yy =   JOptionPane.showConfirmDialog(null, "Are you sure you want to buy a nuke for $20,000?","Buy", JOptionPane.YES_NO_OPTION);
+  	int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);  
   		   if(yy == JOptionPane.YES_OPTION){
   			   
   			   if(cash < 20000.0){
@@ -884,20 +904,12 @@ public static void openShop(){//TODO hjk
   				   
   			   }else{
   				   
-  				   cash -= 20000.0;
+  				   cash -= TotalThread.getCost();
   				   
-  				   Player.saveGame(cash, "Nuke", 1);   
+  				      Player.saveGame(cash, "Nuke", 1);  
   				   
   				   //add to inv
-  				 nuke = null;
-  		  		  cancel = null;
-  		  		 // pane2 = null;
-  		  		 // display = null;
-  		  		  conf = null;
-  		  		  sf = null;
-  		  		  tor = null;
-  		  		  frag = null;
-  		  		  //frr = null;
+  				 
   				   return;
   				   
   			   }
@@ -918,15 +930,7 @@ public static void openShop(){//TODO hjk
   				   
   				   cash -= 12000.0;
   				   //add to inv
-  				 nuke = null;
-  		  		  cancel = null;
-  		  		 // pane2 = null;
-  		  		//  display = null;
-  		  		  conf = null;
-  		  		  sf = null;
-  		  		  tor = null;
-  		  		  frag = null;
-  		  		  //frr = null;
+  				 
   				   return;
   				   
   			   }
@@ -948,15 +952,7 @@ public static void openShop(){//TODO hjk
   				   
   				   cash -= 5000.0;
   				   //add to inv
-  				 nuke = null;
-  		  		  cancel = null;
-  		  		 // pane2 = null;
-  		  		//  display = null;
-  		  		  conf = null;
-  		  		  sf = null;
-  		  		  tor = null;
-  		  		  frag = null;
-  		  		//  frr = null;
+  				 
   				  return;
   			   }
   			   
@@ -978,15 +974,7 @@ public static void openShop(){//TODO hjk
   				   
   				   cash -= 5000.0;
   				   //add to inv
-  				 nuke = null;
-  		  		  cancel = null;
-  		  		  //pane2 = null;
-  		  		//  display = null;
-  		  		  conf = null;
-  		  		  sf = null;
-  		  		  tor = null;
-  		  		  frag = null;
-  		  		 // frr = null;
+  				
   				 return;
   				   
   			   }
@@ -1007,16 +995,7 @@ public static void openShop(){//TODO hjk
   			   }else{
   				   
   				   cash -= 2000.0;
-  				   //add to inv
-  				  nuke = null;
-  		  		  cancel = null;
-  		  		 // pane2 = null;
-  		  		//  display = null;
-  		  		  conf = null;
-  		  		  sf = null;
-  		  		  tor = null;
-  		  		  frag = null;
-  		  		 //frr = null;
+  				  //add to inv
   				 return;
   				   
   			   }
@@ -1029,15 +1008,7 @@ public static void openShop(){//TODO hjk
   		cancel.getModel().setPressed(false);
   		  frr.dispose();
   		  
-  		  nuke = null;
-  		  cancel = null;
-  		 // pane2 = null;
-  		 // display = null;
-  		  conf = null;
-  		  sf = null;
-  		  tor = null;
-  		  frag = null;
-  		  //frr = null;
+  		
   		 return;
   		  
   		  
@@ -1465,9 +1436,11 @@ public static void openShop(){//TODO hjk
 		
 		initLookAndFeel("Nimbus",null);
 		ShopThread.start();
+		amt.addItem(0);
+		TotalThread.start();
 		//System.out.println(en.encrypt("140000.0"));
 		//System.out.println(en.encrypt("Nuke"));
-	
+	   
 		Battleship gui= new Battleship();
 		
 		try {

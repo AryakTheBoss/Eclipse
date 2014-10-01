@@ -24,7 +24,12 @@ public class ShopThread implements Runnable{
 			}
 			if(Battleship.shopB.getModel().isPressed() == true){
 				
-				Battleship.openShop();				
+				try {
+					Battleship.openShop();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
 				
 			}
 			

@@ -29,6 +29,11 @@ public class Player
 	private int shipsleft;
 	private int shots;// shots taken
 	private boolean[][] hitormiss=new boolean[10][10];
+	private static final int NUKE = 2;
+	private static final int CONF = 4;
+	private static final int SF = 6;
+	private static final int TOR = 8;
+	private static final int FRAG = 10;
 	private boolean chit=false;//checks if computer hit ship or not		
 	private JButton[][] bboard = new JButton [10][10];
 						//gbutton=new JButton [10][10];
@@ -1069,9 +1074,11 @@ public class Player
 	}	
 	
 	public static void saveGame(double cash){
-		
+		double temp = 0;
 		try {
-			Battleship.udata.set(0, Battleship.en.encrypt(Double.toString(cash)));
+			temp = Double.parseDouble(Battleship.udata.get(0));
+			temp += cash;
+			Battleship.udata.set(0,Battleship.en.encrypt(Double.toString(temp)));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -1087,45 +1094,59 @@ public class Player
 		
 	}
 	
-	public static void saveGame(double cash, String[] invToAdd){
-		
-		try {
-			Battleship.udata.set(0, Battleship.en.encrypt(Double.toString(cash)));
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		for(int i=0;i>invToAdd.length;i++){
-			
-			Battleship.udata.add(invToAdd[i]);
-			
-		}
-		
-		try {
-			Battleship.write(Battleship.udata, Battleship.userData);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
 	
-public static void saveGame(double cash, String itemToAdd,int quantity){
+	
+public static void saveGame(double cash, String itemID,int quantity)throws Exception{
 		
+	int temp = 0;
+	double tempo = 0.0;
 		try {
-			Battleship.udata.set(0, Battleship.en.encrypt(Double.toString(cash)));
+			tempo = Double.parseDouble(Battleship.udata.get(0));
+			tempo += cash;
+			Battleship.udata.set(0,Battleship.en.encrypt(Double.toString(tempo)));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		
+			if(itemID.matches("Nuke")){
+				
+				temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(NUKE)));
+				temp += quantity;
+				Battleship.udata.set(NUKE,Battleship.en.encrypt(Integer.toString(temp)));
+				
+			}else if(itemID.matches("Confusion Ray")){
+				
+				temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CONF)));
+				temp += quantity;
+				Battleship.udata.set(CONF,Battleship.en.encrypt(Integer.toString(temp)));
+				
+			}else if(itemID.matches("Ship Finder")){
+				
+				temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(SF)));
+				temp += quantity;
+				Battleship.udata.set(SF,Battleship.en.encrypt(Integer.toString(temp)));
+				
+			}else if(itemID.matches("Torpedo")){
+				
+				temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(TOR)));
+				temp += quantity;
+				Battleship.udata.set(TOR,Battleship.en.encrypt(Integer.toString(temp)));
+				
+				
+			}else if(itemID.matches("Frag Bomb")){
+				
+				temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(FRAG)));
+				temp += quantity;
+				Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
+				
+			}else{
+				
+				System.err.println("ERROR SAVING!");
+				
+			}
 			
-			Battleship.udata.add(itemToAdd);
-			Battleship.udata.add(Integer.toString(quantity));
 			
 			try {
 				Battleship.write(Battleship.udata, Battleship.userData);
