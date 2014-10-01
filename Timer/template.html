@@ -1,0 +1,50 @@
+<html> 
+	<head> 
+		<title>JavaTunes Web Interface</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+		<style>
+			a.action
+			{
+				font-size: 12px;
+			}
+			td, body
+			{
+				font-size: 10px;
+			}
+			td
+			{ 
+				border-bottom: 1px solid #000000;
+			} 
+		</style>
+	</head>
+	<body>
+		<a class="action" href="/prev">[Prev]</a>&nbsp;
+		<a class="action" href="/pause">[Play]</a>&nbsp;
+		<a class="action" href="/next">[Next]</a>&nbsp;
+		<br>
+		<form style="display:inline;" name="f2" action="/" method="get">
+			<input name="s" type="text" size="10" value="[search]"> 
+			<input type="submit" value="search">
+		</form>
+		<form style="display:inline;" name="f1" action="/" method="get">
+			<select name="v" onchange="document.f1.submit();">
+			  <option>0</option>
+			  <option>10</option>
+			  <option>20</option>
+			  <option>30</option>
+			  <option>40</option>
+			  <option>50</option>
+			  <option>60</option>
+			  <option>70</option>
+			  <option>80</option>
+			  <option>90</option>
+			  <option>100</option>
+			</select>
+		</form>
+		<br>
+		Playing: [playing]
+		<br>
+		[songs]
+		<script>document.f.s.focus();</script>	
+	</body>
+</html>	
