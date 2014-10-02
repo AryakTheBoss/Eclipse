@@ -396,33 +396,33 @@ public class Player
 					
 					
 						
-						
+						//FIXME
 						
 					if(this.boats[f].getName().matches("Carrier")){
 						
 						kl = "You Lost $250";
 						
-						Battleship.cash -= 250;
+						saveGame(-250);
 						
 					}else if(this.boats[f].getName().matches("Battleship")){
 						
 						kl = "You Lost $500";
-						Battleship.cash -= 500;
+						saveGame(-500);
 						
 					}else if(this.boats[f].getName().matches("Submarine")){
 						
 						kl = "You Lost $700";
-						Battleship.cash -= 700;
+						saveGame(-700);
 						
 					}else if(this.boats[f].getName().matches("Destroyer")){
 						
 						kl = "You Lost $700";
-						Battleship.cash -= 700;
+						saveGame(-700);
 						
 					}else if(this.boats[f].getName().matches("Patrol Boat")){
 						
 						kl = "You Lost $1000";
-						Battleship.cash -= 1000;
+						saveGame(-1000);
 						
 					}else{
 						
@@ -437,7 +437,7 @@ public class Player
 				
 					
 					
-					saveGame(Battleship.cash);
+					
 				
 				}
 			}
@@ -447,27 +447,27 @@ public class Player
 				if(this.boats[f].getName().matches("Carrier")){
 					
 					kl = "You Earned $350!";
-					Battleship.cash += 350;
+					saveGame(350);
 					
 				}else if(this.boats[f].getName().matches("Battleship")){
 					
 					kl = "You Earned $600!";
-					Battleship.cash += 600;
+					saveGame(600);
 					
 				}else if(this.boats[f].getName().matches("Submarine")){
 					
 					kl = "You Earned $800!";
-					Battleship.cash += 800;
+					saveGame(800);
 					
 				}else if(this.boats[f].getName().matches("Destroyer")){
 					
 					kl = "You Earned $800!";
-					Battleship.cash += 800;
+					saveGame(800);
 					
 				}else if(this.boats[f].getName().matches("Patrol Boat")){
 					
 					kl = "You Earned $1100!";
-					Battleship.cash += 1100;
+					saveGame(1100);
 					
 				}else{
 					
@@ -479,7 +479,7 @@ public class Player
 				JOptionPane.showMessageDialog(null,"You sank the "+
 				this.boats[f].getName()+"!\n"+kl,"Good Job!",
 				JOptionPane.INFORMATION_MESSAGE);
-				saveGame(Battleship.cash);
+				
 				for (int k=0;k<10;k++)
 					for (int m=0;m<10;m++)
 						if(this.boats[f].getName().equals(this.getWhatShip(k
@@ -882,7 +882,7 @@ public class Player
 							JOptionPane.ERROR_MESSAGE);								
 						}
 						else
-							this.takeShot(i,j);								
+							this.takeShot(i,j);	//TODO chekcthis for tropedos							
 						break outer;						
 					}
 					else if (source==this.getBboard(i,j))
@@ -903,7 +903,7 @@ public class Player
 			this.getTimer().stop();				
 			if (Battleship.getPlayers(Battleship.getEnemy()).getShipsLeft()!=0)
 			{						
-				if (!Battleship.getPlayers(Battleship.getEnemy()).getUser().equals("Computer"))
+				if (!Battleship.getPlayers(Battleship.getEnemy()).getUser().equals("Computer")) //TODO test for confusion ray.
 					Battleship.getPlayers(Battleship.getEnemy()).setMove(true);					
 				Battleship.getPlayers(Battleship.getEnemy()).getTimer().start();
 				Battleship.flipYou();
@@ -918,6 +918,7 @@ public class Player
 					if (this.getUser().equals("Stupid"))
 						JOptionPane.showMessageDialog(null,"Maybe you're no"
 						+"t that stupid after all!","",JOptionPane.INFORMATION_MESSAGE);
+					saveGame(1200);
 				}
 				else
 				{
@@ -926,7 +927,8 @@ public class Player
 					+"!",JOptionPane.INFORMATION_MESSAGE);
 					if (this.getUser().equals("Stupid"))
 						JOptionPane.showMessageDialog(null,"Maybe you're no"
-						+"t that stupid after all!","",JOptionPane.INFORMATION_MESSAGE);									
+						+"t that stupid after all!","",JOptionPane.INFORMATION_MESSAGE);
+					saveGame(1200);
 				}						
 			}									
 		}						
@@ -941,7 +943,15 @@ public class Player
 	}
 	
 	public void compattack()
-	{					
+	{	
+		
+		if(RayListener.isUsed()){
+			
+			this.setMove(true);
+			Battleship.getPlayers(Battleship.getEnemy()).setMove(false);	
+			
+		}
+		
 		if (this.getChit())
 			this.scanArea(this.getR(),this.getC());					
 		else
@@ -1045,8 +1055,9 @@ public class Player
 		{
 			if (this.getUser().equals("Computer"))
 			{
-				JOptionPane.showMessageDialog(null,"You Lost! You Paid $600 to a Computer?? WTF??","Sorry!",//TODO add cash update
+				JOptionPane.showMessageDialog(null,"You Lost! You Paid $700 to a Computer?? WTF??","Sorry!",//TODO add cash update
 				JOptionPane.INFORMATION_MESSAGE);
+				saveGame(-700);
 				if (Battleship.getPlayers(Battleship.getEnemy()).getUser().equals("Stupid"))
 					JOptionPane.showMessageDialog(null,"Stupid!","Sorry!",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -1068,17 +1079,22 @@ public class Player
 			else{
 				JOptionPane.showMessageDialog(null,this.getUser()+
 				" WON!!! AND EARNED $1200","It's A Celebration!",JOptionPane.INFORMATION_MESSAGE);	
-				Battleship.cash += 1200.0;
-				saveGame(Battleship.cash);
-			}//TODO CASH UPDATE
+				
+				saveGame(1200);
+			}
 			
 		}					
 	}	
 	
-	public static void saveGame(double cash){
+	/**
+	 * Updates AMT of cash remaining
+	 * 
+	 * @param cash
+	 */
+	public static void saveGame(int cash){
 		double temp = 0;
 		try {
-			temp = Double.parseDouble(Battleship.en.decrypt(Battleship.udata.get(0)));
+			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(0)));
 			temp += cash;
 			Battleship.udata.set(0,Battleship.en.encrypt(Double.toString(temp)));
 		} catch (Exception e1) {
@@ -1097,7 +1113,14 @@ public class Player
 	}
 	
 	
-	
+/**
+ * Saves the game USED FOR THE SHOP
+ * 	
+ * @param cash - amt to add to current balance
+ * @param itemID - item id ex.("Nuke")
+ * @param quantity - quantity to add to it
+ * @throws Exception - something
+ */
 public static void saveGame(int cash, String itemID,int quantity)throws Exception{
 		
 	int temp = 0;
@@ -1183,5 +1206,105 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 		
 		
 	}
+
+/**
+ * Saves the game and SUBTRACTS the quantity from current value.
+ * 
+ * @param itemID
+ * 
+ * @throws Exception
+ */
+
+public static void saveGame(String itemID)throws Exception{
+	
+	int temp = 0;
+	
+	
+	
+	if(itemID.matches("Nuke")){
+		
+		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(NUKE)));
+		if(temp == 0){
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+		}
+		temp--;
+		Battleship.udata.set(NUKE,Battleship.en.encrypt(Integer.toString(temp)));
+		
+	}else if(itemID.matches("Confusion Ray")){
+		
+		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CONF)));
+		if(temp == 0){
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+		}
+		temp--;
+		Battleship.udata.set(CONF,Battleship.en.encrypt(Integer.toString(temp)));
+		
+	}else if(itemID.matches("Ship Finder")){
+		
+		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(SF)));
+		if(temp == 0){
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+		}
+		temp--;
+		Battleship.udata.set(SF,Battleship.en.encrypt(Integer.toString(temp)));
+		
+	}else if(itemID.matches("Torpedo")){
+		
+		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(TOR)));
+		if(temp == 0){
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+		}
+		temp--;
+		Battleship.udata.set(TOR,Battleship.en.encrypt(Integer.toString(temp)));
+		
+		
+	}else if(itemID.matches("Frag Bomb")){
+		
+		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(FRAG)));
+		if(temp == 0){
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+		}
+		temp--;
+		Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
+		
+	}else{
+		
+		System.err.println("ERROR SAVING!");
+		
+	}
+	
+	
+	try {
+		Battleship.write(Battleship.udata, Battleship.userData);
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	try{
+		Battleship.inv.removeAll();
+		Battleship.mEN = new JMenuItem("Nukes: "+Battleship.en.decrypt(Battleship.udata.get(NUKE)));		
+		Battleship.inv.add(Battleship.mEN);
+		Battleship.mEN.addActionListener(new NukeListener());  
+		Battleship.mEN = new JMenuItem("Confusion Rays: "+Battleship.en.decrypt(Battleship.udata.get(CONF)));		
+		Battleship.inv.add(Battleship.mEN);
+		Battleship.mEN.addActionListener(new RayListener());
+		Battleship.mEN = new JMenuItem("Ship Finders: "+Battleship.en.decrypt(Battleship.udata.get(SF)));		
+		Battleship.inv.add(Battleship.mEN);
+		Battleship.mEN.addActionListener(new SFListener());
+		Battleship.mEN = new JMenuItem("Torpedoes: "+Battleship.en.decrypt(Battleship.udata.get(TOR)));		
+		Battleship.inv.add(Battleship.mEN);
+		Battleship.mEN.addActionListener(new TorpedoListener());
+		Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
+		Battleship.inv.add(Battleship.mEN);
+		Battleship.mEN.addActionListener(new FragListener());
+		}catch(Exception e){
+			
+			e.printStackTrace();
+			
+		}
+
+	
+}
 	
 }

@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
  *
  */
 public class RayListener implements ActionListener{
+	
+	private static boolean rayUsing = false;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -24,5 +26,10 @@ if(Battleship.allowedItems == true){
 			
 		}
 	}
+	
+	public static boolean isUsed(){return rayUsing;}
+	
+	
+	
 
 }

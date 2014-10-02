@@ -931,9 +931,9 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   			   }else{
   				   
-  				   cash -= TotalThread.getCost();
+  				 cash -= TotalThread.getCost();
   				   
-  				      Player.saveGame(cash, "Nuke", amt.getSelectedIndex()+1);  
+  				      Player.saveGame(-TotalThread.getCost(), "Nuke", amt.getSelectedIndex()+1);  
   				   
   				   //add to inv
   				 
@@ -957,7 +957,7 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   				 cash -= TotalThread.getCost();
 				   
-				      Player.saveGame(cash, "Confusion Ray", amt.getSelectedIndex()+1);
+				      Player.saveGame(-TotalThread.getCost(), "Confusion Ray", amt.getSelectedIndex()+1);
   				 
   				  // return;
   				   
@@ -980,7 +980,7 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   				 cash -= TotalThread.getCost();
 				   
-				      Player.saveGame(cash, "Ship Finder", amt.getSelectedIndex()+1);
+				      Player.saveGame(-TotalThread.getCost(), "Ship Finder", amt.getSelectedIndex()+1);
   				 
   				 // return;
   			   }
@@ -1003,7 +1003,7 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   				 cash -= TotalThread.getCost();
 				   
-				      Player.saveGame(cash, "Torpedo", amt.getSelectedIndex()+1);
+				      Player.saveGame(-TotalThread.getCost(), "Torpedo", amt.getSelectedIndex()+1);
   				
   				 //return;
   				   
@@ -1026,7 +1026,7 @@ public static void openShop() throws Exception{//TODO hjk
   				   
   				 cash -= TotalThread.getCost();
 				   
-				      Player.saveGame(cash, "Frag Bomb", amt.getSelectedIndex()+1);
+				      Player.saveGame(-TotalThread.getCost(), "Frag Bomb", amt.getSelectedIndex()+1);
   				// return;
   				   
   			   }
