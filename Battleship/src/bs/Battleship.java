@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.MenuEvent;
+
 import javax.swing.plaf.metal.DefaultMetalTheme;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
