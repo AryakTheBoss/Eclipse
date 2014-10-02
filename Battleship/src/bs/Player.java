@@ -1012,7 +1012,7 @@ public class Player
 							this.setMHS(r,c,0);
 						}															
 						else if ((Battleship.getPlayers(Battleship.getEnemy()).getShipsLeft()==1)
-							&&(this.getLastShip()==0))
+							&&(this.getLastShip()==0)) //LEL
 						{								
 							for (int i=0;i<5;i++)
 								if (Battleship.getPlayers(Battleship.getEnemy()).boats[i].getHitsLeft()!=0)
