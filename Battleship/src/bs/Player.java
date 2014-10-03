@@ -1209,7 +1209,7 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 	}
 
 /**
- * Saves the game and SUBTRACTS the quantity from current value.
+ * Saves the game and SUBTRACTS (means you used an item)
  * 
  * @param itemID
  * 
