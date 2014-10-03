@@ -21,14 +21,20 @@ public class RayListener implements ActionListener{
 		// TODO Auto-generated method stub
 if(Battleship.allowedItems == true){
 			
-			JOptionPane.showMessageDialog(null, "Ray Pressed");
+		try {
+			Player.saveGame("Confusion Ray");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
 			
+		rayUsing = true;
 			
 		}
 	}
 	
 	public static boolean isUsed(){return rayUsing;}
-	
+	public static void setUsed(boolean flag){rayUsing = flag;}
 	
 	
 

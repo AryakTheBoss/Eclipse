@@ -948,7 +948,8 @@ public class Player
 		if(RayListener.isUsed()){
 			
 			this.setMove(true);
-			Battleship.getPlayers(Battleship.getEnemy()).setMove(false);	
+			Battleship.getPlayers(Battleship.getEnemy()).setMove(false);
+			RayListener.setUsed(false);
 			
 		}
 		
@@ -1226,6 +1227,7 @@ public static void saveGame(String itemID)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(NUKE)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+			return;
 		}
 		temp--;
 		Battleship.udata.set(NUKE,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1235,6 +1237,7 @@ public static void saveGame(String itemID)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CONF)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+			return;
 		}
 		temp--;
 		Battleship.udata.set(CONF,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1244,6 +1247,7 @@ public static void saveGame(String itemID)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(SF)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+			return;
 		}
 		temp--;
 		Battleship.udata.set(SF,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1253,6 +1257,7 @@ public static void saveGame(String itemID)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(TOR)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+			return;
 		}
 		temp--;
 		Battleship.udata.set(TOR,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1262,7 +1267,8 @@ public static void saveGame(String itemID)throws Exception{
 		
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(FRAG)));
 		if(temp == 0){
-			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE); 
+			return;
 		}
 		temp--;
 		Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
