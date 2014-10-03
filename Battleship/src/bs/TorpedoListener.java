@@ -21,14 +21,19 @@ public class TorpedoListener implements ActionListener{
 		// TODO Auto-generated method stub
 if(Battleship.allowedItems == true){ //FIXME UPDATE MENU
 			
+	System.out.println("Trying to use Torpedo...");
 			try {
-				Player.saveGame("Torpedo",false);
+				if(Player.saveGame("Torpedo",false)){
+					
+					using = true;
+					
+				}
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
-			using = true;
+			
 			
 		}
 	}

@@ -21,8 +21,8 @@ import java.text.NumberFormat;
 public class Player
 {
 	private int hits;
-	private int i,j;
-	private Integer n;
+	private int xpos,ypos;  
+	//private Integer n;
 	private int r,c;//row and column for comp attack	
 	private Ship boats[] = new Ship[5];	
 	private String user;//user name
@@ -61,13 +61,13 @@ public class Player
 				
 		if
 		((user.equals("Computer"))||(user.equals("CPU1"))||(user.equals("CPU2"))||(Battleship.isAutoSet())||(Battleship.isLocal()))
-			for (i=0;i<5;i++)
-				boats[i]=new Ship(Battleship.getShips(i),0,0,0,0);		
+			for (xpos=0;xpos<5;xpos++)
+				boats[xpos]=new Ship(Battleship.getShips(xpos),0,0,0,0);		
 		if((user.equals("Computer"))||(user.equals("CPU1"))||(user.equals("CPU2")))
 		{
-			for (i=0;i<10;i++)
-				for (j=0;j<10;j++)
-					mhs[i][j]=3;						
+			for (xpos=0;xpos<10;xpos++)
+				for (ypos=0;ypos<10;ypos++)
+					mhs[xpos][ypos]=3;						
 			
 			timeleft= new Timer(1000,new CompAttack());
 		}
@@ -76,14 +76,14 @@ public class Player
 		move=false;
 		shots=0;
 		hits=0;
-		for (i=0;i<10;i++)
+		for (xpos=0;xpos<10;xpos++)
 		{			
-			for (j=0;j<10;j++)
+			for (ypos=0;ypos<10;ypos++)
 			{
-				this.bboard[i][j]=new JButton();
-				this.bboard[i][j].setBackground(null);				
-				hitormiss[i][j]=false;
-				this.whatship[i][j]=" ";				
+				this.bboard[xpos][ypos]=new JButton();
+				this.bboard[xpos][ypos].setBackground(null);				
+				hitormiss[xpos][ypos]=false;
+				this.whatship[xpos][ypos]=" ";				
 			}
 		}			
 	}
@@ -576,10 +576,10 @@ public class Player
 			if (this.boats[u].getHitsLeft()!=0)
 			{						
 				daloop:
-				for (i=(x-(this.boats[u].getLength()));i<(x+(this.boats[u].getLength()));i++)
+				for (xpos=(x-(this.boats[u].getLength()));xpos<(x+(this.boats[u].getLength()));xpos++)
 				{							
-					if ((isValid(i,y))&&((Battleship.getPlayers(Battleship.getYou()).getMHS(i,y)==3)||
-						(Battleship.getPlayers(Battleship.getYou()).getMHS(i,y)==1)))
+					if ((isValid(xpos,y))&&((Battleship.getPlayers(Battleship.getYou()).getMHS(xpos,y)==3)||
+						(Battleship.getPlayers(Battleship.getYou()).getMHS(xpos,y)==1)))
 					{
 						g+=1;
 						if (g==(this.boats[u].getLength()))
@@ -629,10 +629,10 @@ public class Player
 			if (this.boats[u].getHitsLeft()!=0) 
 			{	
 				daloop:
-				for (i=(y-this.boats[u].getLength());i<(y+this.boats[u].getLength());i++)
+				for (xpos=(y-this.boats[u].getLength());xpos<(y+this.boats[u].getLength());xpos++)
 				{												
-					if ((isValid(x,i))&&((Battleship.getPlayers(Battleship.getYou()).getMHS(x,i)==3)||
-						(Battleship.getPlayers(Battleship.getYou()).getMHS(x,i)==1)))
+					if ((isValid(x,xpos))&&((Battleship.getPlayers(Battleship.getYou()).getMHS(x,xpos)==3)||
+						(Battleship.getPlayers(Battleship.getYou()).getMHS(x,xpos)==1)))
 					{
 						g+=1;
 						if (g==this.boats[u].getLength())
@@ -813,18 +813,29 @@ public class Player
 			}
 		}
 	}
-	
+	/**
+	 * z is the orrientation of the ship also ONLY used be the computer. (0=VERTICAL, 1=HORIZONTAL)
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	private void fireShot(int x, int y, int z)
 	{
 		this.takeShot(x,y);
 		if (this.getChit())
 		{
 			this.setGo(z);
-			this.setR(x);
+			this.setR(x);   //used by the computer
 			this.setC(y);							
 		}	
 	}
-	
+	/**
+	 * this method is ONLY used by the computer for testing ship hits
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	private void fireShot(int x, int y)
 	{
 		this.takeShot(x,y);
@@ -835,7 +846,12 @@ public class Player
 		}	
 	}
 
-		
+	/**
+	 * Takes a shot at the specified (x,y) coord.
+	 * 	
+	 * @param x - xpos of guess
+	 * @param y - ypos of Guess.
+	 */
 	public void takeShot(int x,int y)//takes a shot and tests for hit or miss.
 	{				
 		this.setShots();
@@ -845,8 +861,9 @@ public class Player
 			if (!Battleship.getPlayers(Battleship.getEnemy()).isSunk(x,y))
 			{
 				Battleship.getPlayers(Battleship.getEnemy()).setBboard(x,y,Color.red);
-				if ((this.getUser().equals("Computer"))||(this.getUser().equals("CPU1"))||(this.getUser().equals("CPU2")))
-				{	
+				if ((this.getUser().equals("Computer"))||(this.getUser().equals("CPU1"))||(this.getUser().equals("CPU2")))//if its a computer
+				{	/*this is for the computer to track his moves based on wether it was a hit or miss. hits will cause
+				him to scan the area around the hit and take a random guess (in easy mode)*/
 					this.setMHS(x,y,1);
 					this.setChit(true);
 				}										
@@ -862,22 +879,27 @@ public class Player
 			}
 		}					
 	}		
-	
+	/**
+	 * When its your turn this method evaluates whether the shot you took is a HIT or a MISS.
+	 * as well as check for powerup use.
+	 * 
+	 * @param v
+	 */
 	public void humanAttack(ActionEvent v)
 	{
 		if (this.getMove())
 		{				
 			Object source = v.getSource();
 			outer:						
-			for (i=0;i<10;i++)
+			for (xpos=0;xpos<10;xpos++)
 			{				
-				for (j=0;j<10;j++)
+				for (ypos=0;ypos<10;ypos++)
 				{					
-					if (source==Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,j))
+					if (source==Battleship.getPlayers(Battleship.getEnemy()).getBboard(xpos,ypos))
 					{								
-						if ((Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,j).getBackground()==Color.black)||
-							(Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,j).getBackground()==Color.red)||
-							(Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,j).getBackground()==Color.blue))
+						if ((Battleship.getPlayers(Battleship.getEnemy()).getBboard(xpos,ypos).getBackground()==Color.black)||
+							(Battleship.getPlayers(Battleship.getEnemy()).getBboard(xpos,ypos).getBackground()==Color.red)||
+							(Battleship.getPlayers(Battleship.getEnemy()).getBboard(xpos,ypos).getBackground()==Color.blue))
 						{
 							JOptionPane.showMessageDialog(null,"You tri"
 							+"ed that spot already.","Wasted Shot",
@@ -885,47 +907,63 @@ public class Player
 						}
 						else{
 							
-							if(TorpedoListener.getUsing()){//TODO TEST torpedo logic
+							if(TorpedoListener.getUsing()){ //past this is the logic for if you use a torpedo.
 								int ii,jj;
-								ii = i;
-								jj = j;
+								ii = xpos;
+								jj = ypos;
 								
 								if(rf.nextBoolean()){
-									
+									System.out.println("ii chosen");
 									for(;;){
 										
 										
-										this.takeShot(i,j);	
+										this.takeShot(xpos,ypos);	
 										ii++;
-										if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.blue || Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.black|| this.isValid(ii, j) == false){ 
+										if(this.isValid(ii, ypos)){
 											
-											TorpedoListener.setUsing(false);
-											break;
+											if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,ypos).getBackground()==Color.black){ 
+												
+												TorpedoListener.setUsing(false);
+												break;
+												
+											}else{
+												
+												this.takeShot(ii, ypos);  
+												
+											}
 											
+										
 										}else{
-											
-											this.takeShot(ii, j);  
-											
+											break;
 										}
+										
 									}
 									
 								}else{
-									
+									System.out.println("jj chosen");
 									for(;;){
 										
 										
-										this.takeShot(i,j);	
+										this.takeShot(xpos,ypos);	
 										jj++;
-										if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,jj).getBackground()==Color.blue || Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,jj).getBackground()==Color.black|| this.isValid(i, jj) == false){ 
+										if(this.isValid(xpos, jj)){
 											
-											TorpedoListener.setUsing(false);
-											break;
+											if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(xpos,jj).getBackground()==Color.black){ 
+												
+												TorpedoListener.setUsing(false);
+												break;
+												
+											}else{
+												
+												this.takeShot(xpos, jj);  
+												
+											}
 											
+										
 										}else{
-											
-											this.takeShot(i, jj);  
-											
+											break;
 										}
+										
 									}
 									
 									
@@ -934,7 +972,7 @@ public class Player
 								
 							}else{ //if not using torpedo just do a normal shot
 								
-								this.takeShot(i,j);	
+								this.takeShot(xpos,ypos);	
 								
 							}
 							
@@ -944,7 +982,7 @@ public class Player
 						}						
 						break outer;						
 					}
-					else if (source==this.getBboard(i,j))
+					else if (source==this.getBboard(xpos,ypos))
 					{
 						if(TorpedoListener.getUsing() == false){
 						JOptionPane.showMessageDialog(null,"You are not suppose"
@@ -968,7 +1006,7 @@ public class Player
 				}
 			}
 			
-			if ((i==10)&&(j==10))
+			if ((xpos==10)&&(ypos==10))
 				JOptionPane.showMessageDialog(null,"You took too long!",
 				"Lost Turn",JOptionPane.INFORMATION_MESSAGE);				
 			Player.isStatsOpen();
@@ -1017,14 +1055,14 @@ public class Player
 	
 	public void compattack()
 	{	
-		
-		if(RayListener.isUsed()){
-			
-			this.setMove(true);
-			Battleship.getPlayers(Battleship.getEnemy()).setMove(false);
-			RayListener.setUsed(false);
-			
-		}
+		TorpedoListener.setUsing(false);
+//		if(RayListener.isUsed()){
+//			
+//			this.setMove(true);
+//			Battleship.getPlayers(Battleship.getEnemy()).setMove(false);
+//			RayListener.setUsed(false);
+//			
+//		}
 		
 		if (this.getChit())
 			this.scanArea(this.getR(),this.getC());					
@@ -1035,19 +1073,19 @@ public class Player
 			else
 			{
 				blah:
-				for (i=0;i<10;i++)
+				for (xpos=0;xpos<10;xpos++)
 				{
-					for (j=0;j<10;j++)
-						if (this.getMHS(i,j)==1)
+					for (ypos=0;ypos<10;ypos++)
+						if (this.getMHS(xpos,ypos)==1)
 						{
 							if (this.getMHS(this.getFR(),this.getFC())==2)
 							{
-								if ((this.isPlausible(i+1,j))||(this.isPlausible(i,j+1))
-								||(this.isPlausible(i-1,j))||(this.isPlausible(i,j-1)))
+								if ((this.isPlausible(xpos+1,ypos))||(this.isPlausible(xpos,ypos+1))
+								||(this.isPlausible(xpos-1,ypos))||(this.isPlausible(xpos,ypos-1)))
 								{
-									this.scanArea(i,j);
-									this.setFR(i);
-									this.setFC(j);										
+									this.scanArea(xpos,ypos);
+									this.setFR(xpos);
+									this.setFC(ypos);										
 									break blah;
 								}
 							}
@@ -1058,16 +1096,16 @@ public class Player
 							}								
 						}
 				}
-				if (i==10)
+				if (xpos==10)
 				{							
 					do
 					{									
-						for (i=0;i<10;i++)
+						for (xpos=0;xpos<10;xpos++)
 						{
-							for (j=0;j<10;j++)
-								if (this.getMHS(i,j)==3)
+							for (ypos=0;ypos<10;ypos++)
+								if (this.getMHS(xpos,ypos)==3)
 								{										
-									rows.add(new Integer(i));
+									rows.add(new Integer(xpos));
 									break;
 								}
 						}									
@@ -1077,10 +1115,10 @@ public class Player
 						}
 						while(r>=rows.size());												
 						r=((Integer)rows.elementAt(r)).intValue();						
-						for (i=0;i<10;i++)
+						for (xpos=0;xpos<10;xpos++)
 						{
-							if (this.getMHS(r,i)==3)
-								cols.add(new Integer(i));														
+							if (this.getMHS(r,xpos)==3)
+								cols.add(new Integer(xpos));														
 						}											
 						do
 						{
@@ -1135,17 +1173,17 @@ public class Player
 				if (Battleship.getPlayers(Battleship.getEnemy()).getUser().equals("Stupid"))
 					JOptionPane.showMessageDialog(null,"Stupid!","Sorry!",
 					JOptionPane.INFORMATION_MESSAGE);
-				for (i=0;i<10;i++)
+				for (xpos=0;xpos<10;xpos++)
 				{
-					for (j=0;j<10;j++)
+					for (ypos=0;ypos<10;ypos++)
 					{
-						if ((!this.getWhatShip(i,j).equals(" "))
-							&&(((this.getBboard(i,j
+						if ((!this.getWhatShip(xpos,ypos).equals(" "))
+							&&(((this.getBboard(xpos,ypos
 						).getBackground())!=Color.black)&&
-									((this.getBboard(i,j
+									((this.getBboard(xpos,ypos
 								).getBackground())!=Color.red)))							
 							{
-								this.setBboard(i,j,Battleship.getColor());
+								this.setBboard(xpos,ypos,Battleship.getColor());
 							}
 					}
 				}									
@@ -1166,11 +1204,11 @@ public class Player
 	 * @param cash
 	 */
 	public static void saveGame(int cash){
-		double temp = 0;
+		int temp = 0;
 		try {
 			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(0)));
 			temp += cash;
-			Battleship.udata.set(0,Battleship.en.encrypt(Double.toString(temp)));
+			Battleship.udata.set(0,Battleship.en.encrypt(Integer.toString(temp)));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -1289,7 +1327,7 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
  * @throws Exception
  */
 
-public static void saveGame(String itemID,boolean suboradd)throws Exception{
+public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 	
 	int temp = 0;
 	
@@ -1298,40 +1336,28 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 		if(itemID.matches("Nuke")){
 			
 			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(NUKE)));
-			if(temp == 0){
-				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-				return;
-			}
+			
 			temp++;
 			Battleship.udata.set(NUKE,Battleship.en.encrypt(Integer.toString(temp)));
 			
 		}else if(itemID.matches("Confusion Ray")){
 			
 			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CONF)));
-			if(temp == 0){
-				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-				return;
-			}
+			
 			temp++;
 			Battleship.udata.set(CONF,Battleship.en.encrypt(Integer.toString(temp)));
 			
 		}else if(itemID.matches("Ship Finder")){
 			
 			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(SF)));
-			if(temp == 0){
-				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-				return;
-			}
+			
 			temp++;
 			Battleship.udata.set(SF,Battleship.en.encrypt(Integer.toString(temp)));
 			
 		}else if(itemID.matches("Torpedo")){
 			
 			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(TOR)));
-			if(temp == 0){
-				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-				return;
-			}
+			
 			temp++;
 			Battleship.udata.set(TOR,Battleship.en.encrypt(Integer.toString(temp)));
 			
@@ -1339,10 +1365,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 		}else if(itemID.matches("Frag Bomb")){
 			
 			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(FRAG)));
-			if(temp == 0){
-				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE); 
-				return;
-			}
+			
 			temp++;
 			Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
 			
@@ -1382,6 +1405,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 				e.printStackTrace();
 				
 			}
+		return true;
 		
 	}else{
 	
@@ -1390,7 +1414,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(NUKE)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-			return;
+			return false;
 		}
 		temp--;
 		Battleship.udata.set(NUKE,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1400,7 +1424,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CONF)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-			return;
+			return false;
 		}
 		temp--;
 		Battleship.udata.set(CONF,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1410,7 +1434,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(SF)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-			return;
+			return false;
 		}
 		temp--;
 		Battleship.udata.set(SF,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1420,7 +1444,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(TOR)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
-			return;
+			return false;
 		}
 		temp--;
 		Battleship.udata.set(TOR,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1431,7 +1455,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(FRAG)));
 		if(temp == 0){
 			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE); 
-			return;
+			return false;
 		}
 		temp--;
 		Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
@@ -1439,7 +1463,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 	}else{
 		
 		System.err.println("ERROR SAVING!");
-		
+		return false;
 	}
 	
 	
@@ -1472,6 +1496,7 @@ public static void saveGame(String itemID,boolean suboradd)throws Exception{
 			e.printStackTrace();
 			
 		}
+	return true;
 	}
 	
 }

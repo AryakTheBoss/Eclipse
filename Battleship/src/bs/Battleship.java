@@ -110,10 +110,9 @@ public class Battleship extends JFrame
 	private static BattleshipClient me;
 	private static boolean gameover=false;
 	
-    public static void initSave()throws Exception{
+    public static void initSave()throws Exception{ //FO4eIhSrm/OHX18VHHq8Ow==
     	
-    
- // System.out.println(en.encrypt("130000"));
+   
     	
 
     	
@@ -995,7 +994,7 @@ public static void openShop() throws Exception{//TODO hjk
   		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 5000.0){
+  			   if(cash < 5000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
@@ -1018,7 +1017,7 @@ public static void openShop() throws Exception{//TODO hjk
   		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 2000.0){
+  			   if(cash < 2000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
