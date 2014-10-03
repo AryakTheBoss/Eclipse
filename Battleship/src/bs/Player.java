@@ -13,6 +13,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import java.io.*;
+import java.util.Random;
 import java.util.Vector;
 import java.lang.Integer;
 import java.text.NumberFormat;	
@@ -34,6 +35,7 @@ public class Player
 	private static final int SF = 6;
 	private static final int TOR = 8;
 	private static final int FRAG = 10;
+	private static Random rf = new Random();
 	private boolean chit=false;//checks if computer hit ship or not		
 	private JButton[][] bboard = new JButton [10][10];
 						//gbutton=new JButton [10][10];
@@ -883,26 +885,54 @@ public class Player
 						}
 						else{
 							
-							if(TorpedoListener.getUsing()){//TODO torpedo logic
-								int ii;
+							if(TorpedoListener.getUsing()){//TODO TEST torpedo logic
+								int ii,jj;
 								ii = i;
-								for(;;){
+								jj = j;
+								
+								if(rf.nextBoolean()){
 									
-									
-									this.takeShot(i,j);	
-									ii++;
-									if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.blue || Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.red|| this.isValid(ii, j) == false){ 
+									for(;;){
 										
-										break;
 										
-									}else{
-										
-										this.takeShot(ii, j);  
-										
+										this.takeShot(i,j);	
+										ii++;
+										if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.blue || Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.black|| this.isValid(ii, j) == false){ 
+											
+											TorpedoListener.setUsing(false);
+											break;
+											
+										}else{
+											
+											this.takeShot(ii, j);  
+											
+										}
 									}
+									
+								}else{
+									
+									for(;;){
+										
+										
+										this.takeShot(i,j);	
+										jj++;
+										if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,jj).getBackground()==Color.blue || Battleship.getPlayers(Battleship.getEnemy()).getBboard(i,jj).getBackground()==Color.black|| this.isValid(i, jj) == false){ 
+											
+											TorpedoListener.setUsing(false);
+											break;
+											
+										}else{
+											
+											this.takeShot(i, jj);  
+											
+										}
+									}
+									
+									
 								}
 								
-							}else{
+								
+							}else{ //if not using torpedo just do a normal shot
 								
 								this.takeShot(i,j);	
 								
@@ -916,10 +946,24 @@ public class Player
 					}
 					else if (source==this.getBboard(i,j))
 					{
+						if(TorpedoListener.getUsing() == false){
 						JOptionPane.showMessageDialog(null,"You are not suppose"
 						+"d to fire on your own board!","Lost Turn",
 						JOptionPane.WARNING_MESSAGE);
-						break outer;							
+						break outer;
+						}else{
+							
+							JOptionPane.showMessageDialog(null,"You are not suppose"
+									+"d to fire on your own board! You got your Torpedo Back.","Lost Turn",
+									JOptionPane.WARNING_MESSAGE);
+							try {
+								saveGame("Torpedo",true);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+						}
 					}						
 				}
 			}
@@ -1238,18 +1282,108 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 	}
 
 /**
- * Saves the game and SUBTRACTS (means you used an item)
+ * Saves the game and Adds/Subtracts items
  * 
  * @param itemID
- * 
+ * @param suboradd - False is subtract and True is add.
  * @throws Exception
  */
 
-public static void saveGame(String itemID)throws Exception{
+public static void saveGame(String itemID,boolean suboradd)throws Exception{
 	
 	int temp = 0;
 	
-	
+	if(suboradd == true){
+		
+		if(itemID.matches("Nuke")){
+			
+			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(NUKE)));
+			if(temp == 0){
+				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+				return;
+			}
+			temp++;
+			Battleship.udata.set(NUKE,Battleship.en.encrypt(Integer.toString(temp)));
+			
+		}else if(itemID.matches("Confusion Ray")){
+			
+			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CONF)));
+			if(temp == 0){
+				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+				return;
+			}
+			temp++;
+			Battleship.udata.set(CONF,Battleship.en.encrypt(Integer.toString(temp)));
+			
+		}else if(itemID.matches("Ship Finder")){
+			
+			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(SF)));
+			if(temp == 0){
+				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+				return;
+			}
+			temp++;
+			Battleship.udata.set(SF,Battleship.en.encrypt(Integer.toString(temp)));
+			
+		}else if(itemID.matches("Torpedo")){
+			
+			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(TOR)));
+			if(temp == 0){
+				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE);  
+				return;
+			}
+			temp++;
+			Battleship.udata.set(TOR,Battleship.en.encrypt(Integer.toString(temp)));
+			
+			
+		}else if(itemID.matches("Frag Bomb")){
+			
+			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(FRAG)));
+			if(temp == 0){
+				JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE); 
+				return;
+			}
+			temp++;
+			Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
+			
+		}else{
+			
+			System.err.println("ERROR SAVING!");
+			
+		}
+		
+		
+		try {
+			Battleship.write(Battleship.udata, Battleship.userData);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try{
+			Battleship.inv.removeAll();
+			Battleship.mEN = new JMenuItem("Nukes: "+Battleship.en.decrypt(Battleship.udata.get(NUKE)));		
+			Battleship.inv.add(Battleship.mEN);
+			Battleship.mEN.addActionListener(new NukeListener());  
+			Battleship.mEN = new JMenuItem("Confusion Rays: "+Battleship.en.decrypt(Battleship.udata.get(CONF)));		
+			Battleship.inv.add(Battleship.mEN);
+			Battleship.mEN.addActionListener(new RayListener());
+			Battleship.mEN = new JMenuItem("Ship Finders: "+Battleship.en.decrypt(Battleship.udata.get(SF)));		
+			Battleship.inv.add(Battleship.mEN);
+			Battleship.mEN.addActionListener(new SFListener());
+			Battleship.mEN = new JMenuItem("Torpedoes: "+Battleship.en.decrypt(Battleship.udata.get(TOR)));		
+			Battleship.inv.add(Battleship.mEN);
+			Battleship.mEN.addActionListener(new TorpedoListener());
+			Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
+			Battleship.inv.add(Battleship.mEN);
+			Battleship.mEN.addActionListener(new FragListener());
+			}catch(Exception e){
+				
+				e.printStackTrace();
+				
+			}
+		
+	}else{
 	
 	if(itemID.matches("Nuke")){
 		
@@ -1338,8 +1472,10 @@ public static void saveGame(String itemID)throws Exception{
 			e.printStackTrace();
 			
 		}
-
+	}
 	
 }
+
+
 	
 }

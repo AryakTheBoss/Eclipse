@@ -19,10 +19,10 @@ public class TorpedoListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-if(Battleship.allowedItems == true){
+if(Battleship.allowedItems == true){ //FIXME UPDATE MENU
 			
 			try {
-				Player.saveGame("Torpedo");
+				Player.saveGame("Torpedo",false);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
