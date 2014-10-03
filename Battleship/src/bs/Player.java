@@ -836,7 +836,7 @@ public class Player
 	}
 
 		
-	public void takeShot(int x,int y)
+	public void takeShot(int x,int y)//takes a shot and tests for hit or miss.
 	{				
 		this.setShots();
 		if (Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(x,y))
