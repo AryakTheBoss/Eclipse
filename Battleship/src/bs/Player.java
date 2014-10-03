@@ -855,6 +855,7 @@ public class Player
 	public void takeShot(int x,int y)//takes a shot and tests for hit or miss.
 	{				
 		this.setShots();
+		
 		if (Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(x,y))
 		{
 			this.setHits();
@@ -970,7 +971,34 @@ public class Player
 								}
 								
 								
-							}else{ //if not using torpedo just do a normal shot
+							}else if(SFListener.isUsing()){
+								
+								//TODO Temporarily set a RANDOM ship of the computer to a nice GREEN color. (for about 1000ms)
+								
+								for(int x=0;x<10;x++){
+									for(int y=0;y<10;y++){
+										
+										if(Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(x,y)){
+											
+											this.setBboard(x, y, Color.GREEN); 
+											
+										}
+										
+									}
+									
+								}
+								
+								
+								
+								SFListener.setUsing(false);
+								
+								
+								
+							}
+							
+							
+							
+							else{ //if not using torpedo just do a normal shot
 								
 								this.takeShot(xpos,ypos);	
 								
