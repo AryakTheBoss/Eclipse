@@ -881,8 +881,37 @@ public class Player
 							+"ed that spot already.","Wasted Shot",
 							JOptionPane.ERROR_MESSAGE);								
 						}
-						else
-							this.takeShot(i,j);	//TODO chekcthis for tropedos							
+						else{
+							
+							if(TorpedoListener.getUsing()){//TODO torpedo logic
+								int ii;
+								ii = i;
+								for(;;){
+									
+									
+									this.takeShot(i,j);	
+									ii++;
+									if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.blue || Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,j).getBackground()==Color.red|| this.isValid(ii, j) == false){ 
+										
+										break;
+										
+									}else{
+										
+										this.takeShot(ii, j);  
+										
+									}
+								}
+								
+							}else{
+								
+								this.takeShot(i,j);	
+								
+							}
+							
+							
+							
+							
+						}						
 						break outer;						
 					}
 					else if (source==this.getBboard(i,j))

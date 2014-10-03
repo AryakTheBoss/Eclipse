@@ -13,16 +13,28 @@ import javax.swing.JOptionPane;
  *
  */
 public class TorpedoListener implements ActionListener{
+	
+	private static boolean using = false;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 if(Battleship.allowedItems == true){
 			
-			JOptionPane.showMessageDialog(null, "Torpedo Pressed");
+			try {
+				Player.saveGame("Torpedo");
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
+			using = true;
 			
 		}
 	}
+	
+	public static boolean getUsing(){return using;}
+	public static void setUsing(boolean flag){using = flag;}
+	
 
 }
