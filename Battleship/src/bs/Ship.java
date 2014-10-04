@@ -34,7 +34,17 @@ public class Ship
 		invalid=false;
 		hitsleft=ln;			
 	}
-	
+	/**
+	 * Makes a new ship with the following parameters
+	 * 
+	 * @param n - ship name
+	 * @param d - direction (3 def,2 HOR, 1 VERT)
+	 * @param ln - length (Hits to sink it)
+	 * @param x - starting X-Coord
+	 * @param y - starting Y-Coord
+	 * @param ex - end X-Coord
+	 * @param ey - end Y-Coord
+	 */
 	public Ship(String n, int d, int ln, int x, int y, int ex, int ey)
 	{
 		name=n;

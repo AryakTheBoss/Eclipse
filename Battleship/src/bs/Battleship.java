@@ -47,7 +47,7 @@ public class Battleship extends JFrame
 	public static boolean allowedItems = false;
 	private static final int TOR = 8;
 	private static final int FRAG = 10;
-	public static boolean INFINITE_ITEMS = false;
+	public static boolean INFINITE_ITEMS = true; //FIXME USE ONLY FOR DEBUGGING!!
 	private static String LOOKANDFEEL,THEME;
 	public static int cash;
 	public static JButton nuke,conf,sf,tor,frag,cancel;
@@ -522,7 +522,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 
 		// build the Game menu
 		menu = new JMenu("Game");
-		inv = new JMenu("Inventory");
+		inv = new JMenu("Items");
 		
 		menuBar.add(menu);
 		menuBar.add(inv);
@@ -560,6 +560,8 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		menu.add(mEN);	
 		if(INFINITE_ITEMS){
 			
+			shopB.setEnabled(false);  
+			
 			try{
 				
 				mEN = new JMenuItem("Nukes: ∞");		
@@ -570,7 +572,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 				mEN.addActionListener(new RayListener());
 				mEN = new JMenuItem("Ship Finders: ∞");		
 				inv.add(mEN);
-				mEN.setEnabled(false);  
+				//mEN.setEnabled(false);  
 				mEN.addActionListener(new SFListener());
 				mEN = new JMenuItem("Torpedoes: ∞");		
 				inv.add(mEN);
@@ -584,6 +586,8 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 					
 				}
 			
+			
+			
 		}else{
 			
 		try{
@@ -594,9 +598,9 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Confusion Rays: "+en.decrypt(udata.get(CONF)));		
 		inv.add(mEN);
 		mEN.addActionListener(new RayListener());
-		mEN = new JMenuItem("Ship Finders: "+en.decrypt(udata.get(SF))+" //Extremely Buggy...");		
+		mEN = new JMenuItem("Ship Finders: "+en.decrypt(udata.get(SF)));		
 		inv.add(mEN);
-		mEN.setEnabled(false);  
+		//mEN.setEnabled(false);  
 		mEN.addActionListener(new SFListener());
 		mEN = new JMenuItem("Torpedoes: "+en.decrypt(udata.get(TOR)));		
 		inv.add(mEN);
@@ -928,7 +932,7 @@ public static void openShop() throws Exception{//TODO hjk
 	
 	if(nuke.getModel().isRollover() == true){     		  
 		  
-		  display.setText("<html>Almost Insta-Kills your Opponent<br/>Takes out 4 of his Ships<br/>Price: $20,000</html>");        		  
+		  display.setText("<html>INSTANT KILLS THE COMPUTER BY FINDING<br/>THE PRECISE COORDS OF HIS SHIPS AND TAKING SHOTS AT THEM<br/>Price: $100,000</html>");        		  
 		  
 	  }else if(conf.getModel().isRollover() == true){
 		  
@@ -955,12 +959,12 @@ public static void openShop() throws Exception{//TODO hjk
 	
 	if(nuke.getModel().isPressed() == true){
   		 // com.setVisible(true);  
-		TotalThread.updateItemCost(20000);  
+		TotalThread.updateItemCost(100000);  
 		nuke.getModel().setPressed(false);
   	int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);  
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 20000){
+  			   if(cash < 100000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
@@ -969,7 +973,7 @@ public static void openShop() throws Exception{//TODO hjk
   				 cash -= TotalThread.getCost();
   				   
   				      Player.saveGame(-TotalThread.getCost(), "Nuke", amt.getSelectedIndex()+1);  
-  				   
+  				  
   				   //add to inv
   				 
   				  // return;

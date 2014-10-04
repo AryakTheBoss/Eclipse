@@ -14,21 +14,33 @@ import javax.swing.JOptionPane;
  */
 public class NukeListener implements ActionListener{
 
+	private static boolean using = false;
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 		if(Battleship.allowedItems == true){
 			
-			JOptionPane.showMessageDialog(null, "Nuke Pressed");
-			
+			System.out.println("Trying to use Nuke...");
+			try {
+				if(Player.saveGame("Nuke",false)){
+					
+					using = true;
+					
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 		}
 		
 		
 	}
 	
-	
+	public static boolean getUsing(){return using;}
+	public static void setUsing(boolean flag){using = flag;}
 	
 
 }

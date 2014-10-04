@@ -906,16 +906,40 @@ public class Player
 							+"ed that spot already.","Wasted Shot",
 							JOptionPane.ERROR_MESSAGE);								
 						}
-						else{
+						else{ //TODO FRAG BOMB AND COME UP WITH MORE POWER UPS!!
+							
+							if(NukeListener.getUsing()){ //Logic for Nuke
+								
+								for(int x=0;x<10;x++){
+									for(int y=0;y<10;y++){
+										
+										if(Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(x,y)){
+											
+											this.takeShot(x,y);  
+											
+										}
+										
+									}
+									
+								}
+								
+								NukeListener.setUsing(false);
+								
+							}
+												
+							
 							/**
 							 * This will randomly choose whether to go vertically or horizontally and also 
 							 * whether to go backward or forward.
 							 */
+							
+					
 							if(TorpedoListener.getUsing()){ //past this is the logic for if you use a torpedo.
 								int ii,jj;
 								ii = xpos;
 								jj = ypos;
 								boolean bkOrFwd = rf.nextBoolean();
+								boolean disable = false;
 								
 								if(rf.nextBoolean()){
 									System.out.println("ii chosen");
@@ -923,7 +947,7 @@ public class Player
 										
 										
 										this.takeShot(xpos,ypos);	
-									if(bkOrFwd){
+									if(bkOrFwd && !disable){
 										ii++;
 									}else{
 										ii--;
@@ -954,7 +978,7 @@ public class Player
 										
 										
 										this.takeShot(xpos,ypos);
-										if(bkOrFwd){
+										if(bkOrFwd && !disable){
 											jj++;
 										}else{
 											jj--;
@@ -984,22 +1008,31 @@ public class Player
 								}
 								
 								
-							}else if(SFListener.isUsing()){
+							}else if(SFListener.isUsing()){ //Logic for Ship Finder
 								
-								//TODO Temporarily set a RANDOM ship of the computer to a nice GREEN color. (for about 1000ms)
 								
-								for(int x=0;x<10;x++){
-									for(int y=0;y<10;y++){
+								
+								int pos;
+								int pos2;
+								
+									for(;;){
 										
-										if(Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(x,y)){
+										pos =rf.nextInt(9);
+										pos2 =rf.nextInt(9);
+										
+										if(Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(pos,pos2)){
 											
-											this.setBboard(x, y, Color.GREEN); 
+											
+											
+											Battleship.getPlayers(Battleship.getEnemy()).setBboard(pos,pos2,Color.GREEN); 
+											break;
+											
 											
 										}
 										
 									}
 									
-								}
+								
 								
 								
 								
@@ -1097,6 +1130,9 @@ public class Player
 	public void compattack()
 	{	
 		TorpedoListener.setUsing(false);
+		RayListener.setUsed(false);
+		NukeListener.setUsing(false);
+		SFListener.setUsing(false);
 //		if(RayListener.isUsed()){
 //			
 //			this.setMove(true);
@@ -1368,14 +1404,17 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 /**
  * Saves the game and Adds/Subtracts items
  * 
- * @param itemID
+ * @param itemID - itemID String "Nuke"
  * @param suboradd - False is subtract and True is add.
  * @throws Exception
+ * @return boolean - whether you had enogh money or not.
  */
 
 public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 	
 	int temp = 0;
+	
+	if(!Battleship.INFINITE_ITEMS){
 	
 	if(suboradd == true){
 		
@@ -1543,6 +1582,10 @@ public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 			
 		}
 	return true;
+	}
+	
+	}else{
+		return true;
 	}
 	
 }
