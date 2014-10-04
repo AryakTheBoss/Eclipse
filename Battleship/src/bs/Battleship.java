@@ -47,6 +47,7 @@ public class Battleship extends JFrame
 	public static boolean allowedItems = false;
 	private static final int TOR = 8;
 	private static final int FRAG = 10;
+	public static boolean INFINITE_ITEMS = false;
 	private static String LOOKANDFEEL,THEME;
 	public static int cash;
 	public static JButton nuke,conf,sf,tor,frag,cancel;
@@ -207,6 +208,13 @@ public class Battleship extends JFrame
        
        
        cash = Integer.parseInt(en.decrypt(udata.get(0)));
+       if(cash < 0){
+    	   
+    	   cash = 0;
+    	   Player.saveGame(Math.abs(cash));
+       }
+       
+       
 			
 		}else{
 			
@@ -550,7 +558,34 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Exit");
 		mEN.addActionListener(new ExitListener());
 		menu.add(mEN);	
-		
+		if(INFINITE_ITEMS){
+			
+			try{
+				
+				mEN = new JMenuItem("Nukes: ∞");		
+				inv.add(mEN);
+				mEN.addActionListener(new NukeListener());
+				mEN = new JMenuItem("Confusion Rays: ∞");		
+				inv.add(mEN);
+				mEN.addActionListener(new RayListener());
+				mEN = new JMenuItem("Ship Finders: ∞");		
+				inv.add(mEN);
+				mEN.setEnabled(false);  
+				mEN.addActionListener(new SFListener());
+				mEN = new JMenuItem("Torpedoes: ∞");		
+				inv.add(mEN);
+				mEN.addActionListener(new TorpedoListener());
+				mEN = new JMenuItem("Frag Bombs: ∞");		
+				inv.add(mEN);
+				mEN.addActionListener(new FragListener());
+				}catch(Exception e){
+					
+					e.printStackTrace();
+					
+				}
+			
+		}else{
+			
 		try{
 		
 		mEN = new JMenuItem("Nukes: "+en.decrypt(udata.get(NUKE)));		
@@ -559,8 +594,9 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Confusion Rays: "+en.decrypt(udata.get(CONF)));		
 		inv.add(mEN);
 		mEN.addActionListener(new RayListener());
-		mEN = new JMenuItem("Ship Finders: "+en.decrypt(udata.get(SF)));		
+		mEN = new JMenuItem("Ship Finders: "+en.decrypt(udata.get(SF))+" //Extremely Buggy...");		
 		inv.add(mEN);
+		mEN.setEnabled(false);  
 		mEN.addActionListener(new SFListener());
 		mEN = new JMenuItem("Torpedoes: "+en.decrypt(udata.get(TOR)));		
 		inv.add(mEN);
@@ -574,7 +610,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 			
 		}
 		
-		
+		}
 		
 		
 		

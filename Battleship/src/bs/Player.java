@@ -907,11 +907,15 @@ public class Player
 							JOptionPane.ERROR_MESSAGE);								
 						}
 						else{
-							
+							/**
+							 * This will randomly choose whether to go vertically or horizontally and also 
+							 * whether to go backward or forward.
+							 */
 							if(TorpedoListener.getUsing()){ //past this is the logic for if you use a torpedo.
 								int ii,jj;
 								ii = xpos;
 								jj = ypos;
+								boolean bkOrFwd = rf.nextBoolean();
 								
 								if(rf.nextBoolean()){
 									System.out.println("ii chosen");
@@ -919,7 +923,11 @@ public class Player
 										
 										
 										this.takeShot(xpos,ypos);	
+									if(bkOrFwd){
 										ii++;
+									}else{
+										ii--;
+									}
 										if(this.isValid(ii, ypos)){
 											
 											if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(ii,ypos).getBackground()==Color.black){ 
@@ -945,8 +953,13 @@ public class Player
 									for(;;){
 										
 										
-										this.takeShot(xpos,ypos);	
-										jj++;
+										this.takeShot(xpos,ypos);
+										if(bkOrFwd){
+											jj++;
+										}else{
+											jj--;
+										}
+										
 										if(this.isValid(xpos, jj)){
 											
 											if(Battleship.getPlayers(Battleship.getEnemy()).getBboard(xpos,jj).getBackground()==Color.black){ 
@@ -1268,6 +1281,11 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 		try {
 			tempo = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(0)));
 			tempo += cash;
+			if(tempo < 0){
+				
+				tempo = 0;
+				
+			}
 			Battleship.udata.set(0,Battleship.en.encrypt(Integer.toString(tempo)));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
