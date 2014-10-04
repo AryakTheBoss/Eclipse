@@ -35,6 +35,8 @@ public class Player
 	private static final int SF = 6;
 	private static final int TOR = 8;
 	private static final int FRAG = 10;
+	private static final int CROSS = 12;
+	private static final int BOMB = 14;
 	private static Random rf = new Random();
 	private boolean chit=false;//checks if computer hit ship or not		
 	private JButton[][] bboard = new JButton [10][10];
@@ -908,8 +910,193 @@ public class Player
 						}
 						else{ //TODO FRAG BOMB AND COME UP WITH MORE POWER UPS!!
 							
-							if(NukeListener.getUsing()){ //Logic for Nuke
+							if(BombListener.isUsing()){
+								//- = up/left + = down/right
+								int posx = xpos-1;
+								int posy = ypos-1;
+								this.takeShot(xpos, ypos); 
+								if(this.isValid(posx, posy)){
+								this.takeShot(posx, posy);
+								}
+								posy++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx++;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posy--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								posx--;
+								if(this.isValid(posx, posy)){
+									this.takeShot(posx, posy);
+									}
+								BombListener.setUsed(false);
+							}
+							
+							if(CrossListener.isUsing()){
 								
+								int xp=xpos,yp=ypos;
+								
+								this.takeShot(xpos, ypos);
+								for(;;){
+									yp--;
+									if(this.isValid(xp, yp)){
+										this.takeShot(xp, yp);
+									}else{
+										
+										break;
+										
+									}
+									
+									
+									
+								}
+								xp = xpos;
+								yp = ypos;
+								for(;;){
+									
+									yp++;
+									if(this.isValid(xp, yp)){
+										this.takeShot(xp, yp);
+									}else{
+										
+										break;
+										
+									}
+									
+								}
+								xp = xpos;
+								yp = ypos;
+								for(;;){
+									
+									xp--;
+									if(this.isValid(xp, yp)){
+										this.takeShot(xp, yp);
+									}else{
+										
+										break;
+										
+									}
+									
+								}
+								xp = xpos;
+								yp = ypos;
+								for(;;){
+									
+									xp++;
+									if(this.isValid(xp, yp)){
+										this.takeShot(xp, yp);
+									}else{
+										
+										break;
+										
+									}
+									
+								}
+								
+								CrossListener.setUsed(false);
+								
+								
+							}
+							
+							
+							
+							if(FragListener.isUsing()){
+								
+								for(int c=0;c<=8;c++){
+									 
+									this.takeShot(rf.nextInt(9), rf.nextInt(9));
+									
+								}
+								
+								FragListener.setUsed(false);  
+								
+							}
+							
+							
+							
+							if(NukeListener.getUsing()){ //Logic for Nuke
+								//TODO move this into itself
 								for(int x=0;x<10;x++){
 									for(int y=0;y<10;y++){
 										
@@ -939,7 +1126,7 @@ public class Player
 								ii = xpos;
 								jj = ypos;
 								boolean bkOrFwd = rf.nextBoolean();
-								boolean disable = false;
+								boolean disable = false; //randomly choose backward or forward false = always FORWARD true = RANDOM DIR
 								
 								if(rf.nextBoolean()){
 									System.out.println("ii chosen");
@@ -1017,10 +1204,10 @@ public class Player
 								
 									for(;;){
 										
-										pos =rf.nextInt(9);
+										pos =rf.nextInt(9); //pick random x and y coords and detrmine if its a hit. if it is, mark it with green
 										pos2 =rf.nextInt(9);
 										
-										if(Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(pos,pos2)){
+										if(Battleship.getPlayers(Battleship.getEnemy()).getHitOrMiss(pos,pos2) && Battleship.getPlayers(Battleship.getEnemy()).getBboard(pos,pos2).getBackground() != Color.black){
 											
 											
 											
@@ -1044,7 +1231,7 @@ public class Player
 							
 							
 							
-							else{ //if not using torpedo just do a normal shot
+							else{ //if not using any powerups just do a normal shot
 								
 								this.takeShot(xpos,ypos);	
 								
@@ -1133,6 +1320,9 @@ public class Player
 		RayListener.setUsed(false);
 		NukeListener.setUsing(false);
 		SFListener.setUsing(false);
+		FragListener.setUsed(false); 
+		BombListener.setUsed(false);
+		CrossListener.setUsed(false);
 //		if(RayListener.isUsed()){
 //			
 //			this.setMove(true);
@@ -1360,6 +1550,18 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 				temp += quantity;
 				Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
 				
+			}else if(itemID.matches("Cross Fire")){
+			
+				temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CROSS)));
+				temp += quantity;
+				Battleship.udata.set(CROSS,Battleship.en.encrypt(Integer.toString(temp)));
+			
+			}else if(itemID.matches("Bomb")){
+			
+				temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(BOMB)));
+				temp += quantity;
+				Battleship.udata.set(BOMB,Battleship.en.encrypt(Integer.toString(temp)));
+				
 			}else{
 				
 				System.err.println("ERROR SAVING!");
@@ -1391,6 +1593,12 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 				Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new FragListener());
+				Battleship.mEN = new JMenuItem("Cross Fire: "+Battleship.en.decrypt(Battleship.udata.get(CROSS)));		
+				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN.addActionListener(new CrossListener());
+				Battleship.mEN = new JMenuItem("Bombs: "+Battleship.en.decrypt(Battleship.udata.get(BOMB)));		
+				Battleship.inv.add(Battleship.mEN);
+				Battleship.mEN.addActionListener(new BombListener());
 				}catch(Exception e){
 					
 					e.printStackTrace();
@@ -1454,6 +1662,20 @@ public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 			temp++;
 			Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
 			
+		}else if(itemID.matches("Cross Fire")){
+		
+			temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CROSS)));
+			
+			temp++;
+			Battleship.udata.set(CROSS,Battleship.en.encrypt(Integer.toString(temp)));
+			
+		}else if(itemID.matches("Bomb")){
+			
+temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(BOMB)));
+			
+			temp++;
+			Battleship.udata.set(BOMB,Battleship.en.encrypt(Integer.toString(temp)));
+			
 		}else{
 			
 			System.err.println("ERROR SAVING!");
@@ -1485,6 +1707,12 @@ public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 			Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new FragListener());
+			Battleship.mEN = new JMenuItem("Cross Fires: "+Battleship.en.decrypt(Battleship.udata.get(CROSS)));		
+			Battleship.inv.add(Battleship.mEN);
+			Battleship.mEN.addActionListener(new CrossListener());
+			Battleship.mEN = new JMenuItem("Bombs: "+Battleship.en.decrypt(Battleship.udata.get(BOMB)));		
+			Battleship.inv.add(Battleship.mEN);
+			Battleship.mEN.addActionListener(new BombListener());
 			}catch(Exception e){
 				
 				e.printStackTrace();
@@ -1545,6 +1773,26 @@ public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 		temp--;
 		Battleship.udata.set(FRAG,Battleship.en.encrypt(Integer.toString(temp)));
 		
+	}else if(itemID.matches("Cross Fire")){
+	
+		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(CROSS)));
+		if(temp == 0){
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE); 
+			return false;
+		}
+		temp--;
+		Battleship.udata.set(CROSS,Battleship.en.encrypt(Integer.toString(temp)));
+		
+	}else if(itemID.matches("Bomb")){
+	
+		temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(BOMB)));
+		if(temp == 0){
+			JOptionPane.showMessageDialog(null, "You Don\'t have any!", "No Item", JOptionPane.ERROR_MESSAGE); 
+			return false;
+		}
+		temp--;
+		Battleship.udata.set(BOMB,Battleship.en.encrypt(Integer.toString(temp)));
+		
 	}else{
 		
 		System.err.println("ERROR SAVING!");
@@ -1576,6 +1824,12 @@ public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 		Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new FragListener());
+		Battleship.mEN = new JMenuItem("Cross Fires: "+Battleship.en.decrypt(Battleship.udata.get(CROSS)));		
+		Battleship.inv.add(Battleship.mEN);
+		Battleship.mEN.addActionListener(new CrossListener());
+		Battleship.mEN = new JMenuItem("Bombs: "+Battleship.en.decrypt(Battleship.udata.get(BOMB)));		
+		Battleship.inv.add(Battleship.mEN);
+		Battleship.mEN.addActionListener(new BombListener());
 		}catch(Exception e){
 			
 			e.printStackTrace();

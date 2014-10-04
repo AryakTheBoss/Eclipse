@@ -47,10 +47,12 @@ public class Battleship extends JFrame
 	public static boolean allowedItems = false;
 	private static final int TOR = 8;
 	private static final int FRAG = 10;
+	private static final int CROSS = 12;
+	private static final int BOMB = 14;
 	public static boolean INFINITE_ITEMS = true; //FIXME USE ONLY FOR DEBUGGING!!
 	private static String LOOKANDFEEL,THEME;
 	public static int cash;
-	public static JButton nuke,conf,sf,tor,frag,cancel;
+	public static JButton nuke,conf,sf,tor,frag,cros,bom,cancel;
 	public static JLabel display = new JLabel("Mouse Over the Products to See Info on them!");
 	public static JPanel pane2 = new JPanel();
 	private static JPanel com;
@@ -99,7 +101,7 @@ public class Battleship extends JFrame
 	public static File userData;
 	public static JLabel bal = new JLabel("Balance:");
 	public static ArrayList<String> udata = new ArrayList<String>();
-	public static JMenu inv;
+	public static JMenu inv,help;
 	
 	private static int w=0,a=0,s=0,t=0,e=0;//counters to track the use of all ships
 	//private static String[][] shiphit=new String[10][10];
@@ -143,6 +145,8 @@ public class Battleship extends JFrame
     	tor = new JButton("Torpedo");
     	frag = new JButton("Frag Bomb");			
     	cancel = new JButton("Cancel");
+    	cros = new JButton("Cross Fire");
+    	bom = new JButton("Bomb");
     	//frr = new JFrame("Shop");
     	
     	frr.setLayout(new BorderLayout()); 
@@ -152,10 +156,12 @@ public class Battleship extends JFrame
     	pane2.add(sf);
     	pane2.add(tor);
     	pane2.add(frag);
+    	pane2.add(cros);
+    	pane2.add(bom);
     	
     	pane2.add(cancel);
     	pane2.setSize(600,50);
-    	frr.setSize(600, 200);
+    	frr.setSize(700, 200);
     	frr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
     	frr.add(pane2, BorderLayout.SOUTH);
     	
@@ -236,6 +242,10 @@ public class Battleship extends JFrame
 			udata.add(en.encrypt("0"));
 			udata.add(en.encrypt("Frag Bomb"));
 			udata.add(en.encrypt("0"));
+			udata.add(en.encrypt("Cross Fire"));
+			udata.add(en.encrypt("0"));
+			udata.add(en.encrypt("Bomb"));
+			udata.add(en.encrypt("0"));
 			
 			write(udata,userData);
 			
@@ -283,7 +293,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		setResizable(false);			
 		
 		//gets user to input name
-		user=JOptionPane.showInputDialog("Enter your name.");		
+		user="YOU";		
 		int dummy=0;
 		while (((user==null)||(user.equals("")))&&(dummy<3))
 		{				
@@ -580,6 +590,12 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 				mEN = new JMenuItem("Frag Bombs: ∞");		
 				inv.add(mEN);
 				mEN.addActionListener(new FragListener());
+				mEN = new JMenuItem("Cross Fires: ∞");		
+				inv.add(mEN);
+				mEN.addActionListener(new CrossListener());
+				mEN = new JMenuItem("Bombs: ∞");		
+				inv.add(mEN);
+				mEN.addActionListener(new BombListener());
 				}catch(Exception e){
 					
 					e.printStackTrace();
@@ -608,6 +624,12 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Frag Bombs: "+en.decrypt(udata.get(FRAG)));		
 		inv.add(mEN);
 		mEN.addActionListener(new FragListener());
+		mEN = new JMenuItem("Cross Fires: "+en.decrypt(udata.get(CROSS)));		
+		inv.add(mEN);
+		mEN.addActionListener(new CrossListener());
+		mEN = new JMenuItem("Bombs: "+en.decrypt(udata.get(BOMB)));		
+		inv.add(mEN);
+		mEN.addActionListener(new BombListener());
 		}catch(Exception e){
 			
 			e.printStackTrace();
@@ -910,7 +932,10 @@ public static void openShop() throws Exception{//TODO hjk
 	sf.setVisible(true);
 	tor.setVisible(true);
 	frag.setVisible(true);
+	cros.setVisible(true);
+	bom.setVisible(true);
 	cancel.setVisible(true);
+	
 	
 	
 	
@@ -936,11 +961,11 @@ public static void openShop() throws Exception{//TODO hjk
 		  
 	  }else if(conf.getModel().isRollover() == true){
 		  
-		  display.setText("<html>Will Confuse the Opponent<br/>Making him/her lose their turn<br/>Price: $12,000</html>");
+		  display.setText("<html>Will Confuse the Opponent<br/>Making him lose their turn<br/>Price: $1000</html>");
 		  
 	  }else if(sf.getModel().isRollover() == true){
 		  
-		 display.setText("<html>Will Briefly Flash the location of<br/>ONE of the CPU's Ships<br/>Price: $5000</html>");
+		 display.setText("<html>Will indicate the location of<br/>ONE of the CPU's Ships<br/>Price: $3000</html>");
 		  
 	  }else if(tor.getModel().isRollover() == true){
 		  
@@ -948,7 +973,15 @@ public static void openShop() throws Exception{//TODO hjk
 		  
 	  }else if(frag.getModel().isRollover() == true){
 		  
-		display.setText("<html>You can take out a plus shaped hole<br/>Price: $2000</html>");
+		display.setText("<html>Fires at 8 random places on the board.<br/>Price: $2000</html>");
+		  
+	  }else if(cros.getModel().isRollover() == true){
+		  
+		  display.setText("<html>Will fire outward in every direction of<br/>chosen point (inclusive)<br/>Price: $5200</html>");
+		  
+	  }else if(bom.getModel().isRollover() == true){
+		  
+		  display.setText("<html>Will blow a 5x5 hole of guesses<br/>chosen point being the center.<br/>Price: $10,000</html>");
 		  
 	  }else{
 		  
@@ -1073,7 +1106,52 @@ public static void openShop() throws Exception{//TODO hjk
   		   }
   		
     
+  	  }else if(cros.getModel().isPressed() == true){
+  		  
+  		TotalThread.updateItemCost(5200);
+  		cros.getModel().setPressed(false);
+  		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+  		   if(yy == JOptionPane.YES_OPTION){
+  			   
+  			   if(cash < 5200){
+  				   
+  				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
+  				   
+  			   }else{
+  				   
+  				 cash -= TotalThread.getCost();
+				   
+				      Player.saveGame(-TotalThread.getCost(), "Cross Fire", amt.getSelectedIndex()+1);
+  				// return;
+  				   
+  			   }
+  			   
+  		   }
+  		  
+  	  }else if(bom.getModel().isPressed() == true){
+  		  
+  		TotalThread.updateItemCost(10000);
+  		cros.getModel().setPressed(false);
+  		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+  		   if(yy == JOptionPane.YES_OPTION){
+  			   
+  			   if(cash < 10000){
+  				   
+  				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
+  				   
+  			   }else{
+  				   
+  				 cash -= TotalThread.getCost();
+				   
+				      Player.saveGame(-TotalThread.getCost(), "Bomb", amt.getSelectedIndex()+1);
+  				// return;
+  				   
+  			   }
+  			   
+  		   }
+  		  
   	  }else if(cancel.getModel().isPressed() == true){
+  	  
   		  
   		cancel.getModel().setPressed(false);
   		  frr.setVisible(false);
