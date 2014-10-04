@@ -49,7 +49,7 @@ public class Battleship extends JFrame
 	private static final int FRAG = 10;
 	private static final int CROSS = 12;
 	private static final int BOMB = 14;
-	public static boolean INFINITE_ITEMS = true; //FIXME USE ONLY FOR DEBUGGING!!
+	public static boolean INFINITE_ITEMS = false; //FIXME USE ONLY FOR DEBUGGING!!
 	private static String LOOKANDFEEL,THEME;
 	public static int cash;
 	public static JButton nuke,conf,sf,tor,frag,cros,bom,cancel;
@@ -533,6 +533,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		// build the Game menu
 		menu = new JMenu("Game");
 		inv = new JMenu("Items");
+		help = new JMenu("Help");
 		
 		menuBar.add(menu);
 		menuBar.add(inv);
@@ -568,6 +569,12 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Exit");
 		mEN.addActionListener(new ExitListener());
 		menu.add(mEN);	
+		mEN = new JMenuItem("About");		
+		inv.add(mEN);
+		mEN.addActionListener(new AboutListener());
+		mEN = new JMenuItem("Game Help");		
+		inv.add(mEN);
+		mEN.addActionListener(new HelpListener());
 		if(INFINITE_ITEMS){
 			
 			shopB.setEnabled(false);  
