@@ -198,7 +198,7 @@ public class Battleship extends JFrame
     		
     	}else{
     		
-    		JOptionPane.showMessageDialog(null, "Your OS is unrecognized! IMPORTANT! READ: Therefore the passwords will be stored in the documents folder with the name \"JavaSafeData\". Currently this program is compatible with ALL OSs but it will be the MOST Secure and effective on Mac OS X and Windows. Linux and Ubuntu will be added in the next update. This could be a bug so please contact the developer.", "OS ERROR!", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, "Your OS is unrecognized! \n the game data will be saved in your documents folder", "OS ERROR!", JOptionPane.ERROR_MESSAGE);
     		userData = new File("/Users/"+System.getProperty("user.name")+"/Documents/BattleShip/user.dat");
     		
     		dir = new File("/Users/"+System.getProperty("user.name")+"/Documents/BattleShip");
