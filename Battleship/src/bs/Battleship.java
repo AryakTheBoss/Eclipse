@@ -229,7 +229,7 @@ public class Battleship extends JFrame
 			dir.mkdirs();
 		
 			userData.createNewFile();
-			
+			JOptionPane.showMessageDialog(null, "Make sure you read the rules and help!");
 			//write new data TODO
 			udata.add(en.encrypt("0"));
 			udata.add(en.encrypt("Nuke"));
@@ -537,6 +537,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		
 		menuBar.add(menu);
 		menuBar.add(inv);
+		menuBar.add(help);
 		mEN = new JMenu("New Game");		
 		menu.add(mEN);
 		
@@ -570,10 +571,10 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN.addActionListener(new ExitListener());
 		menu.add(mEN);	
 		mEN = new JMenuItem("About");		
-		inv.add(mEN);
+		help.add(mEN);
 		mEN.addActionListener(new AboutListener());
 		mEN = new JMenuItem("Game Help");		
-		inv.add(mEN);
+		help.add(mEN);
 		mEN.addActionListener(new HelpListener());
 		if(INFINITE_ITEMS){
 			
