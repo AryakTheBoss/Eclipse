@@ -105,7 +105,7 @@ public class AboutListener implements ActionListener{
 		
 		 int x;
 		 for(;;){
-		 x = JOptionPane.showConfirmDialog(null,panel,"Sign Up",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE); 
+		 x = JOptionPane.showConfirmDialog(null,panel,"Send",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE); 
 		 
 		 if(x == JOptionPane.OK_OPTION){
 			 

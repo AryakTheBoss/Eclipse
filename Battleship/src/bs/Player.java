@@ -1581,24 +1581,59 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
 				Battleship.mEN = new JMenuItem("Nukes: "+Battleship.en.decrypt(Battleship.udata.get(NUKE)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new NukeListener());  
+				if(Battleship.en.decrypt(Battleship.udata.get(NUKE)).matches("0")){
+					Battleship.mEN.setEnabled(false);  
+				}else{
+					Battleship.mEN.setEnabled(true); 
+				}
 				Battleship.mEN = new JMenuItem("Confusion Rays: "+Battleship.en.decrypt(Battleship.udata.get(CONF)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new RayListener());
+				if(Battleship.en.decrypt(Battleship.udata.get(CONF)).matches("0")){
+					Battleship.mEN.setEnabled(false);  
+				}else{
+					Battleship.mEN.setEnabled(true); 
+				}
 				Battleship.mEN = new JMenuItem("Ship Finders: "+Battleship.en.decrypt(Battleship.udata.get(SF)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new SFListener());
+				if(Battleship.en.decrypt(Battleship.udata.get(SF)).matches("0")){
+					Battleship.mEN.setEnabled(false);  
+				}else{
+					Battleship.mEN.setEnabled(true); 
+				}
 				Battleship.mEN = new JMenuItem("Torpedoes: "+Battleship.en.decrypt(Battleship.udata.get(TOR)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new TorpedoListener());
+				if(Battleship.en.decrypt(Battleship.udata.get(TOR)).matches("0")){
+					Battleship.mEN.setEnabled(false);  
+				}else{
+					Battleship.mEN.setEnabled(true); 
+				}
 				Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new FragListener());
+				if(Battleship.en.decrypt(Battleship.udata.get(FRAG)).matches("0")){
+					Battleship.mEN.setEnabled(false);  
+				}else{
+					Battleship.mEN.setEnabled(true); 
+				}
 				Battleship.mEN = new JMenuItem("Cross Fire: "+Battleship.en.decrypt(Battleship.udata.get(CROSS)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new CrossListener());
+				if(Battleship.en.decrypt(Battleship.udata.get(CROSS)).matches("0")){
+					Battleship.mEN.setEnabled(false);  
+				}else{
+					Battleship.mEN.setEnabled(true); 
+				}
 				Battleship.mEN = new JMenuItem("Bombs: "+Battleship.en.decrypt(Battleship.udata.get(BOMB)));		
 				Battleship.inv.add(Battleship.mEN);
 				Battleship.mEN.addActionListener(new BombListener());
+				if(Battleship.en.decrypt(Battleship.udata.get(BOMB)).matches("0")){
+					Battleship.mEN.setEnabled(false);  
+				}else{
+					Battleship.mEN.setEnabled(true); 
+				}
 				}catch(Exception e){
 					
 					e.printStackTrace();
@@ -1695,24 +1730,60 @@ temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(BOMB)));
 			Battleship.mEN = new JMenuItem("Nukes: "+Battleship.en.decrypt(Battleship.udata.get(NUKE)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new NukeListener());  
+			if(Battleship.en.decrypt(Battleship.udata.get(NUKE)).matches("0")){
+				Battleship.mEN.setEnabled(false);  
+			}else{
+				Battleship.mEN.setEnabled(true); 
+			}
+			
 			Battleship.mEN = new JMenuItem("Confusion Rays: "+Battleship.en.decrypt(Battleship.udata.get(CONF)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new RayListener());
+			if(Battleship.en.decrypt(Battleship.udata.get(CONF)).matches("0")){
+				Battleship.mEN.setEnabled(false);  
+			}else{
+				Battleship.mEN.setEnabled(true); 
+			}
 			Battleship.mEN = new JMenuItem("Ship Finders: "+Battleship.en.decrypt(Battleship.udata.get(SF)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new SFListener());
+			if(Battleship.en.decrypt(Battleship.udata.get(SF)).matches("0")){
+				Battleship.mEN.setEnabled(false);  
+			}else{
+				Battleship.mEN.setEnabled(true); 
+			}
 			Battleship.mEN = new JMenuItem("Torpedoes: "+Battleship.en.decrypt(Battleship.udata.get(TOR)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new TorpedoListener());
+			if(Battleship.en.decrypt(Battleship.udata.get(TOR)).matches("0")){
+				Battleship.mEN.setEnabled(false);  
+			}else{
+				Battleship.mEN.setEnabled(true); 
+			}
 			Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new FragListener());
+			if(Battleship.en.decrypt(Battleship.udata.get(FRAG)).matches("0")){
+				Battleship.mEN.setEnabled(false);  
+			}else{
+				Battleship.mEN.setEnabled(true); 
+			}
 			Battleship.mEN = new JMenuItem("Cross Fires: "+Battleship.en.decrypt(Battleship.udata.get(CROSS)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new CrossListener());
+			if(Battleship.en.decrypt(Battleship.udata.get(CROSS)).matches("0")){
+				Battleship.mEN.setEnabled(false);  
+			}else{
+				Battleship.mEN.setEnabled(true); 
+			}
 			Battleship.mEN = new JMenuItem("Bombs: "+Battleship.en.decrypt(Battleship.udata.get(BOMB)));		
 			Battleship.inv.add(Battleship.mEN);
 			Battleship.mEN.addActionListener(new BombListener());
+			if(Battleship.en.decrypt(Battleship.udata.get(BOMB)).matches("0")){
+				Battleship.mEN.setEnabled(false);  
+			}else{
+				Battleship.mEN.setEnabled(true); 
+			}
 			}catch(Exception e){
 				
 				e.printStackTrace();
@@ -1812,24 +1883,59 @@ temp = Integer.parseInt(Battleship.en.decrypt(Battleship.udata.get(BOMB)));
 		Battleship.mEN = new JMenuItem("Nukes: "+Battleship.en.decrypt(Battleship.udata.get(NUKE)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new NukeListener());  
+		if(Battleship.en.decrypt(Battleship.udata.get(NUKE)).matches("0")){
+			Battleship.mEN.setEnabled(false);  
+		}else{
+			Battleship.mEN.setEnabled(true); 
+		}
 		Battleship.mEN = new JMenuItem("Confusion Rays: "+Battleship.en.decrypt(Battleship.udata.get(CONF)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new RayListener());
+		if(Battleship.en.decrypt(Battleship.udata.get(CONF)).matches("0")){
+			Battleship.mEN.setEnabled(false);  
+		}else{
+			Battleship.mEN.setEnabled(true); 
+		}
 		Battleship.mEN = new JMenuItem("Ship Finders: "+Battleship.en.decrypt(Battleship.udata.get(SF)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new SFListener());
+		if(Battleship.en.decrypt(Battleship.udata.get(SF)).matches("0")){
+			Battleship.mEN.setEnabled(false);  
+		}else{
+			Battleship.mEN.setEnabled(true); 
+		}
 		Battleship.mEN = new JMenuItem("Torpedoes: "+Battleship.en.decrypt(Battleship.udata.get(TOR)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new TorpedoListener());
+		if(Battleship.en.decrypt(Battleship.udata.get(TOR)).matches("0")){
+			Battleship.mEN.setEnabled(false);  
+		}else{
+			Battleship.mEN.setEnabled(true); 
+		}
 		Battleship.mEN = new JMenuItem("Frag Bombs: "+Battleship.en.decrypt(Battleship.udata.get(FRAG)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new FragListener());
+		if(Battleship.en.decrypt(Battleship.udata.get(FRAG)).matches("0")){
+			Battleship.mEN.setEnabled(false);  
+		}else{
+			Battleship.mEN.setEnabled(true); 
+		}
 		Battleship.mEN = new JMenuItem("Cross Fires: "+Battleship.en.decrypt(Battleship.udata.get(CROSS)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new CrossListener());
+		if(Battleship.en.decrypt(Battleship.udata.get(CROSS)).matches("0")){
+			Battleship.mEN.setEnabled(false);  
+		}else{
+			Battleship.mEN.setEnabled(true); 
+		}
 		Battleship.mEN = new JMenuItem("Bombs: "+Battleship.en.decrypt(Battleship.udata.get(BOMB)));		
 		Battleship.inv.add(Battleship.mEN);
 		Battleship.mEN.addActionListener(new BombListener());
+		if(Battleship.en.decrypt(Battleship.udata.get(BOMB)).matches("0")){
+			Battleship.mEN.setEnabled(false);  
+		}else{
+			Battleship.mEN.setEnabled(true); 
+		}
 		}catch(Exception e){
 			
 			e.printStackTrace();

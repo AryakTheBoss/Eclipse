@@ -590,7 +590,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 				mEN.addActionListener(new RayListener());
 				mEN = new JMenuItem("Ship Finders: ∞");		
 				inv.add(mEN);
-				//mEN.setEnabled(false);  
+				
 				mEN.addActionListener(new SFListener());
 				mEN = new JMenuItem("Torpedoes: ∞");		
 				inv.add(mEN);
@@ -619,25 +619,46 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Nukes: "+en.decrypt(udata.get(NUKE)));		
 		inv.add(mEN);
 		mEN.addActionListener(new NukeListener());
+		if(en.decrypt(udata.get(NUKE)).matches("0")){
+			mEN.setEnabled(false);  
+		}
 		mEN = new JMenuItem("Confusion Rays: "+en.decrypt(udata.get(CONF)));		
 		inv.add(mEN);
 		mEN.addActionListener(new RayListener());
+		if(en.decrypt(udata.get(CONF)).matches("0")){
+			mEN.setEnabled(false);  
+		}
 		mEN = new JMenuItem("Ship Finders: "+en.decrypt(udata.get(SF)));		
 		inv.add(mEN);
 		//mEN.setEnabled(false);  
 		mEN.addActionListener(new SFListener());
+		if(en.decrypt(udata.get(SF)).matches("0")){
+			mEN.setEnabled(false);  
+		}
 		mEN = new JMenuItem("Torpedoes: "+en.decrypt(udata.get(TOR)));		
 		inv.add(mEN);
 		mEN.addActionListener(new TorpedoListener());
+		if(en.decrypt(udata.get(TOR)).matches("0")){
+			mEN.setEnabled(false);  
+		}
 		mEN = new JMenuItem("Frag Bombs: "+en.decrypt(udata.get(FRAG)));		
 		inv.add(mEN);
 		mEN.addActionListener(new FragListener());
+		if(en.decrypt(udata.get(FRAG)).matches("0")){
+			mEN.setEnabled(false);  
+		}
 		mEN = new JMenuItem("Cross Fires: "+en.decrypt(udata.get(CROSS)));		
 		inv.add(mEN);
 		mEN.addActionListener(new CrossListener());
+		if(en.decrypt(udata.get(CROSS)).matches("0")){
+			mEN.setEnabled(false);  
+		}
 		mEN = new JMenuItem("Bombs: "+en.decrypt(udata.get(BOMB)));		
 		inv.add(mEN);
 		mEN.addActionListener(new BombListener());
+		if(en.decrypt(udata.get(BOMB)).matches("0")){
+			mEN.setEnabled(false);  
+		}
 		}catch(Exception e){
 			
 			e.printStackTrace();
@@ -1024,12 +1045,12 @@ public static void openShop() throws Exception{//TODO hjk
   		   }
   		  
   	  }else if(conf.getModel().isPressed() == true){
-  		TotalThread.updateItemCost(12000);
+  		TotalThread.updateItemCost(1000);
   		conf.getModel().setPressed(false);
   		int yy =  JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 12000){
+  			   if(cash < 1000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
