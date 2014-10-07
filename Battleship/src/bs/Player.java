@@ -1314,7 +1314,7 @@ public class Player
 		}
 	}
 	
-	public void compattack()
+	public void compattack()//FIXME confusion ray dont work
 	{	
 		TorpedoListener.setUsing(false);
 		RayListener.setUsed(false);
