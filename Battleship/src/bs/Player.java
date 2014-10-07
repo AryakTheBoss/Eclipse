@@ -908,7 +908,7 @@ public class Player
 							+"ed that spot already.","Wasted Shot",
 							JOptionPane.ERROR_MESSAGE);								
 						}
-						else{ //TODO FRAG BOMB AND COME UP WITH MORE POWER UPS!!
+						else{ //TODO item codes
 							
 							if(BombListener.isUsing()){
 								//- = up/left + = down/right
