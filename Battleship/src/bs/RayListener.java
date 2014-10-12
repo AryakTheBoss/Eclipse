@@ -19,7 +19,7 @@ public class RayListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-if(Battleship.allowedItems == true){ //FIXME UPDATE MENU
+if(Battleship.allowedItems == true){
 			System.out.println("Trying to use Ray...");
 		try {
 			Player.saveGame("Confusion Ray",false);

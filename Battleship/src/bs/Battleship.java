@@ -8,6 +8,7 @@ package bs;
  *
  */
 import java.awt.*;
+
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -49,7 +50,9 @@ public class Battleship extends JFrame
 	private static final int FRAG = 10;
 	private static final int CROSS = 12;
 	private static final int BOMB = 14;
-	public static boolean INFINITE_ITEMS = false; //FIXME USE ONLY FOR DEBUGGING!!
+	private static final int NAME = 15;
+	public static boolean INFINITE_ITEMS = true; //FIXME USE ONLY FOR DEBUGGING!!
+	public static boolean INFINITE_CASH = false;
 	private static String LOOKANDFEEL,THEME;
 	public static int cash;
 	public static JButton nuke,conf,sf,tor,frag,cros,bom,cancel;
@@ -110,7 +113,7 @@ public class Battleship extends JFrame
 									Color.pink,	Color.orange,	Color.white};		 	
 	private static Object selectedValue=" ",
 						  gametype;
-	private static BattleshipClient me;
+	//private static BattleshipClient me;
 	private static boolean gameover=false;
 	
     public static void initSave()throws Exception{ //FO4eIhSrm/OHX18VHHq8Ow==
@@ -220,7 +223,12 @@ public class Battleship extends JFrame
     	   Player.saveGame(Math.abs(cash));
        }
        
-       
+       if(INFINITE_CASH){
+    	   
+    	   cash = Integer.MAX_VALUE;
+    	   
+       }
+       JOptionPane.showMessageDialog(null, "Welcome Back "+en.decrypt(udata.get(NAME))+"!!");  
 			
 		}else{
 			
@@ -246,6 +254,7 @@ public class Battleship extends JFrame
 			udata.add(en.encrypt("0"));
 			udata.add(en.encrypt("Bomb"));
 			udata.add(en.encrypt("0"));
+			udata.add(en.encrypt(JOptionPane.showInputDialog("Enter Your Name")));  
 			
 			write(udata,userData);
 			
@@ -285,7 +294,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		
 	}
 	
-	public Battleship()
+	public Battleship(String nam)//TODO CONTRUCTOR
 	{	
 		setTitle("Battleship");	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -293,7 +302,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		setResizable(false);			
 		
 		//gets user to input name
-		user="YOU";		
+		user=nam;		
 		int dummy=0;
 		while (((user==null)||(user.equals("")))&&(dummy<3))
 		{				
@@ -518,12 +527,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 	public JMenuBar createMenuBar()
 	{
 		
-		try {
-			initSave();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		JMenu menu;//menu
       
@@ -781,7 +785,8 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 					}
 					else
 					{
-						players[u].getBboard(i-1,j-1).addActionListener(new InternetListener());		
+						//players[u].getBboard(i-1,j-1).addActionListener(new InternetListener());
+						
 					}
 					players[u].getGBoard().add(players[u].getBboard(i-1,j-1));
 				}				
@@ -1068,12 +1073,12 @@ public static void openShop() throws Exception{//TODO hjk
   	
   		  
   	  }else if(sf.getModel().isPressed() == true){
-  		TotalThread.updateItemCost(5000);
+  		TotalThread.updateItemCost(3000);
   		sf.getModel().setPressed(false);
   		int yy =   JOptionPane.showConfirmDialog(null,com,"Buy",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
   		   if(yy == JOptionPane.YES_OPTION){
   			   
-  			   if(cash < 5000){
+  			   if(cash < 3000){
   				   
   				   JOptionPane.showMessageDialog(null, "You Don\'t have Enough Money!", "Not Enough Money", JOptionPane.ERROR_MESSAGE);  
   				   
@@ -1605,10 +1610,6 @@ public static void openShop() throws Exception{//TODO hjk
 		}	
 	}	
 	
-	public static BattleshipClient getClient()
-	{
-		return me;		
-	}
 	
 	public static void main(String[] args) throws Exception{	  
 		
@@ -1618,8 +1619,8 @@ public static void openShop() throws Exception{//TODO hjk
 		TotalThread.start();
 		//System.out.println(en.encrypt("140000.0"));
 		//System.out.println(en.encrypt("Nuke"));
-	   
-		Battleship gui= new Battleship();
+	   initSave();
+		Battleship gui= new Battleship(udata.get(NAME));   
 		
 		
 		//hjk();
@@ -1629,53 +1630,7 @@ public static void openShop() throws Exception{//TODO hjk
 				{	}
 			System.out.println("xenophobia");
 			System.out.println("Object = "+selectedValue);
-			if (selectedValue.equals("Online"))
-			{	
-				selectedValue=" ";
-				while (ready!=1)
-				{ }			
-				
-				try
-				{
-					me=new BattleshipClient();
-					if (!me.getServerName().equals("invalid"))
-					{
-						me.sendShips();
-						while (!gameover)
-						{
-							if (!players[you].getMove())	
-							{
-								try
-								{
-									me.listen();							
-								}
-								catch (IOException e){ System.out.println("Aw naw."); }					
-							}
-							while (players[you].getMove())
-								{ }
-							me.results();
-						}								
-					}
-					else
-					{
-						b.removeAll();
-						c.removeAll();
-						d.removeAll();
-						players[you]=new Player (user);
-						players[enemy]=new Player ("Computer");					
-						b.add(gui.setBoard(you),BorderLayout.CENTER);					
-						inputpanel=gui.shipinput();
-						d.add(inputpanel,BorderLayout.NORTH);			
-						gui.pack();		
-						gui.repaint();
-						
-						
-						
-					}					
-				}					
-				catch (IOException e)
-				{ System.out.println("You Suck"); }
-			}			
+					
 		}		//System.out.println("okay");		
 	}
 	

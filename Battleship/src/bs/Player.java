@@ -888,7 +888,7 @@ public class Player
 	 * 
 	 * @param v
 	 */
-	public void humanAttack(ActionEvent v)
+	public void humanAttack(ActionEvent v) //TODO make it so nukes,ship finders and frag bombs go off automatically when clicked
 	{
 		if (this.getMove())
 		{				

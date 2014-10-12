@@ -13,7 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -32,7 +32,7 @@ public class AboutListener implements ActionListener{
 		// TODO Auto-generated method stub
 		
 		
-		int u = JOptionPane.showOptionDialog(null, "Battleship v3.1b\nMade by: DatJavaMaster(AryakTheBoss)\nIf you want to contribute to the development,\nPlease send me feedback by pressing that button.", "About", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);    
+		int u = JOptionPane.showOptionDialog(null, "Battleship v3.1b\nMade by: DatJavaMaster(AryakTheBoss)\nIf you want to contribute to the development,\nPlease send me feedback by pressing that button. (NOTE: Internet Connection Required!!)", "About", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);    
 		
 		if(u == 0){
 			
@@ -43,7 +43,7 @@ public class AboutListener implements ActionListener{
 		
 	}
 	
-	public static void showFeedbackWindow(){
+	private static void showFeedbackWindow(){
 		
 		JPanel panel=new JPanel(); 
 		 
