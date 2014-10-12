@@ -1657,7 +1657,7 @@ public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
 	
 	int temp = 0;
 	
-	if(!Battleship.INFINITE_ITEMS){
+	if(!Battleship.getCheat(0)){
 	
 	if(suboradd == true){
 		

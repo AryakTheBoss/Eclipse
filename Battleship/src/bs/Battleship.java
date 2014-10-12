@@ -51,8 +51,8 @@ public class Battleship extends JFrame
 	private static final int CROSS = 12;
 	private static final int BOMB = 14;
 	private static final int NAME = 15;
-	public static boolean INFINITE_ITEMS = true; //FIXME USE ONLY FOR DEBUGGING!!
-	public static boolean INFINITE_CASH = false;
+	private static boolean INFINITE_ITEMS; 
+	private static boolean INFINITE_CASH;
 	private static String LOOKANDFEEL,THEME;
 	public static int cash;
 	public static JButton nuke,conf,sf,tor,frag,cros,bom,cancel;
@@ -115,6 +115,19 @@ public class Battleship extends JFrame
 						  gametype;
 	//private static BattleshipClient me;
 	private static boolean gameover=false;
+	
+	/**
+	 * Sets the cheat codes to either on or off.
+	 * 
+	 * @param items
+	 * @param cash
+	 */
+	private static void cheats(boolean items,boolean cash){
+		
+		INFINITE_ITEMS = items;
+		INFINITE_CASH = cash;
+		
+	}
 	
     public static void initSave()throws Exception{ //FO4eIhSrm/OHX18VHHq8Ow==
     	
@@ -1610,9 +1623,29 @@ public static void openShop() throws Exception{//TODO hjk
 		}	
 	}	
 	
-	
+	public static boolean getCheat(int id){
+		
+		if(id == 0){
+			
+			return INFINITE_ITEMS;
+			
+		}else{
+			return INFINITE_CASH;
+		}
+		
+	}
 	public static void main(String[] args) throws Exception{	  
 		
+		//FIXME USE ONLY FOR DEBUGGING!!
+		
+		cheats(false,false);
+		
+		if(INFINITE_CASH && INFINITE_ITEMS){
+			
+			System.err.println("Invalid Configuration Exception: CANNOT HAVE INFINITE CASH AND INFINITE ITEMS ENABLED!\n\tat: Battleship.java:1616 ");
+			JOptionPane.showMessageDialog(null, "The Game Has Crashed! \n Please Check the Console for ERRORS!!", "ERROR!", JOptionPane.ERROR_MESSAGE);   
+			System.exit(0);
+		}
 		initLookAndFeel("Nimbus",null);
 		ShopThread.start();
 		amt.addItem(0);
