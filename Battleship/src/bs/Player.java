@@ -1291,6 +1291,7 @@ public class Player
 						JOptionPane.showMessageDialog(null,"Maybe you're no"
 						+"t that stupid after all!","",JOptionPane.INFORMATION_MESSAGE);
 					saveGame(1200);
+					Battleship.allowedItems = true; //TODO ad evrrywhere else
 				}
 				else
 				{
@@ -1648,18 +1649,18 @@ public static void saveGame(int cash, String itemID,int quantity)throws Exceptio
  * Saves the game and Adds/Subtracts items
  * 
  * @param itemID - itemID String "Nuke"
- * @param suboradd - False is subtract and True is add.
+ * @param mode - False is subtract and True is add.
  * @throws Exception
  * @return boolean - whether you had enogh money or not.
  */
 
-public static boolean saveGame(String itemID,boolean suboradd)throws Exception{
+public static boolean saveGame(String itemID,boolean mode)throws Exception{
 	
 	int temp = 0;
 	
 	if(!Battleship.getCheat(0)){
 	
-	if(suboradd == true){
+	if(mode == true){
 		
 		if(itemID.matches("Nuke")){
 			
