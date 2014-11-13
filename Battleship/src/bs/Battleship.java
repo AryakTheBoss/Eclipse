@@ -726,7 +726,7 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		
 		return input;
 	}	
-	
+
 	//creates board for manual ship placement
 	public JPanel setBoard(int n)
 	{
