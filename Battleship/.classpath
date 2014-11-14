@@ -3,6 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LookAndFeels"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Email"/>
+	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/Java/Resources/dsn-1.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/Java/Resources/gimap-1.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/Java/Resources/imap-1.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/Java/Resources/javax.mail.jar"/>
+	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/Java/Resources/smtp-1.5.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
