@@ -242,7 +242,7 @@ public class Battleship extends JFrame
     	   
        }
        JOptionPane.showMessageDialog(null, "Welcome Back "+en.decrypt(udata.get(NAME))+"!!");  
-			
+			Thread.sleep(400);
 		}else{
 			
 			cash = 0;
@@ -1634,15 +1634,22 @@ public static void openShop() throws Exception{//TODO hjk
 		}
 		
 	}
+	
 	public static void main(String[] args) throws Exception{	  
 		
-		//FIXME USE ONLY FOR DEBUGGING!!
 		
-		cheats(false,false);
-		
+		String res = JOptionPane.showInputDialog("Enter a Cheat Code (Optional)(Leave Blank if you wanna play legit)");
+		if(res.equals("MoneyIs4Noobz")){	
+			JOptionPane.showMessageDialog(null, "Infinite Cash Enabled");   
+		cheats(false,true);
+		}else if(res.equals("ItemsAre4Noobz")){
+			JOptionPane.showMessageDialog(null, "Infinite Items Enabled"); 
+			cheats(true,false);
+		}else
+			cheats(false,false);
 		if(INFINITE_CASH && INFINITE_ITEMS){
 			
-			System.err.println("Invalid Configuration Exception: CANNOT HAVE INFINITE CASH AND INFINITE ITEMS ENABLED!\n\tat: Battleship.java:1616 ");
+			System.err.println("Invalid Configuration Exception: CANNOT HAVE INFINITE CASH AND INFINITE ITEMS ENABLED!\n\tat: Battleship.java:1644 ");
 			JOptionPane.showMessageDialog(null, "The Game Has Crashed! \n Please Check the Console for ERRORS!!", "ERROR!", JOptionPane.ERROR_MESSAGE);   
 			System.exit(0);
 		}
