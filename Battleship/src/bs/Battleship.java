@@ -8,15 +8,15 @@ package bs;
  *
  */
 import java.awt.*;
-
 import java.awt.event.*;
+
 
 import javax.swing.*;
 import javax.swing.border.*;
-
 import javax.swing.plaf.metal.DefaultMetalTheme;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
+
 
 
 
@@ -200,16 +200,16 @@ public class Battleship extends JFrame
     	if(System.getProperty("os.name").compareToIgnoreCase("mac os x") == 0){
     		
     		
-    		userData = new File("/Users/"+System.getProperty("user.name")+"/Library/Application Support/BattleShip/user.dat");
+    		userData = new File("/Users/"+System.getProperty("user.name")+"/Library/Application Support/.BattleShip/.user");
     		
-    		dir = new File("/Users/"+System.getProperty("user.name")+"/Library/Application Support/BattleShip");
+    		dir = new File("/Users/"+System.getProperty("user.name")+"/Library/Application Support/.BattleShip");
     		
     		
      	}else if(System.getProperty("os.name").startsWith("Windows")){ 
     		
-    		userData = new File("C:/Users/"+System.getProperty("user.name")+"/AppData/Roaming/BattleShip/user.dat");
+    		userData = new File("C:/Users/"+System.getProperty("user.name")+"/AppData/Roaming/.BattleShip/.user");
     		
-    		dir = new File("C:/Users/"+System.getProperty("user.name")+"/AppData/Roaming/BattleShip");
+    		dir = new File("C:/Users/"+System.getProperty("user.name")+"/AppData/Roaming/.BattleShip");
     		
     		
     	}else{
