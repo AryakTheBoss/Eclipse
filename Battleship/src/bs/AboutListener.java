@@ -7,13 +7,13 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.mail.MessagingException;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -36,14 +36,29 @@ public class AboutListener implements ActionListener{
 		
 		if(u == 0){
 			
-			showFeedbackWindow();
+			try {
+				if(Boolean.parseBoolean(Battleship.en.decrypt(Battleship.udata.get(16))) == true) {
+					
+					JOptionPane.showMessageDialog(null, "Sorry! You have already sent an email! (No Spam :3)","ERROR!" ,JOptionPane.ERROR_MESSAGE );
+					
+				}else {
+					
+						showFeedbackWindow();
+					
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
 			
 		}
 		
 		
 	}
 	
-	private static void showFeedbackWindow(){
+	private static void showFeedbackWindow() throws Exception{
 		
 		JPanel panel=new JPanel(); 
 		 
@@ -118,6 +133,14 @@ public class AboutListener implements ActionListener{
 				 try {
 					gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", "pandeary12@gmail.com", carrier.getSelectedItem().toString(), "FROM: "+emailt.getText()+"\nCOMMENTS:\n\n"+passwordField.getText());
 				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
+				 
+				 Battleship.udata.set(16, Battleship.en.encrypt(""+true));
+				 try {
+					Battleship.write(Battleship.udata, Battleship.userData);
+				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}  

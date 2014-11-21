@@ -268,6 +268,7 @@ public class Battleship extends JFrame
 			udata.add(en.encrypt("Bomb"));
 			udata.add(en.encrypt("0"));
 			udata.add(en.encrypt(JOptionPane.showInputDialog("Enter Your Name")));  
+			udata.add(en.encrypt(""+false));
 			
 			write(udata,userData);
 			
