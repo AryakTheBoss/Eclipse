@@ -32,7 +32,7 @@ public class AboutListener implements ActionListener{
 		// TODO Auto-generated method stub
 		
 		
-		int u = JOptionPane.showOptionDialog(null, "Battleship v3.1b\nMade by: DatJavaMaster(AryakTheBoss)\nIf you want to contribute to the development,\nPlease send me feedback by pressing that button. (NOTE: Internet Connection Required!!)", "About", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);    
+		int u = JOptionPane.showOptionDialog(null, "Battleship v3.5b\nMade by: DatJavaMaster(AryakTheBoss)\nIf you want to contribute to the development,\nPlease send me feedback by pressing that button. (NOTE: Internet Connection Required!!)", "About", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[1]);    
 		
 		if(u == 0){
 			
@@ -41,7 +41,7 @@ public class AboutListener implements ActionListener{
 					
 					JOptionPane.showMessageDialog(null, "Sorry! You have already sent an email! (No Spam :3)","ERROR!" ,JOptionPane.ERROR_MESSAGE );
 					
-				}else {
+				}else{
 					
 						showFeedbackWindow();
 					

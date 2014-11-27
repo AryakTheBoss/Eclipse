@@ -5,6 +5,7 @@ package art;
 
 import java.util.HashMap;
 import java.util.Map;
+import bs.Encryptor;
 
 /**
  * @author UnityBoss
@@ -13,6 +14,7 @@ import java.util.Map;
 public class AsciiArt {
 
     Map<Character, String[]> strings = new HashMap<Character, String[]>();
+private static Encryptor e = new Encryptor();
 
     public AsciiArt() {
        	strings.put('A', letterA());
@@ -45,8 +47,10 @@ public class AsciiArt {
     }
 
     public static void main(String[] args) {
+    
         AsciiArt art = new AsciiArt();
         art.print("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        
     }
 
     public void print(String text) {
