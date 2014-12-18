@@ -20,37 +20,38 @@ import sun.misc.*;
  */
 public class Encryptor {
 	
+	//TODO add method to set keyvalue
 	
-	private String passs; //un encrypted
 	private static final String ALGO = "AES";
-	 private static final byte[] keyValue = 
-	 new byte[] { 'E', 'n', 'c', 'r', 'y', 'p', 't', 'i', 'o', 'n', 'I','s', 'Y', 'o', 'l', 'o' };
-	 public Encryptor(String passw){ 
+	private boolean systemEncryption = false;
+	 private static byte[] keyValue = null;
+	 
+     public Encryptor(boolean systemEnc){
+    	     	 
+    	 systemEncryption = systemEnc;    	 
+    	 if(systemEnc){
+    		keyValue = new byte[] { 'E', 'n', 'c', 'r', 'y', 'p', 't', 'i', 'o', 'n', 'I','s', 'Y', 'o', 'l', 'o' };
+    	 }
+     }
+     
+	 public void setKey(byte[] aesKey){
 		 
-		 passs = passw;
 		 
-	 }
-     public Encryptor(){ 
-		 
-		 passs = null;
-		 
-	 }
-	   
+		if(!systemEncryption){
+			keyValue = aesKey;
+		}
+		if(aesKey.length != 16 || systemEncryption){
+			 throw new IllegalArgumentException("Invalid Key");
+		 }
+	 
+	 }  
 		
-		public String encryptSTPSWD() throws Exception{ 
-		    
-			Key key = generateKey();
-	        Cipher c = Cipher.getInstance(ALGO);
-	        c.init(Cipher.ENCRYPT_MODE, key);
-	        byte[] encVal = c.doFinal(passs.getBytes());
-	        String encryptedValue = new BASE64Encoder().encode(encVal);
-	        return encryptedValue;
-
-
-		   }
+		
 
 		   
 		public String encrypt(String Data) throws Exception {
+			
+			
 	        Key key = generateKey();
 	        Cipher c = Cipher.getInstance(ALGO);
 	        c.init(Cipher.ENCRYPT_MODE, key);
@@ -60,23 +61,19 @@ public class Encryptor {
 	    }
 
 		   
-		public void setPassword(String password){
-			
-			passs = password;
-			
-		}
-		public String decrypt(String pass)throws Exception{
+		
+		public String decrypt(String encryptedString)throws Exception{
 			
 			 Key key = generateKey();
 			    Cipher c = Cipher.getInstance(ALGO);
 			    c.init(Cipher.DECRYPT_MODE, key);
-			    byte[] decordedValue = new BASE64Decoder().decodeBuffer(pass);
+			    byte[] decordedValue = new BASE64Decoder().decodeBuffer(encryptedString);
 			    byte[] decValue = c.doFinal(decordedValue);
 			    String decryptedValue = new String(decValue);
 			    return decryptedValue;
 			
 		}
-		private Key generateKey() throws Exception {
+		private static Key generateKey() throws Exception {
 		    Key key = new SecretKeySpec(keyValue, ALGO);
 		    return key;
 		}
