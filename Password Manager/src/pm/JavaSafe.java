@@ -87,7 +87,6 @@ import emai.GoogleMail;
  * v7.3 - password confirmation for disabling 2-step verification
  * v7.4 - UI tweaks
  * v7.5 - bug fixes
- * v8.0 - NOW MORE SECURE! EACH user now has a random unique AES Key!!!!
  * 
  *  Behold the LEGENDARY JAVASAFE!! Have Fun Remembering your Passwords!
  * 
@@ -114,9 +113,7 @@ public static final String TMOBILE = "@tmomail.net";
 public static final String USCELL = "@email.uscc.net";
 public static final String VERIZON = "@vtext.com";
 public static final String VIRGIN = "@vmobl.com";
-private static Encryptor system = new Encryptor(true);
-private static Encryptor user = new Encryptor(false);
-private static byte[] letters = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+private static Encryptor e = new Encryptor();
 private static String nmd;
 private static File userData;
 private static File passwords; 
@@ -183,7 +180,7 @@ if(System.getProperty("os.name").compareToIgnoreCase("mac os x") == 0){
 			
 	
 	
-	nmd = system.encrypt("JavaSafeData");
+	nmd = e.encrypt("JavaSafeData");
 	
 	String[] optionsf = new String[] {"New User", "Existing User","Quit"};
 	 int opp =  JOptionPane.showOptionDialog(null, "Who Are You?", "Choose", 
@@ -1072,9 +1069,9 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 		System.exit(0); 
 	}else if(c == JOptionPane.OK_OPTION){
 		
-		if(textField.getText().matches(loginData.get(USERNAME)) && new String(passwordField.getPassword()).matches(system.decrypt(loginData.get(PASSWORD)))){ 
+		if(textField.getText().matches(loginData.get(USERNAME)) && new String(passwordField.getPassword()).matches(e.decrypt(loginData.get(PASSWORD)))){ 
 			
-			if(system.decrypt(loginData.get(CONF)).matches("true")){  
+			if(e.decrypt(loginData.get(CONF)).matches("true")){  
 				
 				String[] array = new String[]{"Continue","Phone is Unavailable"};
 				
@@ -1096,61 +1093,61 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 					
 					cc = "";
 					
-					if(system.decrypt(loginData.get(CARRIER)).matches("Alltel Wireless")){
+					if(e.decrypt(loginData.get(CARRIER)).matches("Alltel Wireless")){
 						
 						cc = ALLTEL;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("AT&T")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("AT&T")){
 						
 						cc = ATT;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Cingular")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Cingular")){
 						
 						cc = CINGULAR;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Boost Mobile")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Boost Mobile")){
 						
 						cc = BOOST;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Cricket")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Cricket")){
 						
 						cc = CRICKET;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Metro PCS")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Metro PCS")){
 						
 						cc = METRO;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Sprint")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Sprint")){
 						
 						cc = SPRINT;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Sprint (Nextel)")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Sprint (Nextel)")){
 						
 						cc = SN;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Straight Talk")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Straight Talk")){
 						
 						cc = STRAIGHT;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("T-Mobile")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("T-Mobile")){
 						
 						cc = TMOBILE;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("U.S. Cellular")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("U.S. Cellular")){
 						
 						cc = USCELL;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Verizon")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Verizon")){
 						
 						cc = VERIZON;
 						
-					}else if(system.decrypt(loginData.get(CARRIER)).matches("Virgin Mobile")){
+					}else if(e.decrypt(loginData.get(CARRIER)).matches("Virgin Mobile")){
 						
 						cc = VIRGIN;
 						
 					}
 					JOptionPane.showMessageDialog(null, "Please be Patient this may take a while depending on your internet connection. click ok to continue.", "Please Wait", JOptionPane.WARNING_MESSAGE); 
-					gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", system.decrypt(loginData.get(PHONE))+cc, "", "Your Secret Code is: "+code); 
+					gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", e.decrypt(loginData.get(PHONE))+cc, "", "Your Secret Code is: "+code); 
 					int repeats = 0;
 					for(;;){
 						repeats++;
@@ -1184,7 +1181,7 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 							iop++;
 						String kk = JOptionPane.showInputDialog("Great! please enter or paste the backup code:"); //TODO BACKUP
 						
-						if(system.decrypt(kk).matches(system.decrypt(loginData.get(BACKUP)))){
+						if(e.decrypt(kk).matches(e.decrypt(loginData.get(BACKUP)))){
 							
 							JOptionPane.showMessageDialog(null, "Backup Code Confirmed. A New backup code is now on your desktop. \nThe one you entered just now is now INVALID.\nNext time you dont have accsess to your phone, you must use the new code.");
 							
@@ -1206,7 +1203,7 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 							
 							}
 							
-							loginData.set(BACKUP, system.encrypt(newBackupCode())); 
+							loginData.set(BACKUP, e.encrypt(newBackupCode())); 
 							write(loginData,userData);
 							
 							PrintWriter pww = new PrintWriter(f);
@@ -1264,9 +1261,9 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 				JPanel secqs = new JPanel();
 				//open security qs and the email
 				secqs.setLayout(new GridLayout(3,1)); 
-				JLabel s1 = new JLabel(system.decrypt(securityQs.get(0))+"?"); 
-				 JLabel s2 = new JLabel(system.decrypt(securityQs.get(2))+"?");
-				 JLabel s3 = new JLabel(system.decrypt(securityQs.get(4))+"?"); 
+				JLabel s1 = new JLabel(e.decrypt(securityQs.get(0))+"?"); 
+				 JLabel s2 = new JLabel(e.decrypt(securityQs.get(2))+"?");
+				 JLabel s3 = new JLabel(e.decrypt(securityQs.get(4))+"?"); 
 				
 				 
 				
@@ -1298,11 +1295,11 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 					
 				}else{
 					 
-					if(system.decrypt(securityQs.get(1)).matches(new String(ans1.getPassword())) && system.decrypt(securityQs.get(3)).matches(new String(ans2.getPassword())) && system.decrypt(securityQs.get(5)).matches(new String(ans3.getPassword()))){
+					if(e.decrypt(securityQs.get(1)).matches(new String(ans1.getPassword())) && e.decrypt(securityQs.get(3)).matches(new String(ans2.getPassword())) && e.decrypt(securityQs.get(5)).matches(new String(ans3.getPassword()))){
 						
 						JOptionPane.showMessageDialog(null, "Your Secret Questions have been Confirmed! An Email will be sent to you with your login Details!"); 
 						GoogleMail gm = new GoogleMail(0);			
-						gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", system.decrypt(loginData.get(EMAIL)), "Your JavaSafe Credentials", "Hello, \n\n Your login details are as follows: \n\n Username: "+loginData.get(USERNAME)+"\nPassword: "+system.decrypt(loginData.get(PASSWORD)));  
+						gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", e.decrypt(loginData.get(EMAIL)), "Your JavaSafe Credentials", "Hello, \n\n Your login details are as follows: \n\n Username: "+loginData.get(USERNAME)+"\nPassword: "+e.decrypt(loginData.get(PASSWORD)));  
 						JOptionPane.showMessageDialog(null, "Email Sent!"); 
 						
 						System.exit(0);
@@ -1333,67 +1330,67 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 							
 							cc = "";
 							
-							if(system.decrypt(loginData.get(CARRIER)).matches("Alltel Wireless")){
+							if(e.decrypt(loginData.get(CARRIER)).matches("Alltel Wireless")){
 								
 								cc = ALLTEL;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("AT&T")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("AT&T")){
 								
 								cc = ATT;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Cingular")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Cingular")){
 								
 								cc = CINGULAR;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Boost Mobile")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Boost Mobile")){
 								
 								cc = BOOST;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Cricket")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Cricket")){
 								
 								cc = CRICKET;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Metro PCS")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Metro PCS")){
 								
 								cc = METRO;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Sprint")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Sprint")){
 								
 								cc = SPRINT;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Sprint (Nextel)")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Sprint (Nextel)")){
 								
 								cc = SN;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Straight Talk")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Straight Talk")){
 								
 								cc = STRAIGHT;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("T-Mobile")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("T-Mobile")){
 								
 								cc = TMOBILE;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("U.S. Cellular")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("U.S. Cellular")){
 								
 								cc = USCELL;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Verizon")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Verizon")){
 								
 								cc = VERIZON;
 								
-							}else if(system.decrypt(loginData.get(CARRIER)).matches("Virgin Mobile")){
+							}else if(e.decrypt(loginData.get(CARRIER)).matches("Virgin Mobile")){
 								
 								cc = VIRGIN;
 								
 							}
 							JOptionPane.showMessageDialog(null, "Please be Patient this may take a while depending on your internet connection. click ok to continue.", "Please Wait", JOptionPane.WARNING_MESSAGE); 
-							gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", system.decrypt(loginData.get(PHONE))+cc, "", "Your Secret Code is: "+code); 
+							gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", e.decrypt(loginData.get(PHONE))+cc, "", "Your Secret Code is: "+code); 
 							for(;;){
 							String rply = JOptionPane.showInputDialog("Please Enter the code you got on your phone:");
 							
 							if(rply.matches(code)){
 								
-								JOptionPane.showMessageDialog(null, "OK! Identity Verified. Here is your Account Info:\n\nUsername: "+loginData.get(USERNAME)+"\nPassword: "+system.decrypt(loginData.get(PASSWORD))+"\nSecret Answer 1: "+system.decrypt(securityQs.get(1))+"\nSecret Answer 2: "+system.decrypt(securityQs.get(3))+"\nSecret Answer 3: "+system.decrypt(securityQs.get(5)));           
+								JOptionPane.showMessageDialog(null, "OK! Identity Verified. Here is your Account Info:\n\nUsername: "+loginData.get(USERNAME)+"\nPassword: "+e.decrypt(loginData.get(PASSWORD))+"\nSecret Answer 1: "+e.decrypt(securityQs.get(1))+"\nSecret Answer 2: "+e.decrypt(securityQs.get(3))+"\nSecret Answer 3: "+e.decrypt(securityQs.get(5)));           
 								System.exit(0); 
 							}else if(rply.isEmpty()){
 							System.exit(0); 
@@ -1437,9 +1434,9 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 					JPanel secqs = new JPanel();
 					//open security qs and the email
 					secqs.setLayout(new GridLayout(3,1)); 
-					JLabel s1 = new JLabel(system.decrypt(securityQs.get(0))+"?"); 
-					 JLabel s2 = new JLabel(system.decrypt(securityQs.get(2))+"?");
-					 JLabel s3 = new JLabel(system.decrypt(securityQs.get(4))+"?"); 
+					JLabel s1 = new JLabel(e.decrypt(securityQs.get(0))+"?"); 
+					 JLabel s2 = new JLabel(e.decrypt(securityQs.get(2))+"?");
+					 JLabel s3 = new JLabel(e.decrypt(securityQs.get(4))+"?"); 
 					// JLabel a1 = new JLabel("Answer Question I:");
 					// JLabel a2 = new JLabel("Answer Question II:");
 					// JLabel a3 = new JLabel("Answer Question III:");
@@ -1476,11 +1473,11 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 						
 					}else{
 						
-						if(system.decrypt(securityQs.get(1)).matches(new String(ans1.getPassword())) && system.decrypt(securityQs.get(3)).matches(new String(ans2.getPassword())) && system.decrypt(securityQs.get(5)).matches(new String(ans3.getPassword()))){
+						if(e.decrypt(securityQs.get(1)).matches(new String(ans1.getPassword())) && e.decrypt(securityQs.get(3)).matches(new String(ans2.getPassword())) && e.decrypt(securityQs.get(5)).matches(new String(ans3.getPassword()))){
 							
 							JOptionPane.showMessageDialog(null, "Your Secret Questions have been Confirmed! An Email will be sent to you with your login Details!"); 
 							GoogleMail gm = new GoogleMail(0);			
-							gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", system.decrypt(loginData.get(EMAIL)), "Your JavaSafe Credentials", "Hello, \n\n Your login details are as follows: \n\n Username: "+loginData.get(USERNAME)+"\nPassword: "+system.decrypt(loginData.get(PASSWORD)));  
+							gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", e.decrypt(loginData.get(EMAIL)), "Your JavaSafe Credentials", "Hello, \n\n Your login details are as follows: \n\n Username: "+loginData.get(USERNAME)+"\nPassword: "+e.decrypt(loginData.get(PASSWORD)));  
 							JOptionPane.showMessageDialog(null, "Email Sent!"); 
 							
 							System.exit(0);
@@ -1510,68 +1507,68 @@ public static void userboot() throws HeadlessException, Exception{//TODO userboo
 								
 								cc = "";
 								
-								if(system.decrypt(loginData.get(CARRIER)).matches("Alltel Wireless")){
+								if(e.decrypt(loginData.get(CARRIER)).matches("Alltel Wireless")){
 									
 									cc = ALLTEL;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("AT&T")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("AT&T")){
 									
 									cc = ATT;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Cingular")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Cingular")){
 									
 									cc = CINGULAR;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Boost Mobile")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Boost Mobile")){
 									
 									cc = BOOST;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Cricket")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Cricket")){
 									
 									cc = CRICKET;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Metro PCS")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Metro PCS")){
 									
 									cc = METRO;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Sprint")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Sprint")){
 									
 									cc = SPRINT;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Sprint (Nextel)")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Sprint (Nextel)")){
 									
 									cc = SN;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Straight Talk")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Straight Talk")){
 									
 									cc = STRAIGHT;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("T-Mobile")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("T-Mobile")){
 									
 									cc = TMOBILE;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("U.S. Cellular")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("U.S. Cellular")){
 									
 									cc = USCELL;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Verizon")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Verizon")){
 									
 									cc = VERIZON;
 									
-								}else if(system.decrypt(loginData.get(CARRIER)).matches("Virgin Mobile")){
+								}else if(e.decrypt(loginData.get(CARRIER)).matches("Virgin Mobile")){
 									
 									cc = VIRGIN;
 									
 								}
 								JOptionPane.showMessageDialog(null, "Please be Patient this may take a while depending on your internet connection. click ok to continue.", "Please Wait", JOptionPane.WARNING_MESSAGE); 
 
-								gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", system.decrypt(loginData.get(PHONE))+cc, "", "Your Secret Code is: "+code); 
+								gm.Send("java.safe.dev@gmail.com", "javabossizzmeh123", e.decrypt(loginData.get(PHONE))+cc, "", "Your Secret Code is: "+code); 
 								for(;;){
 								String rply = JOptionPane.showInputDialog("Please Enter the code you got on your phone:");
 								
 								if(rply.matches(code)){
 									
-									JOptionPane.showMessageDialog(null, "OK! Identity Verified. Here is your Account Info: (You might want to write it down)\n\nUsername: "+loginData.get(USERNAME)+"\nPassword: "+system.decrypt(loginData.get(PASSWORD))+"\nSecret Answer 1: "+system.decrypt(securityQs.get(1))+"\nSecret Answer 2: "+system.decrypt(securityQs.get(3))+"\nSecret Answer 3: "+system.decrypt(securityQs.get(5)));           
+									JOptionPane.showMessageDialog(null, "OK! Identity Verified. Here is your Account Info: (You might want to write it down)\n\nUsername: "+loginData.get(USERNAME)+"\nPassword: "+e.decrypt(loginData.get(PASSWORD))+"\nSecret Answer 1: "+e.decrypt(securityQs.get(1))+"\nSecret Answer 2: "+e.decrypt(securityQs.get(3))+"\nSecret Answer 3: "+e.decrypt(securityQs.get(5)));           
 									System.exit(0); 
 								}else if(rply.isEmpty()){
 									System.exit(0); 
@@ -1731,7 +1728,7 @@ public static void newuser() throws Exception{//TODO newuser
 		  
 		  if(new String(passwordField.getPassword()).matches(new String(conf.getPassword()))){
 			  
-			  
+			  e.setPassword(new String(passwordField.getPassword()));
 			  break;
 			  
 		  }else{
@@ -1799,33 +1796,25 @@ public static void newuser() throws Exception{//TODO newuser
 	 PrintWriter wrr = new PrintWriter(securityQ);
 	 Random r = new Random();
 	double jj =  r.nextDouble();
-	
-	byte [] lel = new byte[]{letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],
-			letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],
-			letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],letters[r.nextInt(52)],
-			letters[r.nextInt(52)],letters[r.nextInt(52)]};
-	String key = new String(lel);
-	user.setKey(lel);      
-	 wrr.println(system.encrypt(ques1.getText()));  
-	 wrr.println(system.encrypt(new String(ans1.getPassword())));
-	 wrr.println(system.encrypt(ques2.getText()));  
-	 wrr.println(system.encrypt(new String(ans2.getPassword())));
-	 wrr.println(system.encrypt(ques3.getText()));  
-	 wrr.println(system.encrypt(new String(ans3.getPassword())));
-	 wrr.println(system.encrypt(Double.toString(jj)));
-	 write.println(system.encrypt(Double.toString(jj)));  
-	 wr.println(system.encrypt(Double.toString(jj))); 
+	 wrr.println(e.encrypt(ques1.getText()));  
+	 wrr.println(e.encrypt(new String(ans1.getPassword())));
+	 wrr.println(e.encrypt(ques2.getText()));  
+	 wrr.println(e.encrypt(new String(ans2.getPassword())));
+	 wrr.println(e.encrypt(ques3.getText()));  
+	 wrr.println(e.encrypt(new String(ans3.getPassword())));
+	 wrr.println(e.encrypt(Double.toString(jj)));
+	 write.println(e.encrypt(Double.toString(jj)));  
+	 wr.println(e.encrypt(Double.toString(jj))); 
 	 write.println(US);
-	 write.println(user.encrypt(emailt.getText()));
-	 write.println(user.encrypt(new String(passwordField.getPassword())));
+	 write.println(e.encrypt(emailt.getText()));
+	 write.println(e.encryptSTPSWD());
 	 write.println("Aluminium");
-	 write.println(user.encrypt(textField.getText())); //phone number 
-	 write.println(user.encrypt(carrier.getSelectedItem().toString())); //carrier
-	 write.println(user.encrypt("false"));
-	 write.println(user.encrypt(newBackupCode())); 
-	 write.println(user.encrypt("false")); 	
+	 write.println(e.encrypt(textField.getText())); //phone number 
+	 write.println(e.encrypt(carrier.getSelectedItem().toString())); //carrier
+	 write.println(e.encrypt("false"));
+	 write.println(e.encrypt(newBackupCode())); 
+	 write.println(e.encrypt("false")); 
 	 write.println(0);
-	 write.println(system.encrypt(String.copyValueOf(key.toCharArray())));    
 	 write.close();
 	 wrr.close();
 	 wr.close(); //TODO new user write to file
@@ -1869,7 +1858,7 @@ public static void newuser() throws Exception{//TODO newuser
 	
 	public static void UI() throws Exception{ //TODO UI
 		
-	    if(system.decrypt(passwordDataBase.get(0)).matches(system.decrypt(loginData.get(KEY))) == false || system.decrypt(passwordDataBase.get(0)).matches(system.decrypt(securityQs.get(6))) == false){
+	    if(e.decrypt(passwordDataBase.get(0)).matches(e.decrypt(loginData.get(KEY))) == false || e.decrypt(passwordDataBase.get(0)).matches(e.decrypt(securityQs.get(6))) == false){
 	    	
 	    
 	    	userData.delete(); 
@@ -2069,14 +2058,14 @@ public static void newuser() throws Exception{//TODO newuser
 				 panel.add(jb);
 				 panel.add(jb2);
 				// usernam.setText(loginData.get(USERNAME));
-				 textField.setText(user.decrypt(loginData.get(PHONE)));  
-				 carrier.setSelectedItem(user.decrypt(loginData.get(CARRIER)));  
-				 emailt.setText(user.decrypt(loginData.get(EMAIL)));
-				 jb.setSelected(Boolean.parseBoolean(user.decrypt(loginData.get(CONF)))); 
-				 jb2.setSelected(Boolean.parseBoolean(user.decrypt(loginData.get(SHOW))));  
+				 textField.setText(e.decrypt(loginData.get(PHONE)));  
+				 carrier.setSelectedItem(e.decrypt(loginData.get(CARRIER)));  
+				 emailt.setText(e.decrypt(loginData.get(EMAIL)));
+				 jb.setSelected(Boolean.parseBoolean(e.decrypt(loginData.get(CONF)))); 
+				 jb2.setSelected(Boolean.parseBoolean(e.decrypt(loginData.get(SHOW))));  
 				 int x;
 				 for(;;){
-					 if(user.decrypt(loginData.get(CARRIER)).matches("Not Shown")){
+					 if(e.decrypt(loginData.get(CARRIER)).matches("Not Shown")){
 						 
 						 jb.setSelected(false);
 						 jb.setEnabled(false);  
@@ -2097,7 +2086,7 @@ public static void newuser() throws Exception{//TODO newuser
 					 
 				 }else{
 					 
-					 if(user.decrypt(loginData.get(PHONE)).matches(textField.getText()) && user.decrypt(loginData.get(CARRIER)).matches(carrier.getSelectedItem().toString()) && user.decrypt(loginData.get(EMAIL)).matches(emailt.getText()) && user.decrypt(loginData.get(CONF)).matches(String.valueOf(jb.isSelected())) && user.decrypt(loginData.get(SHOW)).matches(String.valueOf(jb2.isSelected()))){  
+					 if(e.decrypt(loginData.get(PHONE)).matches(textField.getText()) && e.decrypt(loginData.get(CARRIER)).matches(carrier.getSelectedItem().toString()) && e.decrypt(loginData.get(EMAIL)).matches(emailt.getText()) && e.decrypt(loginData.get(CONF)).matches(String.valueOf(jb.isSelected())) && e.decrypt(loginData.get(SHOW)).matches(String.valueOf(jb2.isSelected()))){  
 						 
 						 
 						 break;
@@ -2105,11 +2094,11 @@ public static void newuser() throws Exception{//TODO newuser
 					 }
 					 
 					//loginData.set(USERNAME, usernam.getText()); 
-					loginData.set(PHONE, system.encrypt(textField.getText())); 
-					loginData.set(CARRIER, system.encrypt(carrier.getSelectedItem().toString()));
-					loginData.set(EMAIL, system.encrypt(emailt.getText()));
+					loginData.set(PHONE, e.encrypt(textField.getText())); 
+					loginData.set(CARRIER, e.encrypt(carrier.getSelectedItem().toString()));
+					loginData.set(EMAIL, e.encrypt(emailt.getText()));
 					
-					if(system.decrypt(loginData.get(CONF)).matches("true") && jb.isSelected() == false){
+					if(e.decrypt(loginData.get(CONF)).matches("true") && jb.isSelected() == false){
 						
 						JPanel pan = new JPanel();
 						
@@ -2125,13 +2114,13 @@ public static void newuser() throws Exception{//TODO newuser
 						
 						if(yy == JOptionPane.CANCEL_OPTION){
 							
-							loginData.set(CONF, system.encrypt("true"));
+							loginData.set(CONF, e.encrypt("true"));
 							
 						}else{
 							
-							if(new String(jpf.getPassword()).matches(system.decrypt(loginData.get(PASSWORD)))){
+							if(new String(jpf.getPassword()).matches(e.decrypt(loginData.get(PASSWORD)))){
 								
-								loginData.set(CONF, system.encrypt("false"));  
+								loginData.set(CONF, e.encrypt("false"));  
 								File gh = new File("/Users/"+System.getProperty("user.name")+"/Desktop/"+loginData.get(USERNAME)+"s BACKUP CODE"+"("+CODECOUNT+")"+".txt");
 								gh.delete();
 							}
@@ -2139,15 +2128,15 @@ public static void newuser() throws Exception{//TODO newuser
 						}
 						
 						
-					}else if(system.decrypt(loginData.get(CONF)).matches("false") && jb.isSelected() == true){  
+					}else if(e.decrypt(loginData.get(CONF)).matches("false") && jb.isSelected() == true){  
 						
-						loginData.set(CONF, system.encrypt("true"));
+						loginData.set(CONF, e.encrypt("true"));
 						
 					}
 					
 					
 					
-					if(system.decrypt(loginData.get(SHOW)).matches("true") && jb2.isSelected() == false && TYPE == true){ 
+					if(e.decrypt(loginData.get(SHOW)).matches("true") && jb2.isSelected() == false && TYPE == true){ 
 					JPanel pan = new JPanel();
 					
 					pan.setLayout(new GridLayout(2,1));
@@ -2166,9 +2155,9 @@ public static void newuser() throws Exception{//TODO newuser
 						
 					}else{
 						
-						if(new String(jpf.getPassword()).matches(system.decrypt(loginData.get(PASSWORD)))){
+						if(new String(jpf.getPassword()).matches(e.decrypt(loginData.get(PASSWORD)))){
 							
-							loginData.set(SHOW, system.encrypt("false"));
+							loginData.set(SHOW, e.encrypt("false"));
 							
 						}else{
 							
@@ -2177,9 +2166,9 @@ public static void newuser() throws Exception{//TODO newuser
 						}
 						
 					}
-					}else if(system.decrypt(loginData.get(SHOW)).matches("false") && jb2.isSelected() == true && TYPE == true){
+					}else if(e.decrypt(loginData.get(SHOW)).matches("false") && jb2.isSelected() == true && TYPE == true){
 						
-						loginData.set(SHOW, system.encrypt("true"));
+						loginData.set(SHOW, e.encrypt("true"));
 					}
 					write(loginData,userData);
 					if(jb.isSelected() == true){
@@ -2206,7 +2195,7 @@ public static void newuser() throws Exception{//TODO newuser
 						}
 						
 						
-						loginData.set(BACKUP, system.encrypt(newBackupCode()));
+						loginData.set(BACKUP, e.encrypt(newBackupCode()));
 						loginData.set(COUNT, String.valueOf(CODECOUNT));
 						write(loginData,userData);
 						PrintWriter pp = new PrintWriter(bak);
@@ -2374,7 +2363,7 @@ public static void newuser() throws Exception{//TODO newuser
 						
 					}else{
 						
-						if(!new String(jpf.getPassword()).matches(system.decrypt(loginData.get(PASSWORD)))){
+						if(!new String(jpf.getPassword()).matches(e.decrypt(loginData.get(PASSWORD)))){
 							
 							JOptionPane.showMessageDialog(null, "Wrong Password", "Error!", JOptionPane.ERROR_MESSAGE);  
 							continue;
@@ -2431,7 +2420,7 @@ public static void newuser() throws Exception{//TODO newuser
 				 JPasswordField passwordField1=new JPasswordField(12);
 				 textField1.setText(names.get(INDEX)); 
 					usrnm1.setText(usernames.get(INDEX));
-					passwordField1.setText(system.decrypt(pswds.get(INDEX))); 
+					passwordField1.setText(e.decrypt(pswds.get(INDEX))); 
 					panel1.add(username1);  
 					  
 					 
@@ -2462,7 +2451,7 @@ public static void newuser() throws Exception{//TODO newuser
 					 
 				 }else{
 					 
-					 if(textField1.getText().matches(names.get(INDEX)) && usrnm1.getText().matches(usernames.get(INDEX)) && new String(passwordField1.getPassword()).matches(system.decrypt(pswds.get(INDEX)))){
+					 if(textField1.getText().matches(names.get(INDEX)) && usrnm1.getText().matches(usernames.get(INDEX)) && new String(passwordField1.getPassword()).matches(e.decrypt(pswds.get(INDEX)))){
 						 
 						 break;
 						 
@@ -2470,7 +2459,7 @@ public static void newuser() throws Exception{//TODO newuser
 					 
 					 names.set(INDEX, textField1.getText()); 
 					 usernames.set(INDEX, usrnm1.getText());
-					 pswds.set(INDEX, system.encrypt(new String(passwordField1.getPassword()))); 
+					 pswds.set(INDEX, e.encrypt(new String(passwordField1.getPassword()))); 
 					 NUPtoPDB(); //TODO edit
 					 write(passwordDataBase,passwords); 
 						refreshList();
@@ -2488,7 +2477,7 @@ public static void newuser() throws Exception{//TODO newuser
 				JTextField passwordField1=new JTextField(12);
 				 textField1.setText(names.get(INDEX)); 
 					usrnm1.setText(usernames.get(INDEX));
-					passwordField1.setText(system.decrypt(pswds.get(INDEX))); 
+					passwordField1.setText(e.decrypt(pswds.get(INDEX))); 
 					panel1.add(username1);  
 					  
 					 
@@ -2521,7 +2510,7 @@ public static void newuser() throws Exception{//TODO newuser
 					 
 					 names.set(INDEX, textField1.getText()); 
 					 usernames.set(INDEX, usrnm1.getText());
-					 pswds.set(INDEX, system.encrypt(passwordField1.getText())); 
+					 pswds.set(INDEX, e.encrypt(passwordField1.getText())); 
 					 NUPtoPDB();
 					 write(passwordDataBase,passwords); 
 						refreshList();
@@ -2603,9 +2592,9 @@ public static void newuser() throws Exception{//TODO newuser
 					 
 				 }else{
 					 
-					 if(new String(oldPswd.getPassword()).matches(system.decrypt(loginData.get(PASSWORD))) && new String(newPswd.getPassword()).matches(new String(confPswd.getPassword()))){ 
+					 if(new String(oldPswd.getPassword()).matches(e.decrypt(loginData.get(PASSWORD))) && new String(newPswd.getPassword()).matches(new String(confPswd.getPassword()))){ 
 						 //check for password confirmation
-						 loginData.set(PASSWORD, system.encrypt(new String(newPswd.getPassword()))); //update the logs
+						 loginData.set(PASSWORD, e.encrypt(new String(newPswd.getPassword()))); //update the logs
 						 write(loginData,userData);
 						 bnm = true;
 						 JOptionPane.showMessageDialog(null, "Password Has Been Changed! (Remember it!)");
@@ -2674,11 +2663,11 @@ public static void newuser() throws Exception{//TODO newuser
 					 
 					 passwordDataBase.add(textField.getText());
 					 passwordDataBase.add(usrnm.getText()); 
-					 passwordDataBase.add(system.encrypt(new String(passwordField.getPassword())));
+					 passwordDataBase.add(e.encrypt(new String(passwordField.getPassword())));
 					 write(passwordDataBase,passwords); 
 					 names.add(textField.getText());
 					 usernames.add(usrnm.getText());
-					 pswds.add(system.encrypt(new String(passwordField.getPassword())));
+					 pswds.add(e.encrypt(new String(passwordField.getPassword())));
 					 refreshList();
 					 Thread.sleep(20);
 				     listOfPasswords.setListData(
@@ -2729,11 +2718,11 @@ public static void newuser() throws Exception{//TODO newuser
 						 
 						 passwordDataBase.add(textField.getText());
 						 passwordDataBase.add(usrnm.getText()); 
-						 passwordDataBase.add(system.encrypt(passwordField.getText()));
+						 passwordDataBase.add(e.encrypt(passwordField.getText()));
 						 write(passwordDataBase,passwords); 
 						 names.add(textField.getText());
 						 usernames.add(usrnm.getText());
-						 pswds.add(system.encrypt(passwordField.getText()));
+						 pswds.add(e.encrypt(passwordField.getText()));
 						 refreshList();
 						 Thread.sleep(20);
 					     listOfPasswords.setListData(
@@ -2764,7 +2753,7 @@ public static void newuser() throws Exception{//TODO newuser
 				buttonPane.add(ok);
 				checkFrame.add(buttonPane, BorderLayout.SOUTH); 
 				
-				int jc = system.decrypt(pswds.get(INDEX)).length();
+				int jc = e.decrypt(pswds.get(INDEX)).length();
 				
 				String ps = "";
 				for(int s=1;s<=jc;s++){
@@ -2787,7 +2776,7 @@ public static void newuser() throws Exception{//TODO newuser
 						int v =0;
 						decrypt.getModel().setPressed(false); 
 						
-						if(system.decrypt(loginData.get(SHOW)).matches("true")){
+						if(e.decrypt(loginData.get(SHOW)).matches("true")){
 						
 						JPanel pan = new JPanel();
 						
@@ -2807,7 +2796,7 @@ public static void newuser() throws Exception{//TODO newuser
 							
 						}else{
 							
-							if(new String(jpf.getPassword()).matches(system.decrypt(loginData.get(PASSWORD)))){
+							if(new String(jpf.getPassword()).matches(e.decrypt(loginData.get(PASSWORD)))){
 								
 							 v = JOptionPane.showConfirmDialog(null, "Do you still want to see the Password?", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); 
 								
@@ -2828,7 +2817,7 @@ public static void newuser() throws Exception{//TODO newuser
 							
 						}else{
 							//JOptionPane.showMessageDialog(null, "For Saftey, the dialog with the password shown will self destruct in 10 seconds.", "Notice", JOptionPane.WARNING_MESSAGE); 
-							display.setText("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+system.decrypt(pswds.get(INDEX))+"</html>"); 
+							display.setText("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+e.decrypt(pswds.get(INDEX))+"</html>"); 
 							//Thread.sleep(10000);
 							decrypt.setEnabled(false); 
 							for(int co = 10000;co>=0;co--){
@@ -2840,7 +2829,7 @@ public static void newuser() throws Exception{//TODO newuser
 									
 								}
 							if(co <= 7000){
-							display.setText("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+system.decrypt(pswds.get(INDEX))+"<br/>Self Destruct in: "+co/1000+"s"+"</html>");
+							display.setText("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+e.decrypt(pswds.get(INDEX))+"<br/>Self Destruct in: "+co/1000+"s"+"</html>");
 							}
 							}
 							display.setText("SELF DESTRUCT!");
@@ -2866,7 +2855,7 @@ public static void newuser() throws Exception{//TODO newuser
 					
 					
 					
-					JLabel display = new JLabel("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+system.decrypt(pswds.get(INDEX))+"<br/>Click OK when Finished</html>"); 
+					JLabel display = new JLabel("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+e.decrypt(pswds.get(INDEX))+"<br/>Click OK when Finished</html>"); 
 					display.setHorizontalAlignment((int) JLabel.CENTER_ALIGNMENT);
 					checkFrame.add(display); 
 					checkFrame.setVisible(true); 
@@ -2898,7 +2887,7 @@ public static void newuser() throws Exception{//TODO newuser
 				String mod;
 				swich.getModel().setPressed(false);
 				
-                   if(system.decrypt(loginData.get(SHOW)).matches("true") && TYPE == true){  
+                   if(e.decrypt(loginData.get(SHOW)).matches("true") && TYPE == true){  
 					
 					JPanel pan = new JPanel();
 					
@@ -2918,7 +2907,7 @@ public static void newuser() throws Exception{//TODO newuser
 						
 					}else{
 						
-						if(!new String(jpf.getPassword()).matches(system.decrypt(loginData.get(PASSWORD)))){
+						if(!new String(jpf.getPassword()).matches(e.decrypt(loginData.get(PASSWORD)))){
 							
 							JOptionPane.showMessageDialog(null, "Wrong Password", "Error!", JOptionPane.ERROR_MESSAGE);  
 							continue;
