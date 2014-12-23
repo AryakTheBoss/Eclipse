@@ -33,7 +33,7 @@ public class Encryptor {
      public Encryptor(){ 
 		 
 		 passs = null;
-		 
+		
 	 }
 	   
 		

@@ -87,7 +87,7 @@ import emai.GoogleMail;
  * v7.3 - password confirmation for disabling 2-step verification
  * v7.4 - UI tweaks
  * v7.5 - bug fixes
- * 
+ * v8.0 - all users have their own AES-128 key
  *  Behold the LEGENDARY JAVASAFE!! Have Fun Remembering your Passwords!
  * 
  *  
