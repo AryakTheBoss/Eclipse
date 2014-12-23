@@ -87,7 +87,7 @@ import emai.GoogleMail;
  * v7.3 - password confirmation for disabling 2-step verification
  * v7.4 - UI tweaks
  * v7.5 - bug fixes
- * v8.0 - all users have their own AES-128 key
+ * v8.0 - now uses RSA-2048
  *  Behold the LEGENDARY JAVASAFE!! Have Fun Remembering your Passwords!
  * 
  *  
@@ -1728,7 +1728,7 @@ public static void newuser() throws Exception{//TODO newuser
 		  
 		  if(new String(passwordField.getPassword()).matches(new String(conf.getPassword()))){
 			  
-			  e.setPassword(new String(passwordField.getPassword()));
+			 // e.setPassword(new String(passwordField.getPassword()));
 			  break;
 			  
 		  }else{
@@ -1807,7 +1807,7 @@ public static void newuser() throws Exception{//TODO newuser
 	 wr.println(e.encrypt(Double.toString(jj))); 
 	 write.println(US);
 	 write.println(e.encrypt(emailt.getText()));
-	 write.println(e.encryptSTPSWD());
+	 write.println(e.encrypt(new String(passwordField.getPassword())));
 	 write.println("Aluminium");
 	 write.println(e.encrypt(textField.getText())); //phone number 
 	 write.println(e.encrypt(carrier.getSelectedItem().toString())); //carrier
