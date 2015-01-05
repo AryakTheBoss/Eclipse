@@ -31,17 +31,17 @@ public class RSA2048 {
   /**
    * String to hold name of the encryption algorithm.
    */
-  public static final String ALGORITHM = "RSA";
+  protected static final String ALGORITHM = "RSA";
 
   /**
    * String to hold the name of the private key file.
    */
-  public static final String PRIVATE_KEY_FILE = "/Users/UnityBoss/Library/ApplicationSupport/";
+  private static final String PRIVATE_KEY_FILE = "WAY DIFFERENT directory";
 
   /**
    * String to hold name of the public key file.
    */
-  public static final String PUBLIC_KEY_FILE = "C:/keys/public.key";
+ private static final String PUBLIC_KEY_FILE = "same directory";
 
   /**
    * Generate key which contains a pair of private and public key using 1024
@@ -51,7 +51,7 @@ public class RSA2048 {
    * @throws IOException
    * @throws FileNotFoundException
    */
-  public static void generateKey() {
+  private static void generateKey() {
     try {
       final KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
       keyGen.initialize(2048);
@@ -93,7 +93,7 @@ public class RSA2048 {
    * 
    * @return flag indicating if the pair of keys were generated.
    */
-  public static boolean areKeysPresent() {
+ private static boolean areKeysPresent() {
 
     File privateKey = new File(PRIVATE_KEY_FILE);
     File publicKey = new File(PUBLIC_KEY_FILE);
@@ -114,7 +114,7 @@ public class RSA2048 {
    * @return Encrypted text
    * @throws java.lang.Exception
    */
-  public static byte[] encrypt(String text, PublicKey key) {
+  protected static byte[] encrypt(String text, PublicKey key) {
     byte[] cipherText = null;
     try {
       // get an RSA cipher object and print the provider
@@ -138,7 +138,7 @@ public class RSA2048 {
    * @return plain text
    * @throws java.lang.Exception
    */
-  public static String decrypt(byte[] text, PrivateKey key) {
+  protected static String decrypt(byte[] text, PrivateKey key) {
     byte[] dectyptedText = null;
     try {
       // get an RSA cipher object and print the provider
