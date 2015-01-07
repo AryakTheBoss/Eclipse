@@ -3,7 +3,7 @@
  */
 package com.aryaktheboss.algorithims;
 
-import java.io.File;
+
 import java.security.Key;
 
 import javax.crypto.Cipher;
@@ -11,9 +11,12 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.aryaktheboss.exceptions.InvalidKeyException;
 
+import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 /**
+ * This class will encrypt your data using the standard AES-128 encryption algorithim
+ * 128 bit is the only current key length however, 256-bit will be added soon.
  * @author UnityBoss
  *
  */
@@ -23,6 +26,7 @@ public class AES implements Encryptor{
 	   */
 	  protected static final String ALGORITHM = "AES";
 	
+	  
 	private final byte[] key;
 	
 	/**
@@ -38,6 +42,7 @@ public class AES implements Encryptor{
 		this.key = key;
 		
 	}
+
 	
 	public String encrypt(String text) {
 		// TODO Auto-generated method stub
@@ -52,14 +57,26 @@ public class AES implements Encryptor{
         encryptedValue = new BASE64Encoder().encode(encVal);
        
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		 return encryptedValue;
 	}
 
 	public String decrypt(String data) {
 		// TODO Auto-generated method stub
-		return null;
+		String decryptedValue = null;
+		try {
+		 Key key = generateKey();
+		    Cipher c = Cipher.getInstance(ALGORITHM);
+		    c.init(Cipher.DECRYPT_MODE, key);
+		   
+		    byte[] decordedValue = new BASE64Decoder().decodeBuffer(data);
+		    byte[] decValue = c.doFinal(decordedValue);
+		    decryptedValue = new String(decValue);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		    return decryptedValue;
 	}
 
 	private Key generateKey() throws Exception {

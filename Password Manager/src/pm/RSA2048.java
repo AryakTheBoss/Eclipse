@@ -36,12 +36,12 @@ public class RSA2048 {
   /**
    * String to hold the name of the private key file.
    */
-  private static final String PRIVATE_KEY_FILE = "private.key";
+  private static final String PRIVATE_KEY_FILE = "private.bin";
 
   /**
    * String to hold name of the public key file.
    */
- private static final String PUBLIC_KEY_FILE = "public.key";
+ private static final String PUBLIC_KEY_FILE = "public.bin";
 
   /**
    * Generate key which contains a pair of private and public key using 1024
