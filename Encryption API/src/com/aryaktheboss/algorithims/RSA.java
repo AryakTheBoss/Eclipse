@@ -15,6 +15,9 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 /**
+ * This class uses the standard RSA encryption algorithm with customizable 
+ * key sizes including 1024 and 2048
+ * 
  * @author UnityBoss
  *
  */
@@ -35,6 +38,12 @@ public class RSA implements Encryptor{
 	   */
 	 private PublicKey PUBLIC_KEY = null;
 	 
+	 /**
+	  * Primary Constructor that accepts key size as a parameter
+	  * it will then generate a public key and a private key.
+	  * 
+	  * @param bits - the key size
+	  */
 	 public RSA(int bits) {
 		 
 		 if(bits != 2048 || bits != 1024) {
@@ -43,14 +52,38 @@ public class RSA implements Encryptor{
 		 generateKey(bits);
 		 
 	 }
-	 
-	 protected PublicKey getPublicKey() {
+	 /**
+	  * This constructor takes a public key and a private key to use
+	  * with encryption and decryption.
+	  * 
+	  * @param publicKey
+	  * @param privateKey
+	  */
+	 public RSA(PublicKey publicKey,PrivateKey privateKey) {
+		 this.PUBLIC_KEY = publicKey;
+		 this.PRIVATE_KEY = privateKey;
+	 }
+	 /**
+	  * Gets the public key of THIS instance
+	  * 
+	  * @return the public key
+	  */
+	 public PublicKey getPublicKey() {
 		 
-		 return PUBLIC_KEY;
+		 return this.PUBLIC_KEY;
 		 
 	 }
-	
-
+	 /**
+	  * Gets the private key of THIS instance
+	  * 
+	  * @return the public key
+	  */
+	 public PrivateKey getPrivateKey() {
+		 
+		 return this.PRIVATE_KEY;
+		 
+	 }
+   
 	public String encrypt(String text) {
 		// TODO Auto-generated method stub
 		byte[] cipherText = null;
@@ -59,7 +92,7 @@ public class RSA implements Encryptor{
 	      // get an RSA cipher object and print the provider
 	      final Cipher cipher = Cipher.getInstance(ALGORITHM);
 	      // encrypt the plain text using the public key
-	      cipher.init(Cipher.ENCRYPT_MODE, PUBLIC_KEY);
+	      cipher.init(Cipher.ENCRYPT_MODE, this.PUBLIC_KEY);
 	      cipherText = cipher.doFinal(text.getBytes());
 	      encryptedValue = new BASE64Encoder().encode(cipherText);
 	    } catch (Exception e) {
@@ -76,7 +109,7 @@ public class RSA implements Encryptor{
 	      final Cipher cipher = Cipher.getInstance(ALGORITHM);
 	      byte[] decordedValue = new BASE64Decoder().decodeBuffer(data);
 	      // decrypt the text using the private key
-	      cipher.init(Cipher.DECRYPT_MODE, PRIVATE_KEY);
+	      cipher.init(Cipher.DECRYPT_MODE, this.PRIVATE_KEY);
 	      dectyptedText = cipher.doFinal(decordedValue);
 
 	    } catch (Exception ex) {
