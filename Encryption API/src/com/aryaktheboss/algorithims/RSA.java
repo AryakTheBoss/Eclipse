@@ -9,6 +9,11 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import javax.crypto.Cipher;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 /**
  * @author UnityBoss
  *
@@ -21,12 +26,12 @@ public class RSA implements Encryptor{
 	  protected static final String ALGORITHM = "RSA";
 
 	  /**
-	   * String to hold the name of the private key file.
+	   * Holds the private key
 	   */
 	  private PrivateKey PRIVATE_KEY = null;
 
 	  /**
-	   * String to hold name of the public key file.
+	   * Holds public key
 	   */
 	 private PublicKey PUBLIC_KEY = null;
 	 
@@ -48,12 +53,36 @@ public class RSA implements Encryptor{
 
 	public String encrypt(String text) {
 		// TODO Auto-generated method stub
-		return null;
+		byte[] cipherText = null;
+		String encryptedValue = null;
+	    try {
+	      // get an RSA cipher object and print the provider
+	      final Cipher cipher = Cipher.getInstance(ALGORITHM);
+	      // encrypt the plain text using the public key
+	      cipher.init(Cipher.ENCRYPT_MODE, PUBLIC_KEY);
+	      cipherText = cipher.doFinal(text.getBytes());
+	      encryptedValue = new BASE64Encoder().encode(cipherText);
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    return encryptedValue;
 	}
 
 	public String decrypt(String data) {
 		// TODO Auto-generated method stub
-		return null;
+		byte[] dectyptedText = null;
+	    try {
+	      // get an RSA cipher object and print the provider
+	      final Cipher cipher = Cipher.getInstance(ALGORITHM);
+	      byte[] decordedValue = new BASE64Decoder().decodeBuffer(data);
+	      // decrypt the text using the private key
+	      cipher.init(Cipher.DECRYPT_MODE, PRIVATE_KEY);
+	      dectyptedText = cipher.doFinal(decordedValue);
+
+	    } catch (Exception ex) {
+	      ex.printStackTrace();
+	    }
+	   return new String(dectyptedText);
 	}
 	
 	
