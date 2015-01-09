@@ -46,10 +46,15 @@ public class RSA implements Encryptor{
 	  */
 	 public RSA(KeySize k) {
 		 
-		 if() {
-			 throw new IllegalArgumentException("Bits are invalid");
+		 if(k.equals(KeySize.SMALL)){  
+		 generateKey(1024);
+		 }else if(k.equals(KeySize.MEDIUM)){
+		 generateKey(2048);
+		 }else if(k.equals(KeySize.LARGE)){
+	     generateKey(4096);
+		 }else if(k.equals(KeySize.XTRALARGE)){
+		 generateKey(8192);
 		 }
-		 generateKey(bits);
 		 
 	 }
 	 /**
