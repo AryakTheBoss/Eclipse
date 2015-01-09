@@ -36,13 +36,18 @@ public class AES implements Encryptor{
 	 */
 	public AES(byte[] key) throws InvalidKeyException {
 		
-		if(key.length != 16) {
-			throw new InvalidKeyException("Key length must be 16");
+		if(key.length != 16 && key.length != 32) {
+			throw new InvalidKeyException("Key length must be 16 or 32");
 		}
 		this.key = key;
 		
 	}
 
+	public byte[] getKey(){
+		
+		return this.key;
+		
+	}
 	
 	public String encrypt(String text) {
 		// TODO Auto-generated method stub

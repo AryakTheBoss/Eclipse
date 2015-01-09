@@ -25,7 +25,7 @@ public class DES implements Encryptor{
 	  
 	  public DES(byte[] key) throws InvalidKeyException {
 		  
-		  if(key.length != 7) {
+		  if(key.length != 8) {
 			  throw new InvalidKeyException("key length is not 7");
 		  }
 		  this.key = key;
