@@ -44,9 +44,9 @@ public class RSA implements Encryptor{
 	  * 
 	  * @param bits - the key size
 	  */
-	 public RSA(int bits) {
+	 public RSA(KeySize k) {
 		 
-		 if(bits != 2048 || bits != 1024) {
+		 if(k.) {
 			 throw new IllegalArgumentException("Bits are invalid");
 		 }
 		 generateKey(bits);

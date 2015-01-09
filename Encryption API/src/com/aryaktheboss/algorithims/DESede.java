@@ -24,10 +24,10 @@ public class DESede implements Encryptor{
 	/**
 	   * String to hold name of the encryption algorithm.
 	   */
-	  protected static final String ALGORITHM = "DESede";
+	protected static final String ALGORITHM = "DESede";
 	private String digest = "";
 	private String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	//http://stackoverflow.com/questions/20227/how-do-i-use-3des-encryption-decryption-in-java
+	
 	/**
 	 * Main Constructor for DESede takes a boolean if true a random key is generated
 	 * else a default key is set.
