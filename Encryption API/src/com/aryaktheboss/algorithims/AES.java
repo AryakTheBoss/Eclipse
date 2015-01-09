@@ -16,7 +16,7 @@ import sun.misc.BASE64Encoder;
 
 /**
  * This class will encrypt your data using the standard AES-128 encryption algorithim
- * 128 bit is the only current key length however, 256-bit will be added soon.
+ * 128 bit is the only current key length
  * @author UnityBoss
  *
  */
@@ -31,7 +31,7 @@ public class AES implements Encryptor{
 	
 	/**
 	 * Constructor which takes the key which is unchangeable afterwards.
-	 * key.length must be at least 16
+	 * key length must be at least 16
 	 * @param key
 	 */
 	public AES(byte[] key) throws InvalidKeyException {
