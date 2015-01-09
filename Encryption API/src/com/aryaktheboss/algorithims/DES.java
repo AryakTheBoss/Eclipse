@@ -34,11 +34,11 @@ public class DES implements Encryptor{
 	  
 	 
 
-	public String encrypt(String text) {
+	public String encrypt(String text) throws Exception{
 		// TODO Auto-generated method stub
 		Cipher c;
 		byte[] enc = null;
-		try {
+		
 		  c = Cipher.getInstance("DES");
 		    c.init(Cipher.ENCRYPT_MODE, generateKey());
 		    
@@ -47,27 +47,25 @@ public class DES implements Encryptor{
 
 		    // Encrypt
 		     enc = c.doFinal(utf8);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		
+			
+		
 		    // Encode bytes to base64 to get a string
 		    return new sun.misc.BASE64Encoder().encode(enc);
 	}
 
-	public String decrypt(String data) {
+	public String decrypt(String data) throws Exception{
 		// TODO Auto-generated method stub
 		byte[] utf8;
-		try {
+		
 		Cipher c = Cipher.getInstance("DES");
-		    c.init(Cipher.ENCRYPT_MODE, generateKey());
+		    c.init(Cipher.DECRYPT_MODE, generateKey());
 		byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(data);
 
 	    utf8 = c.doFinal(dec);
 	    return new String(utf8, "UTF8");
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		
+		
 	    // Decode using utf-8
 	    
 	}

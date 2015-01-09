@@ -17,7 +17,7 @@ public interface Encryptor {
 	     * @param text
 	     * @return
 	     */
-		String encrypt(String text);
+		String encrypt(String text) throws Exception;
 		/**
 	     * Decrypts the plain text with the algorithm that
 	     * implements it.
@@ -25,6 +25,6 @@ public interface Encryptor {
 	     * @param data
 	     * @return
 	     */
-		String decrypt(String data);
+		String decrypt(String data) throws Exception;
 	    
 }
