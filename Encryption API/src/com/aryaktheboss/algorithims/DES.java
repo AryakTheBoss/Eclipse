@@ -3,7 +3,7 @@
  */
 package com.aryaktheboss.algorithims;
 
-import java.io.UnsupportedEncodingException;
+
 import java.security.InvalidKeyException;
 import java.security.Key;
 
@@ -63,11 +63,13 @@ public class DES implements Encryptor{
 		byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(data);
 
 	    utf8 = c.doFinal(dec);
+	    return new String(utf8, "UTF8");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	    // Decode using utf-8
-	    return new String(utf8, "UTF8");
+	    
 	}
 	
 	private Key generateKey() throws Exception {
