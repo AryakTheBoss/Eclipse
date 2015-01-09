@@ -46,7 +46,7 @@ public class RSA implements Encryptor{
 	  */
 	 public RSA(KeySize k) {
 		 
-		 if(k.) {
+		 if() {
 			 throw new IllegalArgumentException("Bits are invalid");
 		 }
 		 generateKey(bits);
