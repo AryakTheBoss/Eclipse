@@ -26,7 +26,7 @@ public class DESede implements Encryptor{
 	   */
 	protected static final String ALGORITHM = "DESede";
 	private String digest = "";
-	private String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	private static String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	
 	/**
 	 * Main Constructor for DESede takes a boolean if true a random key is generated

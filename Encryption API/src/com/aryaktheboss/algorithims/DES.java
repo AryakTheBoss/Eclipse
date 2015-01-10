@@ -6,6 +6,7 @@ package com.aryaktheboss.algorithims;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -20,6 +21,7 @@ public class DES implements Encryptor{
 	   * String to hold name of the encryption algorithm.
 	   */
 	  protected static final String ALGORITHM = "DES";
+	  private static String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	  
 	  private byte[] key;
 	  
@@ -31,7 +33,16 @@ public class DES implements Encryptor{
 		  this.key = key;
 		  
 	  }
-	  
+	  public DES(){
+		  
+		  byte[] arr2 = new byte[8];
+	        for(int i=0;i<arr2.length;i++) {
+				
+				arr2[i] = (byte)keyChars.charAt(new Random().nextInt(keyChars.length()));
+				
+			}
+		  this.key = arr2;
+	  }
 	 
 
 	public String encrypt(String text) throws Exception{

@@ -26,30 +26,25 @@ public class Tester {
 		System.out.println("Encrypted Value: "+enc);
 		System.out.println("Decrypted Value: "+rsa.decrypt(enc));
 		System.err.println("AES Encryption: ");
-		String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		byte[] arr = new byte[16];
-        for(int i=0;i<arr.length;i++) {
-			
-			arr[i] = (byte)keyChars.charAt(new Random().nextInt(keyChars.length()));
-			
-		}
-		AES aes = new AES(arr);
+		
+		
+		AES aes = new AES();
 		String enc2 = aes.encrypt("Secret Phrase");
 		System.out.println("Encrypted Value: "+enc2);
-		System.out.println("Decrypted Value: "+aes.decrypt(enc2));
-		System.out.println("Key: "+Arrays.toString(arr));
+		System.out.println("Decrypted Value: "+aes.decrypt(enc2));		
 		System.err.println("DES Encryption: ");
-		byte[] arr2 = new byte[8];
-        for(int i=0;i<arr.length;i++) {
-			
-			arr[i] = (byte)keyChars.charAt(new Random().nextInt(keyChars.length()));
-			
-		}
-		DES des = new DES(arr2);
+		
+		DES des = new DES();
 		String enc3 = des.encrypt("Secret Phrase");
 		System.out.println("Encrypted Value: "+enc3);
 		System.out.println("Decrypted Value: "+des.decrypt(enc3));
-		System.out.println("Key: "+Arrays.toString(arr2));
+		System.err.println("DESede Encryption: ");
+		
+		DESede tdes = new DESede(true);
+		String enc4 = tdes.encrypt("Secret Phrase");
+		System.out.println("Encrypted Value: "+enc4);
+		System.out.println("Decrypted Value: "+tdes.decrypt(enc4));
+		
 	}
 
 }

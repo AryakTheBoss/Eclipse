@@ -5,6 +5,7 @@ package com.aryaktheboss.algorithims;
 
 
 import java.security.Key;
+import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -25,7 +26,7 @@ public class AES implements Encryptor{
 	   * String to hold name of the encryption algorithm.
 	   */
 	  protected static final String ALGORITHM = "AES";
-	
+	  private static String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	  
 	private final byte[] key;
 	
@@ -36,10 +37,22 @@ public class AES implements Encryptor{
 	 */
 	public AES(byte[] key) throws InvalidKeyException {
 		
-		if(key.length != 16 && key.length != 32) {
+		if(key.length != 16) {
 			throw new InvalidKeyException("Key length must be 16 or 32");
 		}
 		this.key = key;
+		
+	}
+	
+	public AES(){
+		
+		byte[] arr2 = new byte[16];
+        for(int i=0;i<arr2.length;i++) {
+			
+			arr2[i] = (byte)keyChars.charAt(new Random().nextInt(keyChars.length()));
+			
+		}
+	  this.key = arr2;
 		
 	}
 
