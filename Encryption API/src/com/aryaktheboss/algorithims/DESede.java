@@ -29,9 +29,9 @@ public class DESede implements Encryptor{
 	private static String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	
 	/**
-	 * Main Constructor for DESede takes a boolean if true a random key is generated
+	 * Main Constructor for DESede takes a <code>boolean</code> if true a random key is generated
 	 * else a default key is set.
-	 * @param randomKey if false, a default key is set if true it will generate a random key.
+	 * @param randomKey if <code>false</code>, a default key is set if <code>true</code> it will generate a random key.
 	 */
 public DESede(boolean randomKey) {
 	
@@ -49,10 +49,10 @@ public DESede(boolean randomKey) {
 	
 }
 /**
- * This constructor takesa string with a custom key but it must be
+ * This constructor takes a <code>String</code> with a custom key but it must be
  * atleast 10 letters long
  * 
- * @param key
+ * @param key - a plaintext key of atleast 10 length.
  * @throws InvalidKeyException
  */
 public DESede(String key) throws InvalidKeyException{

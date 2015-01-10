@@ -48,7 +48,7 @@ public class AES implements Encryptor{
 	/**
 	 * Main Constructor which generates a random key which is
 	 * retrievable.
-	 * @see getKey()
+	 * 
 	 */
 	public AES(){
 		
@@ -61,7 +61,11 @@ public class AES implements Encryptor{
 	  this.key = arr2;
 		
 	}
-
+/**
+ * Gets the key for this instance that was either given or generated.
+ * 
+ * @return
+ */
 	public byte[] getKey(){
 		
 		return this.key;

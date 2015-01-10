@@ -15,7 +15,7 @@ public interface Encryptor {
 	     * implements it.
 	     * 
 	     * @param text
-	     * @return
+	     * @return encrypted text
 	     */
 		String encrypt(String text) throws Exception;
 		/**
@@ -23,7 +23,7 @@ public interface Encryptor {
 	     * implements it.
 	     * 
 	     * @param data
-	     * @return
+	     * @return decrypted text
 	     */
 		String decrypt(String data) throws Exception;
 	    

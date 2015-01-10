@@ -43,7 +43,7 @@ public class RSA implements Encryptor{
 	  * it will then generate a public key and a private key.
 	  * 
 	  * @param k - the keysize as described in the KeySize Enum.
-	  * 
+	  * @see KeySize
 	  */
 	 public RSA(KeySize k) {
 		 

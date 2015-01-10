@@ -11,7 +11,8 @@ public enum KeySize {
 	
 	/**
 	 * Smallest and Least secure key length of 
-	 * 1024 bits
+	 * 1024 bits <br>
+	 * <b>Operations on this key size are fairly quick</b>
 	 */
 	SMALL,
 	/**

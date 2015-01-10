@@ -24,15 +24,25 @@ public class DES implements Encryptor{
 	  private static String keyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	  
 	  private byte[] key;
-	  
+	  /**
+	   * Constructor for if you want to use a custom key with this 
+	   * instance of <code>DES</code>
+	   * 
+	   * @param key - the key must be 8 bytes
+	   * @throws InvalidKeyException
+	   */
 	  public DES(byte[] key) throws InvalidKeyException {
 		  
 		  if(key.length != 8) {
-			  throw new InvalidKeyException("key length is not 7");
+			  throw new InvalidKeyException("key length is not 8 bytes");
 		  }
 		  this.key = key; 
 		  
 	  }
+	  /**
+	   * Main Constructor that generates a key which is retriveable.
+	   * 
+	   */
 	  public DES(){
 		  
 		  byte[] arr2 = new byte[8];
@@ -43,7 +53,16 @@ public class DES implements Encryptor{
 			}
 		  this.key = arr2;
 	  }
-	 
+	  /**
+	   * Gets the key for this instance that was either given or generated.
+	   * 
+	   * @return the key for this instance
+	   */
+	  	public byte[] getKey(){
+	  		
+	  		return this.key;
+	  		
+	  	}
 
 	public String encrypt(String text) throws Exception{
 		// TODO Auto-generated method stub
