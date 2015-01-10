@@ -4,6 +4,8 @@
 package com.aryaktheboss.algorithims;
 
 /**
+ * Enum to store key sizes for the RSA algorithm
+ * 
  * @author UnityBoss
  *
  */
