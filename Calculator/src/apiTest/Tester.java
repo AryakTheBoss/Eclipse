@@ -5,12 +5,14 @@ package apiTest;
 
 
 
+import java.security.InvalidKeyException;
+
 import com.aryaktheboss.algorithims.AES;
 import com.aryaktheboss.algorithims.DES;
 import com.aryaktheboss.algorithims.DESede;
 import com.aryaktheboss.algorithims.KeySize;
 import com.aryaktheboss.algorithims.RSA;
-import com.aryaktheboss.exceptions.InvalidKeyException;
+
 
 /**
  * @author UnityBoss
