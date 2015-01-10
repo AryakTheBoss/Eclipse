@@ -16,7 +16,7 @@ import sun.misc.BASE64Encoder;
 
 /**
  * This class uses the standard RSA encryption algorithm with customizable 
- * key sizes including 1024 and 2048
+ * key sizes starting from 1024 - 8192
  * 
  * @author UnityBoss
  *
@@ -42,7 +42,8 @@ public class RSA implements Encryptor{
 	  * Primary Constructor that accepts key size as a parameter
 	  * it will then generate a public key and a private key.
 	  * 
-	  * @param bits - the key size
+	  * @param k - the keysize as described in the KeySize Enum.
+	  * 
 	  */
 	 public RSA(KeySize k) {
 		 
@@ -55,7 +56,7 @@ public class RSA implements Encryptor{
 		 }else if(k.equals(KeySize.XTRALARGE)){
 		 generateKey(8192);
 		 }
-		 
+		 		 
 	 }
 	 /**
 	  * This constructor takes a public key and a private key to use
@@ -89,7 +90,7 @@ public class RSA implements Encryptor{
 		 return this.PRIVATE_KEY;
 		 
 	 }
-   
+    
 	public String encrypt(String text) {
 		// TODO Auto-generated method stub
 		byte[] cipherText = null;

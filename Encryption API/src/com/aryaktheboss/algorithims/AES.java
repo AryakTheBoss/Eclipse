@@ -4,13 +4,15 @@
 package com.aryaktheboss.algorithims;
 
 
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.aryaktheboss.exceptions.InvalidKeyException;
+
+
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -33,17 +35,21 @@ public class AES implements Encryptor{
 	/**
 	 * Constructor which takes the key which is unchangeable afterwards.
 	 * key length must be at least 16
-	 * @param key
+	 * @param key - the key that should be used with encryption
 	 */
 	public AES(byte[] key) throws InvalidKeyException {
 		
 		if(key.length != 16) {
-			throw new InvalidKeyException("Key length must be 16 or 32");
+			throw new InvalidKeyException("Key length must be 16");
 		}
 		this.key = key;
 		
 	}
-	
+	/**
+	 * Main Constructor which generates a random key which is
+	 * retrievable.
+	 * @see getKey()
+	 */
 	public AES(){
 		
 		byte[] arr2 = new byte[16];
