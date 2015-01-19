@@ -27,7 +27,7 @@ public class Tester {
 	public static void main(String[] args) throws Exception, InvalidKeyException {
 		// TODO Auto-generated method stub
         System.err.println("RSA Encryption: ");
-		RSA rsa = new RSA(KeySize.SMALL);
+		RSA rsa = new RSA(KeySize.MEDIUM);
 		String enc = rsa.encrypt("Secret Phrase");
 		System.out.println("Encrypted Value: "+enc);
 		System.out.println("Decrypted Value: "+rsa.decrypt(enc));
