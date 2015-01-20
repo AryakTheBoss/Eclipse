@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Email"/>
-	<classpathentry kind="lib" path="C:/Downloads/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Downloads/imap-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Downloads/dsn-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Downloads/gimap-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Downloads/smtp-1.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre7/lib/jsse.jar"/>
-	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/xxx/dsn-1.5.1.jar"/>
-	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/xxx/gimap-1.5.1.jar"/>
-	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/xxx/imap-1.5.1.jar"/>
-	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/xxx/javax.mail.jar"/>
-	<classpathentry kind="lib" path="/Users/UnityBoss/Documents/xxx/smtp-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre8/lib/jsse.jar"/>
+	<classpathentry kind="lib" path="H:/dsn-1.5.2.jar"/>
+	<classpathentry kind="lib" path="H:/gimap-1.5.2.jar"/>
+	<classpathentry kind="lib" path="H:/imap-1.5.2.jar"/>
+	<classpathentry kind="lib" path="H:/javax.mail-1.5.2.jar"/>
+	<classpathentry kind="lib" path="H:/smtp-1.5.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
