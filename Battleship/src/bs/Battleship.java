@@ -984,7 +984,7 @@ public static void openShop() throws Exception{//TODO hjk
 	bom.setVisible(true);
 	cancel.setVisible(true);
 	
-	
+	//initSave();
 	
 	
 
