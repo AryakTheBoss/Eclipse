@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
-import javax.mail.MessagingException;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -60,7 +60,7 @@ public class AboutListener implements ActionListener{
 	
 	private static void showFeedbackWindow() throws Exception{
 		
-		JPanel panel=new JPanel(); 
+		/*JPanel panel=new JPanel(); 
 		 
 		   
 		 panel.setLayout(new GridLayout(3,1));  
@@ -160,8 +160,8 @@ public class AboutListener implements ActionListener{
 		 }
 		
 		
+	}*/
+	
 	}
-	
-	
 
 }
