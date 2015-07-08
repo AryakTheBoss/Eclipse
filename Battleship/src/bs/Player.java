@@ -433,7 +433,7 @@ public class Player
 						kl = "You Lost";
 						System.err.println("SOMETHING WENT WRONG");
 						System.exit(0);
-					}
+					} //TODO MAKE SMOOTHER GAMEPLAY
 					
 					JOptionPane.showMessageDialog(null,"You just lost your "+
 					this.boats[f].getName()+"! \n"+kl,"Ship Destroyed",
@@ -480,7 +480,7 @@ public class Player
 					System.exit(0);
 				}
 				
-				JOptionPane.showMessageDialog(null,"You sank the "+
+				JOptionPane.showMessageDialog(null,"You sank the "+ //TODO SAME AS ABOVE
 				this.boats[f].getName()+"!\n"+kl,"Good Job!",
 				JOptionPane.INFORMATION_MESSAGE);
 				
@@ -510,7 +510,7 @@ public class Player
 		if (this.boats[f].getHitsLeft()==0)
 		{
 			this.setShipsLeft();
-			JOptionPane.showMessageDialog(null,"You just lost your "+
+			JOptionPane.showMessageDialog(null,"You just lost your "+ //TODO SAMETHING
 			this.boats[f].getName()+"!","Ship Destroyed",
 					JOptionPane.WARNING_MESSAGE);
 			for (int k=0;k<10;k++)
@@ -888,7 +888,7 @@ public class Player
 	 * 
 	 * @param v
 	 */
-	public void humanAttack(ActionEvent v) //TODO make it so nukes,ship finders and frag bombs go off automatically when clicked
+	public void humanAttack(ActionEvent v) //TODO PLAYERS TURN
 	{
 		if (this.getMove())
 		{				
@@ -908,7 +908,7 @@ public class Player
 							+"ed that spot already.","Wasted Shot",
 							JOptionPane.ERROR_MESSAGE);								
 						}
-						else{ //TODO item codes
+						else{ //TODO ITEM LOGIC
 							
 							if(BombListener.isUsing()){
 								//- = up/left + = down/right

@@ -29,7 +29,14 @@ import java.util.Scanner;
 public class Battleship extends JFrame
 {		
 	/**
-	 * 
+	 * v3.4 : Bug fixes
+	 * v4.0 : Smoother game play by removing the dialogs if a ship is sunk instead a little disappearing text box
+	 * will show the update rather than a interruptive dialog.
+	 * v4.x : ~~BUG FIX UPDATE~~	
+	 * v5.0 : New volley and classic game mode both of which don't involve power ups but do involve money which CAN be used in standard mode.
+	 * v5.x : ~~BUG FIX UPDATE~~
+	 * v6.0 : Multi-User update allows for more people to store data on the same account. previous data will be deleted
+	 * v6.x : ~~BUG FIX UPDATE~~
 	 */
 	private static final long serialVersionUID = 1L;
 	private static JButton ok = new JButton("OK"),//closes stats menu
