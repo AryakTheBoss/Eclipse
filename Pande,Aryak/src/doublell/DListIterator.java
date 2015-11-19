@@ -19,11 +19,11 @@ private DLinkedList myList;
 
 private boolean canRemove; // for remove() method. true if OK to call 
 
-	public DListIterator(DLinkedList list) { 
+	public DListIterator(DLinkedList list,DListNode d) { 
 
 		myList = list; 
 
-		current = null; 
+		current = d; 
 
 		previous = null; 
 

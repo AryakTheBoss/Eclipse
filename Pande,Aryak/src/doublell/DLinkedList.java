@@ -1,5 +1,9 @@
 package doublell;
 
+import java.util.Map.Entry;
+
+import mylinkedlist.ListNode;
+
 public class DLinkedList { 
 
 private DListNode firstNode; 
@@ -42,7 +46,14 @@ public boolean isEmpty(){
 public void addFirst(Object o) {
 	
 	DListNode temp = firstNode;
-	firstNode = new DListNode(o, temp, null);
+	if(firstNode == null){
+		firstNode = new DListNode(o,null,null);
+		
+	}
+	else{
+		 firstNode = new DListNode(o,temp,null);
+		
+	}
 	
 }
 
@@ -55,7 +66,14 @@ public void addFirst(Object o) {
 public void addLast(Object o){
 	
 	DListNode temp = lastNode;
-	lastNode = new DListNode(o, null, temp);
+	if(lastNode == null){
+		lastNode = new DListNode(o,null,null);
+		
+	}
+	else
+	{
+		lastNode = new DListNode(o, null, temp);
+	}
 	
 }
 
@@ -100,7 +118,7 @@ public String toString(){
 	while (iter.hasNext())
 	{
 		
-		output += iter.next().toString();
+		output += iter.next().toString()+" ";
 		
 	}
 	return output;
@@ -148,7 +166,7 @@ private void clear() {
 
 public DListIterator iterator() { 
 
-return new DListIterator(this); 
+return new DListIterator(this,firstNode); 
 
 }
 }
