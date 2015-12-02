@@ -67,10 +67,10 @@ public class Deck {
 	// split the deck at a random spot. Put the stack of cards above the random 
 
 	// spot below the other cards 
-
+//TODO f
 	public void cut() {
 		int r = 1 + (int)(Math.random()*52); 
-		Deck newd = new Deck();
+		Stack<Card> rekt = new Stack<Card>();
 		while(r>0){
 			
 		}
