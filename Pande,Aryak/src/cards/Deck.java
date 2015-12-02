@@ -3,6 +3,7 @@
  */
 package cards;
 
+import java.util.Collections;
 import java.util.Stack;
 
 /**
@@ -30,14 +31,32 @@ public class Deck {
 	// Load the stack with 52 cards in order 
 
 	public void loadDeck(){
-		
+		for(int i=1;i<5;i++){
+			for(int j=2;j<15;j++){
+				deck.push(new Card(i,j));
+			}
+		}
 	}
 
-	public String toString() {} 
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		int x = 0;
+		for(Card c : deck){
+			if(x == 4){
+				x = 0;
+				s.append("\n");
+			}
+			s.append(c);
+		}
+		return s.toString();
+	} 
 
 	// Return and remove the top card 
 
-	public Card deal() {} 
+	public Card deal() {
+		return deck.pop(); // :^)
+	}
+	
 
 	// Take the top half of the deck (26 cards) and alternate card by card with 
 
@@ -49,7 +68,13 @@ public class Deck {
 
 	// spot below the other cards 
 
-	public void cut() {} 
+	public void cut() {
+		int r = 1 + (int)(Math.random()*52); 
+		Deck newd = new Deck();
+		while(r>0){
+			
+		}
+	} 
 
 	// complete a bridge shuffle and then cut the deck. Repeat 7 times 
 
