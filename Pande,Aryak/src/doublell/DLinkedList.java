@@ -1,8 +1,6 @@
 package doublell;
 
-import java.util.Map.Entry;
 
-import mylinkedlist.ListNode;
 
 public class DLinkedList { 
 
