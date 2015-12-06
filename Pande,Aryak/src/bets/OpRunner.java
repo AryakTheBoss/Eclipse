@@ -8,7 +8,7 @@ public class OpRunner {
 		a = new ArithmeticOPS();
 		a.start();
 		Scanner s = new Scanner(System.in);
-		System.out.println("Enter yor sting pls");
+		System.out.println("Enter yor string pls");
 		String input = s.nextLine();
 		processInput(input);
 		s.close();

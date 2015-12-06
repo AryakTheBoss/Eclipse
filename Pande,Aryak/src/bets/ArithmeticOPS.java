@@ -25,9 +25,12 @@ public class ArithmeticOPS extends Thread{
 		
 	}
 	
-	public int parseExp(){
+	public int parseExp(String expression){
 		
-		return 0; //CALCULATE SOME SHIT
+		expression.split("[1-9]");
+		
+		
+		return 0; //CALCULATE
 		
 	}
 	public synchronized void processQueue(){
