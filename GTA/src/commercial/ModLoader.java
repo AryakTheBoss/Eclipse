@@ -1,17 +1,20 @@
 package commercial;
 
+import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ModLoader {
 	
-	private static ArrayList<File> mods;
+	private static List<File> mods;
 	private static String gtaDirectory;
+	private static final String[] supportedFileTypes = {"dll","asi","lua","cs","vb"};
 	
 	
 	public ModLoader() throws FileNotFoundException{
@@ -61,9 +64,38 @@ public class ModLoader {
 		
 	}
 	
-	private ArrayList<File> loadFiles(){
+	private List<File> loadFiles(){
 		
-		ArrayList<File> files = new ArrayList<File>();
+		List<File> fileList = new ArrayList<File>();
+		File dir = new File(gtaDirectory);
+		File[] files = dir.listFiles();
+		fileList = Arrays.asList(files);
+		
+		for(int i=0;i<fileList.size();i++){
+			
+			if(fileList.get(i).isDirectory() || isMod(fileList.get(i)))
+				fileList.remove(i);
+			
+		}
+		
+		
+		return fileList;
+		
+	}
+	private boolean isMod(File f){
+		
+		String extention = f.getName();
+		extention = extention.substring(extention.indexOf(".")+1);
+		
+		for(String s : supportedFileTypes){
+			
+			if(s.equals(extention)){
+				return true;
+			}
+			
+		}
+		return false;
+		
 		
 	}
 	

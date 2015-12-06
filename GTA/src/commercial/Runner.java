@@ -25,6 +25,12 @@ public class Runner {
 		fw.write("echo Loading Directories....\njava -jar ModControl.jar");
 		fw.close();
 		}*/
+		File f = new File("C:\\RHDSetup.log");
+		String extention = f.getName();
+		extention = extention.substring(extention.indexOf(".")+1);
+		System.out.println(f.getName());
+		System.out.println(extention);
+
 
 	}
 
