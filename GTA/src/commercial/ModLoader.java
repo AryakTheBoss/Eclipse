@@ -2,19 +2,24 @@ package commercial;
 
 import java.util.List;
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class ModLoader {
 	
-	private static List<File> mods;
+	private static ArrayList<File> mods;
 	private static String gtaDirectory;
-	private static final String[] supportedFileTypes = {"dll","asi","lua","cs","vb"};
+	private static final String[] supportedFileTypes = {".dll",".asi",".lua",".cs",".vb"};
 	
 	
 	public ModLoader() throws FileNotFoundException{
@@ -25,7 +30,7 @@ public class ModLoader {
 			
 			Scanner fr = new Scanner(f2);
 			gtaDirectory = fr.nextLine();
-			initialize();
+			mods = loadFiles();
 			fr.close();
 			
 		}else{
@@ -42,41 +47,76 @@ public class ModLoader {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Scanner sss = new Scanner(f2);
-			gtaDirectory =	sss.nextLine();
-			initialize();
-			sss.close();
+			gtaDirectory = ss;
 			
+			mods = loadFiles();
+			
+			System.out.println("LOCATION SAVED!");
 			
 		}
 			
 		
 	}
 	
-	private void initialize(){
+	
+	public void printFiles(){
 		
-		mods = loadFiles();
-		
-		
-		
-		
-		
+		int count = 1;
+		for(File f : mods){
+			
+			System.out.println(count +") "+ f.getName());
+			count++;
+		}
 		
 	}
+	public int mods(){
+		return mods.size();
+	}
+	//copy from mods folder to game folder
+	public void installMod(File mod){
+		
+	/*	File file = new File("<file to be copied>");
+		// get the java.nio.file.path from this
+		Path filePath = file.toPath();
+		//create a temporary file to copy contents to.
+		//In actual application this is the target file for copy
+		Path tempFilePath = Files.createTempFile(tempDir, "temp", "a",new FileAttribute<?>[0]);
+		
+		// copy contents
+		Files.copy(filePath, out);*/
+		
+		System.out.println(mod.getName() + " Installed Successfully!");
+	}
+	//rename extention to .OFFZ
+	public void enableMod(File mod, boolean flag){
+		
+		
+		System.out.println(mod.getName() + " Has Been Disabled.");
+	}
 	
-	private List<File> loadFiles(){
+	
+	private ArrayList<File> loadFiles(){
 		
-		List<File> fileList = new ArrayList<File>();
-		File dir = new File(gtaDirectory);
-		File[] files = dir.listFiles();
-		fileList = Arrays.asList(files);
+		ArrayList<File> fileList = new ArrayList<File>();
+		File dir = new File("C:\\Paste Mods Here");	
 		
-		for(int i=0;i<fileList.size();i++){
-			
-			if(fileList.get(i).isDirectory() || isMod(fileList.get(i)))
-				fileList.remove(i);
-			
-		}
+		FilenameFilter filter = new FilenameFilter() {
+	        public boolean accept(File directory, String fileName) {
+	        	
+	           for(String s : supportedFileTypes)
+	        	   if(fileName.endsWith(s))
+	        		   return true;
+	           
+	           return false;
+	           
+	        }
+	        };
+		
+		for(File f : dir.listFiles(filter))
+			fileList.add(f);
+		
+		
+		
 		
 		
 		return fileList;
