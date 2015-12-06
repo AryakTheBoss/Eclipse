@@ -49,7 +49,7 @@ public class Runner {
 	}
 	public static void createBat(boolean flag) throws IOException{
 		
-		if(flag)
+		if(!flag)
 			return;
 		
 	File f = new File("run.bat");
