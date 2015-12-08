@@ -7,10 +7,13 @@ public class OpRunner {
 	public static void main(String[] args) {
 		a = new ArithmeticOPS("5 + 5");
 		Scanner s = new Scanner(System.in);
-		System.out.println("Enter yor string pls");
+		System.out.println("Enter yor string expression pls");
 		String input = s.nextLine();
-		processInput(input);
-		s.close();
+		a = new ArithmeticOPS(input);
+		System.out.println(a);
+	
+		
+		
 		
 	}
 	public static void processInput(String betas){
