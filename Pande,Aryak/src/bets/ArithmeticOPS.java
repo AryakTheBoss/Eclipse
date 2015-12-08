@@ -16,7 +16,7 @@ public class ArithmeticOPS {
 
 	private Stack<String> ops = new Stack<String>();
 	private Stack<String> nums = new Stack<String>();
-
+	private static final String orderOfOps = "^*/+-";
 	private int result = 0;
 
 	private String input;
@@ -32,12 +32,22 @@ public class ArithmeticOPS {
 	}
 
 	private void calculate() {
+		
 		while (!nums.empty()) {
-			int num = Integer.parseInt(nums.get(0));
-			nums.remove(0);
+			int num = Integer.parseInt(nums.remove(0));
+			String sign = nums.remove(0);
+			for(int x = 0; x < ops.size() - 1; x++) {
+				if(orderOfOps.indexOf(ops.get(x)) > orderOfOps.indexOf(ops.get(x + 1))){
+					if(ops.get(x) == )
+				}
+			}
+			
 
 		}
 
+	}
+	
+	private String runNumbers(String num1, String num2, String op) {
 	}
 
 	private void splitInput() {
