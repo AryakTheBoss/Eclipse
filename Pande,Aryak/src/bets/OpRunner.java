@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class OpRunner {
 	private static ArithmeticOPS a;
 	public static void main(String[] args) {
-		a = new ArithmeticOPS();
-		a.start();
+		a = new ArithmeticOPS("5 + 5");
 		Scanner s = new Scanner(System.in);
 		System.out.println("Enter yor string pls");
 		String input = s.nextLine();

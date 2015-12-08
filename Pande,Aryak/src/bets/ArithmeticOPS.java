@@ -14,8 +14,10 @@ import java.util.Vector;
  */
 public class ArithmeticOPS{
 	
-	private Stack<String> ops;
-	private Stack<String> nums;
+	private Stack<String> ops = new Stack<String>();
+	private Stack<String> nums = new Stack<String>();
+	
+	private int result = 0;
 	
 	private String input;
 	
@@ -27,15 +29,32 @@ public class ArithmeticOPS{
 		nums = null;
 		input = arg;
 		splitInput();
-		
+		calculate();
 	}
 	
 	
 	
+	private void calculate() {
+		while(!nums.empty()) {
+			int num = Integer.parseInt(nums.get(0));
+			nums.remove(0);
+			
+			
+		}
+		
+	}
+
+
+
 	private void splitInput() {
 		Scanner s = new Scanner(input);
 		while(s.hasNext()) {
-			
+			String hey = s.next();
+			if(hey.matches("-?\\d+(\\.\\d+)?")) {
+				nums.push(hey);
+			}
+			else
+				ops.push(hey);
 		}
 		
 	}
