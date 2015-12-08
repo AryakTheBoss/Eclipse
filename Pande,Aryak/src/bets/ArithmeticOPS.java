@@ -44,9 +44,12 @@ public class ArithmeticOPS {
 				}
 				else if (ops.size() == 1) {
 					nums.add(x, runNumbers(nums.remove(x),nums.remove(x),ops.remove(x + 1)));
-				} {
-					
+				} 
+				else {
+					x++;
 				}
+					
+				
 			}
 			
 
