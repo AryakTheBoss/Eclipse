@@ -12,61 +12,44 @@ import java.util.Vector;
  * @author 17ap0497
  *
  */
-public class ArithmeticOPS{
-	
+public class ArithmeticOPS {
+
 	private Stack<String> ops = new Stack<String>();
 	private Stack<String> nums = new Stack<String>();
-	
+
 	private int result = 0;
-	
+
 	private String input;
-	
-	
+
 	Vector<String> queue = new Vector<String>();
-	
-	public ArithmeticOPS(String arg){
+
+	public ArithmeticOPS(String arg) {
 		ops = null;
 		nums = null;
 		input = arg;
 		splitInput();
 		calculate();
 	}
-	
-	
-	
+
 	private void calculate() {
-		while(!nums.empty()) {
+		while (!nums.empty()) {
 			int num = Integer.parseInt(nums.get(0));
 			nums.remove(0);
-			
-			
+
 		}
-		
+
 	}
-
-
 
 	private void splitInput() {
 		Scanner s = new Scanner(input);
-		while(s.hasNext()) {
+		while (s.hasNext()) {
 			String hey = s.next();
-			if(hey.matches("-?\\d+(\\.\\d+)?")) {
+			if (hey.matches("-?\\d+(\\.\\d+)?")) {
 				nums.push(hey);
-			}
-			else
+			} else
 				ops.push(hey);
 		}
-		
+
 	}
-
-
-
-	public int parseExp(String expression){
-		
-		expression.split("[1-9]");
-		return 0;
-		
-	}
-
 
 }
