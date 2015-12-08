@@ -4,6 +4,7 @@
 package bets;
 
 import java.io.Serializable;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -11,54 +12,42 @@ import java.util.Vector;
  * @author 17ap0497
  *
  */
-public class ArithmeticOPS extends Thread{
+public class ArithmeticOPS{
 	
 	private Stack<String> ops;
 	private Stack<String> nums;
 	
+	private String input;
+	
 	
 	Vector<String> queue = new Vector<String>();
 	
-	public ArithmeticOPS(){
+	public ArithmeticOPS(String arg){
 		ops = null;
 		nums = null;
+		input = arg;
+		splitInput();
 		
 	}
 	
+	
+	
+	private void splitInput() {
+		Scanner s = new Scanner(input);
+		while(s.hasNext()) {
+			
+		}
+		
+	}
+
+
+
 	public int parseExp(String expression){
 		
 		expression.split("[1-9]");
+		return 0;
 		
-		
-		return 0; //CALCULATE
-		
-	}
-	public synchronized void processQueue(){
-		String arg = null;
-		arg = queue.firstElement();
-		queue.removeElementAt(0);
-		
-	}
-	
-	
-	
-	public synchronized void addToQueue(String arg) {
-		queue.add(arg);
-		notify();
-
 	}
 
-	public void run() {
-		try {
-			while (!interrupted()) {
-				if (queue.isEmpty())
-					wait();
-			}
-
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 }
