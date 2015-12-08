@@ -48,6 +48,20 @@ public class ArithmeticOPS {
 	}
 	
 	private String runNumbers(String num1, String num2, String op) {
+		int num1i = Integer.parseInt(num1);
+		int num2i = Integer.parseInt(num2);
+		if(op == "^")
+			return Math.pow(num1i, num2i)+"";
+		else if(op == "*")
+			return (num1i*num2i)+"";
+		else if(op == "/")
+			return (num1i/num2i)+"";
+		else if(op == "+")
+			return (num1i+num2i)+"";
+		else if(op == "-")
+			return (num1i-num2i)+"";
+		
+		return "Some shit went down";
 	}
 
 	private void splitInput() {

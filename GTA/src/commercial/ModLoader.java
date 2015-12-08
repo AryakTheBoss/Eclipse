@@ -73,7 +73,7 @@ public class ModLoader {
 		return mods.size();
 	}
 	//copy from mods folder to game folder
-	public void installMod(File mod){
+	public boolean installMod(File mod){
 		
 	/*	File file = new File("<file to be copied>");
 		// get the java.nio.file.path from this
@@ -86,12 +86,22 @@ public class ModLoader {
 		Files.copy(filePath, out);*/
 		
 		System.out.println(mod.getName() + " Installed Successfully!");
+		return true;
 	}
-	//rename extention to .OFFZ
-	public void enableMod(File mod, boolean flag){
+	//rename extention to .OFFZ+(originalExtention)
+	public boolean disableMod(File mod){
 		
-		
+		if(mod.getName().indexOf(".OFFZ") >= 0){
+			return false;
+		}
+		String lel = mod.getName().substring(mod.getName().indexOf(".")+1);
+		mod.renameTo(new File(mod.getPath()));
 		System.out.println(mod.getName() + " Has Been Disabled.");
+		return true;
+	}
+	public boolean enableMod(File mod){
+		System.out.println(mod.getName() + " Has Been Enabled!");
+		return true;
 	}
 	
 	
@@ -120,22 +130,6 @@ public class ModLoader {
 		
 		
 		return fileList;
-		
-	}
-	private boolean isMod(File f){
-		
-		String extention = f.getName();
-		extention = extention.substring(extention.indexOf(".")+1);
-		
-		for(String s : supportedFileTypes){
-			
-			if(s.equals(extention)){
-				return true;
-			}
-			
-		}
-		return false;
-		
 		
 	}
 	
