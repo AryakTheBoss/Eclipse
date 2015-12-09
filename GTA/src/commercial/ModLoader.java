@@ -96,7 +96,7 @@ public class ModLoader {
 		}
 		String originalExtention = mod.getName().substring(mod.getName().indexOf(".")+1);
 		//mod.renameTo(new File(mod.getPath()));
-		
+		mod.renameTo(new File(mod.getAbsolutePath().substring(mod.getName().indexOf(".")+1)+"OFFZ"+originalExtention));
 		System.out.println(mod.getName() + " Has Been Disabled.");
 		return true;
 	}
