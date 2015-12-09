@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.Stack;
+
+import javax.sound.midi.SysexMessage;
 /**
  * @author Aryak
  *
@@ -25,6 +27,9 @@ public class Runner {
 		createBat(false); //Change to True if using Jar File
 		
 		ModLoader loader = new ModLoader();
+		System.out.println(loader.disableMod(new File("H:\\qn.txt")));
+		
+		System.exit(0);
 		System.out.println("Mods were Successfully Loaded!");
 		System.out.println("1) Install Mods");
 		System.out.println("2) Configure Installed Mods");

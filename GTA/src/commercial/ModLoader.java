@@ -96,9 +96,11 @@ public class ModLoader {
 		}
 		String originalExtention = mod.getName().substring(mod.getName().indexOf(".")+1);
 		//mod.renameTo(new File(mod.getPath()));
-		mod.renameTo(new File(mod.getAbsolutePath().substring(mod.getName().indexOf(".")+1)+"OFFZ"+originalExtention));
+		System.out.println(originalExtention);
+		System.out.println(mod.getAbsolutePath().substring(mod.getName().indexOf(".")+1)+"OFFZ"+originalExtention);
+		boolean b = mod.renameTo(new File(mod.getAbsolutePath().substring(mod.getName().indexOf(".")+1)+"OFFZ"+originalExtention));
 		System.out.println(mod.getName() + " Has Been Disabled.");
-		return true;
+		return b;
 	}
 	public boolean enableMod(File mod){
 		System.out.println(mod.getName() + " Has Been Enabled!");
