@@ -30,24 +30,46 @@ public class ArithmeticOPS {
 	}
 
 	private void calculate() {
-
-		while (!nums.empty()) {
-			int num = Integer.parseInt(nums.remove(0));
-			String sign = nums.remove(0);
 			int x = 0;
 			while (!ops.isEmpty()) {
-				String op = ops.remove(0);
-				if (op.equals("*")) {
-					
+				System.out.println(x);
+				String op = ops.get(x);
+				if (op.equals("^")) {
+					nums.add(x, runNumbers(nums.remove(x),nums.remove(x), ops.remove(x)));
+					x = 0;
+				} else if (op.equals("*")) {
+					if(ops.indexOf("^") < 0) {
+						nums.add(x, runNumbers(nums.remove(x),nums.remove(x), ops.remove(x)));
+						x = 0;
+					}
+					else {
+						x++;
+					}
 				} else if (op.equals("/")) {
-
+					if(ops.indexOf("^") < 0) {
+						nums.add(x, runNumbers(nums.remove(x),nums.remove(x), ops.remove(x)));
+						x = 0;}
+					else {
+						x++;
+					}
 				} else if (op.equals("+")) {
-
+					if(!(ops.contains("^") || ops.contains("*")|| ops.contains("/"))) {
+						nums.add(x, runNumbers(nums.remove(x),nums.remove(x), ops.remove(x)));
+						x = 0;
+					}
+					else {
+						x++;
+					}
 				} else if (op.equals("-")) {
-
+					if(!(ops.contains("^") || ops.contains("*")|| ops.contains("/"))) {
+						nums.add(x, runNumbers(nums.remove(x),nums.remove(x), ops.remove(x)));
+						x = 0;}
+					else {
+						x++;
+					}
 				}
 
-			}
+			
 
 		}
 
@@ -56,15 +78,15 @@ public class ArithmeticOPS {
 	private String runNumbers(String num1, String num2, String op) {
 		int num1i = Integer.parseInt(num1);
 		int num2i = Integer.parseInt(num2);
-		if (op == "^")
+		if (op.equals("^"))
 			return Math.pow(num1i, num2i) + "";
-		else if (op == "*")
+		else if (op.equals("*"))
 			return (num1i * num2i) + "";
-		else if (op == "/")
+		else if (op.equals("/"))
 			return (num1i / num2i) + "";
-		else if (op == "+")
+		else if (op.equals("+"))
 			return (num1i + num2i) + "";
-		else if (op == "-")
+		else if (op.equals("-"))
 			return (num1i - num2i) + "";
 
 		return "Some shit went down";
@@ -80,6 +102,11 @@ public class ArithmeticOPS {
 				ops.push(hey);
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return nums.pop();
 	}
 
 }
