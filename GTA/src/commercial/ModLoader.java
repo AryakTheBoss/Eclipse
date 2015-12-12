@@ -93,9 +93,10 @@ public class ModLoader {
 	public void printAvailableMods(){
 		
 		int count = 1;
+		System.out.println("Name\tType");
 		for(File f : availableMods){
 			
-			System.out.println(count +") "+ f.getName());
+			System.out.println(count +") "+ f.getName().split(".")[0]+"\t"+f.getName().split(".")[1]);
 			count++;
 		}
 		
@@ -105,6 +106,15 @@ public class ModLoader {
 		for(File f : installedMods){
 			
 			System.out.println(count +") "+ f.getName());
+			count++;
+		}
+	}
+	public void printInstalledModsWithStatus(){
+		int count = 1;
+		System.out.println("Name\tType\tStatus");
+		for(File f : installedMods){
+			
+			System.out.println(count +") "+ f.getName().split(".")[0]+"\t"+f.getName().split(".")[1]+(f.getName().endsWith(".OFFZ") ? "DISABLED":"ENABLED"));
 			count++;
 		}
 	}
@@ -152,6 +162,9 @@ public class ModLoader {
 		}
 		
 		
+	}
+	public boolean isDisabled(File mod){
+		return mod.getName().indexOf(".OFFZ") >= 0;
 	}
 	//rename mod extention to .OFFZ and Script extention to .OFFS
 	public boolean disableMod(File mod){

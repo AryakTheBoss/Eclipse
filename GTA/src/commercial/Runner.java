@@ -70,7 +70,7 @@ public class Runner {
 		}else if(Integer.parseInt(choi) == 2){
 			
 			System.out.println("Installed Mods: ");
-			loader.printInstalledMods();
+			loader.printInstalledModsWithStatus();
 			System.out.println("\nWhich Mods would you like to configure? (Enter numbers and Seperate by commas)");
 			String choice = s.nextLine();
 			String[] pickedIndecies = choice.split(",");
@@ -79,8 +79,13 @@ public class Runner {
 				System.out.println("1) Enable");
 				System.out.println("2) Disable");
 				System.out.println("3) Uninstall");				
-				System.out.println("\nWhat do you want to do with "+"? (Enter numbers and Seperate by commas)");
+				System.out.println("\nWhat do you want to do with "+"that mod"+"? (Enter numbers and Seperate by commas)");
 				String choice2 = s.nextLine();
+				if(Integer.parseInt(choice2) == 1){
+					if(!loader.isDisabled(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1))){
+						
+					}
+				}
 				
 			}else{
 				System.out.println("1) Enable");
