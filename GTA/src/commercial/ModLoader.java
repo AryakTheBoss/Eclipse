@@ -230,17 +230,53 @@ private static String getFileExtension(String f) {
 	}
 	public boolean enableMods(Stack<File> mods){
 		
-		return false;
+		while(!mods.isEmpty()){
+			enableMod(mods.pop());
+		}
+		return true;
 		
 	}
 	
 	public boolean uninstallMod(File mod, boolean moveBack){ //if moveback is true, it will move the mod back to "Paste Mods Here" folder else it will delete it
 		
-		return false;
+		if(!moveBack){
+		String s = mod.getPath();
+			mod.delete();
+			for(int i=0;i<installedMods.size();i++){
+				if(installedMods.get(i).getPath().equals(s)){
+					installedMods.remove(i);
+				}
+			}
+			try {
+				FileWriter fw = new FileWriter(installed,false);
+				for(int i=0;i<installedMods.size();i++)
+					fw.write(installedMods.get(i).getPath());
+				
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}else{
+			String s = mod.getPath();
+			try {
+				FileUtils.copyFileToDirectory(mod, f);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			new File(s).delete();
+		}
 		
+		return true;
 	}
-	public boolean uninstallMods(Stack<File> mods){
+	public boolean uninstallMods(Stack<File> mods, boolean moveBack){
 		
+		while(!mods.isEmpty()){
+			uninstallMod(mods.pop(),moveBack);
+		}
 		return false;
 		
 	}

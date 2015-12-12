@@ -20,7 +20,8 @@ public class Runner {
 	 * @throws IOException 
 	 */
 	public static Scanner s = new Scanner(System.in);
-	public static Stack<File> toInstall = new Stack<File>();
+	public static Stack<File> toInstall = new Stack<File>(); //TODO use MOD class
+	public static Stack<File> toUninstall = new Stack<File>();
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -132,11 +133,7 @@ public class Runner {
 				System.out.println("\nWith these mods, What do you want to do? (Enter numbers and Seperate by commas)");
 				String choice2 = s.nextLine();
 				
-				for(int i=0;i<pickedIndecies.length;i++){
-					
-					//
-					
-				}
+				
 				
 			}
 			
