@@ -82,9 +82,46 @@ public class Runner {
 				System.out.println("\nWhat do you want to do with "+"that mod"+"? (Enter numbers and Seperate by commas)");
 				String choice2 = s.nextLine();
 				if(Integer.parseInt(choice2) == 1){
+					try{
 					if(!loader.isDisabled(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1))){
-						
+						System.err.println("Mod is already Enabled!");
+					}else					
+					loader.enableMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1));
+					
+					}catch (IllegalArgumentException e){
+						System.err.println("Illegal Index!");
 					}
+				}else if(Integer.parseInt(choice2) == 2){
+					
+					try{
+						if(loader.isDisabled(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1))){
+							System.err.println("Mod is already Disabled!");
+						}else						
+						loader.disableMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1));
+						
+						}catch (IllegalArgumentException e){
+							System.err.println("Illegal Index!");
+						}
+					
+				}else if(Integer.parseInt(choice2) == 3){
+					try{
+						
+					if(loader.isDisabled(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1))){
+						System.err.println("Mod Must be enabled to uninstall! Mod will be enabled automatically");
+						loader.enableMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1));
+						System.err.println("Enabled!");
+					}
+					System.out.println("How would you like to uninstall this mod?");
+					System.out.println("1) Delete it");
+					System.out.println("2) Move back to Paste folder");
+					String uchoice = s.nextLine();
+					if(Integer.parseInt(uchoice) == 1){
+						loader.uninstallMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1), false);
+					}
+					}catch (IllegalArgumentException e){
+						System.err.println("Illegal Index!");
+					}
+					
 				}
 				
 			}else{
