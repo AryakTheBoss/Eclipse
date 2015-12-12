@@ -63,8 +63,13 @@ public class ModLoader {
 			
 		
 	}
-	public ArrayList<File> loadInstalledMods(){
+	public ArrayList<File> loadInstalledMods() throws FileNotFoundException{
 		
+		ArrayList<File> lol = new ArrayList<File>();
+		Scanner s = new Scanner(installed);
+		while(s.hasNext()){
+			lol.add(new File(s.nextLine()));
+		}
 		return null;
 		
 	}
@@ -87,13 +92,14 @@ public class ModLoader {
 		System.out.println("Trying to install "+mod.getName()+"...");
 		String temp = mod.getPath();
 	try {
-		if(mod.getName().endsWith(".asi")||mod.getName().endsWith(".lua")||mod.getName().endsWith(".cs")||mod.getName().endsWith(".vb"))
+		if(!mod.getName().endsWith(".dll"))
 			FileUtils.copyFileToDirectory(mod, new File(gtaDirectory+"\\scripts"));
 		else
 			FileUtils.copyFileToDirectory(mod, new File(gtaDirectory));
 	
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
+		System.err.println(mod.getName() + " Was NOT Installed Successfully :(");
 		return false;
 	}
 	
@@ -102,12 +108,13 @@ public class ModLoader {
 				installed.createNewFile();
 			
 			FileWriter fw = new FileWriter(installed,true);
-			fw.write(mod.getPath());
+			fw.write(mod.getPath()+"\n");
 			fw.close();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println(mod.getName() + " Was NOT Installed Successfully :(");
+			return false;
 		}
 		new File(temp).delete(); //delete original file
 		System.out.println(mod.getName() + " Installed Successfully!");
