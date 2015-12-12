@@ -115,9 +115,10 @@ public class Runner {
 					System.out.println("1) Delete it");
 					System.out.println("2) Move back to Paste folder");
 					String uchoice = s.nextLine();
-					if(Integer.parseInt(uchoice) == 1){
+					if(Integer.parseInt(uchoice) == 1)
 						loader.uninstallMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1), false);
-					}
+					else
+						loader.uninstallMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1), true);
 					}catch (IllegalArgumentException e){
 						System.err.println("Illegal Index!");
 					}

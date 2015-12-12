@@ -1,7 +1,9 @@
 package commercial;
 
 import java.util.List;
+
 import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -169,22 +171,61 @@ public class ModLoader {
 	//rename mod extention to .OFFZ and Script extention to .OFFS
 	public boolean disableMod(File mod){
 		
-		if(mod.getName().indexOf(".OFFZ") >= 0){
+		if(isDisabled(mod) || !mod.getName().endsWith(".dll")){
+			System.out.println("Disabling and enabling of Scripts is not supported yet");
 			return false;
 		}
+		
+		renameFileExtention(mod.getPath(),".OFFZ");
 		
 		
 		System.out.println(mod.getName() + " Has Been Disabled.");
 		
 		return true;
 	}
+	public boolean renameFileExtention(String source, String newExtension)  
+	{  
+		String target;  
+		String currentExtension = getFileExtension(source);  
+  
+		if (currentExtension.equals("")){  
+     target = source + "." + newExtension;  
+	}  
+		else {  
+     target = source.replaceAll("." + currentExtension, newExtension);  
+		}  
+		return new File(source).renameTo(new File(target));  
+	}  
+  
+private static String getFileExtension(String f) {  
+  String ext = "";  
+  int i = f.lastIndexOf('.');  
+  if (i > 0 &&  i < f.length() - 1) {  
+     ext = f.substring(i + 1).toLowerCase();  
+  }  
+  return ext;  
+}  
 	public boolean disableMods(Stack<File> mods){		
 		
+		while(!mods.isEmpty()){
+			disableMod(mods.pop());
+		}
 		return true;
 		
 	}
 	public boolean enableMod(File mod){
-		System.out.println(mod.getName() + " Has Been Enabled!");
+		
+		if(!isDisabled(mod) || !mod.getName().endsWith(".dll")){
+			System.out.println("Disabling and enabling of Scripts is not supported yet");
+			return false;
+		}
+		
+		
+		renameFileExtention(mod.getPath(),".dll");
+		
+		
+		System.out.println(mod.getName() + " Has Been Enabled.");
+		
 		return true;
 	}
 	public boolean enableMods(Stack<File> mods){
