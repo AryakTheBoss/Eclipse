@@ -27,7 +27,7 @@ public class Runner {
 		createBat(false); //Change to True if using Jar File
 		
 		ModLoader loader = new ModLoader();
-		System.out.println(loader.disableMod(new File("H:\\qn.txt")));
+		//System.out.println(loader.disableMod(new File("H:\\qn.txt")));
 		
 		System.exit(0);
 		System.out.println("Mods were Successfully Loaded!");

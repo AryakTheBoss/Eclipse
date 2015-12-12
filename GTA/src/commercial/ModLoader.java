@@ -1,8 +1,8 @@
 package commercial;
 
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 import java.io.File;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,23 +14,29 @@ import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class ModLoader {
 	
-	private static ArrayList<File> mods;
+	
+	private static ArrayList<File> availableMods;
+	private static ArrayList<File> installedMods;
+	private File f = new File("C:\\Paste Mods Here");
+	private File dir = new File("C:\\Paste Mods Here\\gtaDirectory.txt");
+	private File installed = new File("C:\\Paste Mods Here\\installedMods.txt");
 	private static String gtaDirectory;
 	private static final String[] supportedFileTypes = {".dll",".asi",".lua",".cs",".vb"};
 	
 	
 	public ModLoader() throws FileNotFoundException{
 		
-		File f = new File("C:\\Paste Mods Here");
-		File f2 = new File("C:\\Paste Mods Here\\gtaDirectory.txt");
-		if(f2.exists()){
+		
+		if(dir.exists()){
 			
-			Scanner fr = new Scanner(f2);
+			Scanner fr = new Scanner(dir);
 			gtaDirectory = fr.nextLine();
-			mods = loadFiles();
+			availableMods = loadFiles();
+			installedMods = loadInstalledMods();
 			fr.close();
 			
 		}else{
@@ -39,8 +45,8 @@ public class ModLoader {
 			System.out.println("Enter GTA Directory: ");
 			String ss = s.nextLine();			
 			try {
-				f2.createNewFile();
-				FileWriter fs = new FileWriter(f2);
+				dir.createNewFile();
+				FileWriter fs = new FileWriter(dir);
 				fs.write(ss);
 				fs.close();
 			} catch (IOException e) {
@@ -49,7 +55,7 @@ public class ModLoader {
 			}
 			gtaDirectory = ss;
 			
-			mods = loadFiles();
+			availableMods = loadFiles();
 			
 			System.out.println("LOCATION SAVED!");
 			
@@ -57,12 +63,16 @@ public class ModLoader {
 			
 		
 	}
-	
+	public ArrayList<File> loadInstalledMods(){
+		
+		return null;
+		
+	}
 	
 	public void printFiles(){
 		
 		int count = 1;
-		for(File f : mods){
+		for(File f : availableMods){
 			
 			System.out.println(count +") "+ f.getName());
 			count++;
@@ -70,23 +80,47 @@ public class ModLoader {
 		
 	}
 	public int mods(){
-		return mods.size();
+		return availableMods.size();
 	}
 	//copy from mods folder to game folder
 	public boolean installMod(File mod){
-		
-	/*	File file = new File("<file to be copied>");
-		// get the java.nio.file.path from this
-		Path filePath = file.toPath();
-		//create a temporary file to copy contents to.
-		//In actual application this is the target file for copy
-		Path tempFilePath = Files.createTempFile(tempDir, "temp", "a",new FileAttribute<?>[0]);
-		
-		// copy contents
-		Files.copy(filePath, out);*/
-		
+		System.out.println("Trying to install "+mod.getName()+"...");
+		String temp = mod.getPath();
+	try {
+		if(mod.getName().endsWith(".asi")||mod.getName().endsWith(".lua")||mod.getName().endsWith(".cs")||mod.getName().endsWith(".vb"))
+			FileUtils.copyFileToDirectory(mod, new File(gtaDirectory+"\\scripts"));
+		else
+			FileUtils.copyFileToDirectory(mod, new File(gtaDirectory));
+	
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		return false;
+	}
+	
+		try {
+			if(!installed.exists())
+				installed.createNewFile();
+			
+			FileWriter fw = new FileWriter(installed,true);
+			fw.write(mod.getPath());
+			fw.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		new File(temp).delete(); //delete original file
 		System.out.println(mod.getName() + " Installed Successfully!");
+		
 		return true;
+	}
+	public void installMods(Stack<File> mods){
+		
+		while(!mods.isEmpty()){
+			installMod(mods.pop());
+		}
+		
+		
 	}
 	//rename extention to .OFFZ+(originalExtention)
 	public boolean disableMod(File mod){
@@ -95,19 +129,35 @@ public class ModLoader {
 			return false;
 		}
 		String originalExtention = mod.getName().substring(mod.getName().indexOf(".")+1);
-		//mod.renameTo(new File(mod.getPath()));
-		System.out.println(originalExtention);
-		System.out.println(mod.getAbsolutePath().substring(mod.getName().indexOf(".")+1)+"OFFZ"+originalExtention);
-		boolean b = mod.renameTo(new File(mod.getAbsolutePath().substring(mod.getName().indexOf(".")+1)+"OFFZ"+originalExtention));
+		
 		System.out.println(mod.getName() + " Has Been Disabled.");
-		return b;
+		return true;
+	}
+	public boolean disableMods(Stack<File> mods){		
+		
+		return true;
+		
 	}
 	public boolean enableMod(File mod){
 		System.out.println(mod.getName() + " Has Been Enabled!");
 		return true;
 	}
+	public boolean enableMods(Stack<File> mods){
+		
+		return false;
+		
+	}
 	
-	
+	public boolean uninstallMod(File mod){
+		
+		return false;
+		
+	}
+	public boolean uninstallMods(Stack<File> mods){
+		
+		return false;
+		
+	}
 	private ArrayList<File> loadFiles(){
 		
 		ArrayList<File> fileList = new ArrayList<File>();
