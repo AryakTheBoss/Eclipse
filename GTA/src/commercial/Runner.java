@@ -29,7 +29,7 @@ public class Runner {
 		ModLoader loader = new ModLoader();
 		//System.out.println(loader.disableMod(new File("H:\\qn.txt")));
 		
-		System.exit(0);
+		
 		System.out.println("Mods were Successfully Loaded!");
 		System.out.println("1) Install Mods");
 		System.out.println("2) Configure Installed Mods");
@@ -40,14 +40,63 @@ public class Runner {
 		
 		
 		System.out.println("AVAILABLE MODS (Not Installed): ");
-		loader.printFiles();
-		System.out.println("\nWhich Mods would you like to install? (Enter number and Seperate by commas)");
+		loader.printAvailableMods();
+		System.out.println("\nWhich Mods would you like to install? (Enter numbers and Seperate by commas)");
 		String choice = s.nextLine();
 		//parse input
+		String[] pickedIndecies = choice.split(",");
 		
+		if(pickedIndecies.length == 1){
+			try{
+			loader.installMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1));
+			}catch (IllegalArgumentException e){
+				System.err.println("Illegal Index!");
+			}
+		}else{
 		
+		for(int i=0;i<pickedIndecies.length;i++){
+			
+			try{
+			toInstall.push(loader.getAvailableModAtIndex(Integer.parseInt(pickedIndecies[i])-1));
+			}catch (IllegalArgumentException e){
+				System.err.println("Illegal Index Found! Skipping it...");
+			}
+			
+		}
+		loader.installMods(toInstall);  
 		
+		}
 		
+		}else if(Integer.parseInt(choi) == 2){
+			
+			System.out.println("Installed Mods: ");
+			loader.printInstalledMods();
+			System.out.println("\nWhich Mods would you like to configure? (Enter numbers and Seperate by commas)");
+			String choice = s.nextLine();
+			String[] pickedIndecies = choice.split(",");
+			
+			if(pickedIndecies.length == 1){
+				System.out.println("1) Enable");
+				System.out.println("2) Disable");
+				System.out.println("3) Uninstall");				
+				System.out.println("\nWhat do you want to do with "+"? (Enter numbers and Seperate by commas)");
+				String choice2 = s.nextLine();
+				
+			}else{
+				System.out.println("1) Enable");
+				System.out.println("2) Disable");
+				System.out.println("3) Uninstall");				
+				System.out.println("\nWith these mods, What do you want to do? (Enter numbers and Seperate by commas)");
+				String choice2 = s.nextLine();
+				
+				for(int i=0;i<pickedIndecies.length;i++){
+					
+					//
+					
+				}
+				
+			}
+			
 		}
 
 

@@ -46,6 +46,7 @@ public class ModLoader {
 			String ss = s.nextLine();			
 			try {
 				dir.createNewFile();
+				installed.createNewFile();
 				FileWriter fs = new FileWriter(dir);
 				fs.write(ss);
 				fs.close();
@@ -56,6 +57,7 @@ public class ModLoader {
 			gtaDirectory = ss;
 			
 			availableMods = loadFiles();
+			installedMods = loadInstalledMods();
 			
 			System.out.println("LOCATION SAVED!");
 			
@@ -70,11 +72,25 @@ public class ModLoader {
 		while(s.hasNext()){
 			lol.add(new File(s.nextLine()));
 		}
-		return null;
+		s.close();
+		return lol;
 		
 	}
-	
-	public void printFiles(){
+	public File getInstalledModAtIndex(int i){
+		try{
+		return installedMods.get(i);
+		}catch (IndexOutOfBoundsException e){
+			throw new IllegalArgumentException();
+		}
+	}
+	public File getAvailableModAtIndex(int i){
+		try{
+			return availableMods.get(i);
+			}catch (IndexOutOfBoundsException e){
+				throw new IllegalArgumentException();
+			}
+	}
+	public void printAvailableMods(){
 		
 		int count = 1;
 		for(File f : availableMods){
@@ -83,6 +99,14 @@ public class ModLoader {
 			count++;
 		}
 		
+	}
+	public void printInstalledMods(){
+		int count = 1;
+		for(File f : installedMods){
+			
+			System.out.println(count +") "+ f.getName());
+			count++;
+		}
 	}
 	public int mods(){
 		return availableMods.size();
@@ -129,15 +153,16 @@ public class ModLoader {
 		
 		
 	}
-	//rename extention to .OFFZ+(originalExtention)
+	//rename mod extention to .OFFZ and Script extention to .OFFS
 	public boolean disableMod(File mod){
 		
 		if(mod.getName().indexOf(".OFFZ") >= 0){
 			return false;
 		}
-		String originalExtention = mod.getName().substring(mod.getName().indexOf(".")+1);
+		
 		
 		System.out.println(mod.getName() + " Has Been Disabled.");
+		
 		return true;
 	}
 	public boolean disableMods(Stack<File> mods){		
@@ -155,7 +180,7 @@ public class ModLoader {
 		
 	}
 	
-	public boolean uninstallMod(File mod){
+	public boolean uninstallMod(File mod, boolean moveBack){ //if moveback is true, it will move the mod back to "Paste Mods Here" folder else it will delete it
 		
 		return false;
 		
