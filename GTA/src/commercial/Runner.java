@@ -51,7 +51,7 @@ public class Runner {
 		
 		if(pickedIndecies.length == 1){
 			try{
-			loader.installMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[0])-1));
+			loader.installMod(loader.getAvailableModAtIndex(Integer.parseInt(pickedIndecies[0])-1));
 			}catch (IllegalArgumentException e){
 				System.err.println("Illegal Index!");
 			}
@@ -73,7 +73,7 @@ public class Runner {
 		}else if(Integer.parseInt(choi) == 2){
 			
 			System.out.println("Installed Mods: ");
-			loader.printInstalledModsWithStatus();
+			loader.printInstalledMods();
 			System.out.println("\nWhich Mods would you like to configure? (Enter numbers and Seperate by commas)");
 			String choice = s.nextLine();
 			String[] pickedIndecies = choice.split(",");

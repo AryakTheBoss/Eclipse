@@ -75,6 +75,7 @@ public class ModLoader {
 			lol.add(new File(s.nextLine()));
 		}
 		s.close();
+		System.out.println(lol);
 		return lol;
 		
 	}
@@ -98,7 +99,7 @@ public class ModLoader {
 		System.out.println("Name\tType");
 		for(File f : availableMods){
 			
-			System.out.println(count +") "+ f.getName().split(".")[0]+"\t"+f.getName().split(".")[1]);
+			System.out.println(count +") "+ f.getName());
 			count++;
 		}
 		
@@ -114,8 +115,10 @@ public class ModLoader {
 	public void printInstalledModsWithStatus(){
 		int count = 1;
 		System.out.println("Name\tType\tStatus");
+		
 		for(File f : installedMods){
-			
+			//System.out.println(Arrays.toString(f.getName().split(".")));
+			//System.out.println(f.getName());
 			System.out.println(count +") "+ f.getName().split(".")[0]+"\t"+f.getName().split(".")[1]+(f.getName().endsWith(".OFFZ") ? "DISABLED":"ENABLED"));
 			count++;
 		}
@@ -144,7 +147,7 @@ public class ModLoader {
 				installed.createNewFile();
 			
 			FileWriter fw = new FileWriter(installed,true);
-			fw.write(mod.getPath()+"\n");
+			fw.write(gtaDirectory+"\\"+mod.getName()+"\n");
 			fw.close();
 			
 		} catch (IOException e) {
@@ -165,8 +168,9 @@ public class ModLoader {
 		
 		
 	}
+	
 	public boolean isDisabled(File mod){
-		return mod.getName().indexOf(".OFFZ") >= 0;
+		return mod.getName().indexOf(".offz") >= 0;
 	}
 	//rename mod extention to .OFFZ and Script extention to .OFFS
 	public boolean disableMod(File mod){
@@ -176,7 +180,7 @@ public class ModLoader {
 			return false;
 		}
 		
-		renameFileExtention(mod.getPath(),".OFFZ");
+		renameFileExtention(mod.getPath(),".offz");
 		
 		
 		System.out.println(mod.getName() + " Has Been Disabled.");
@@ -215,7 +219,7 @@ private static String getFileExtension(String f) {
 	}
 	public boolean enableMod(File mod){
 		
-		if(!isDisabled(mod) || !mod.getName().endsWith(".dll")){
+		if(!isDisabled(mod) || !(mod.getName().endsWith(".dll") || mod.getName().endsWith(".offz"))){
 			System.out.println("Disabling and enabling of Scripts is not supported yet");
 			return false;
 		}
