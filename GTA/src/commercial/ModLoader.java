@@ -257,7 +257,7 @@ private static String getFileExtension(String f) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			System.out.println(mod.getName()+" Has been Uninstalled Successfully!");
 			
 		}else{
 			String s = mod.getPath();
@@ -268,6 +268,7 @@ private static String getFileExtension(String f) {
 				e.printStackTrace();
 			} 
 			new File(s).delete();
+			System.out.println(mod.getName()+" Has been Uninstalled Successfully!");
 		}
 		
 		return true;

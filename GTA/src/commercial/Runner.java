@@ -22,6 +22,8 @@ public class Runner {
 	public static Scanner s = new Scanner(System.in);
 	public static Stack<File> toInstall = new Stack<File>(); //TODO use MOD class
 	public static Stack<File> toUninstall = new Stack<File>();
+	public static Stack<File> toEnable = new Stack<File>();
+	public static Stack<File> toDisable = new Stack<File>();
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -133,7 +135,66 @@ public class Runner {
 				System.out.println("\nWith these mods, What do you want to do? (Enter numbers and Seperate by commas)");
 				String choice2 = s.nextLine();
 				
-				
+				if(Integer.parseInt(choice2) == 1){
+					
+					for(int i=0;i<pickedIndecies.length;i++){
+						
+						try{
+						toEnable.push(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[i])-1));
+						}catch (IllegalArgumentException e){
+							System.err.println("Illegal Index Found! Skipping it...");
+						}
+						
+					}
+					loader.enableMods(toEnable);
+					
+				}else if(Integer.parseInt(choice2) == 2){
+					
+					for(int i=0;i<pickedIndecies.length;i++){
+						
+						try{
+						toDisable.push(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[i])-1));
+						}catch (IllegalArgumentException e){
+							System.err.println("Illegal Index Found! Skipping it...");
+						}
+						
+					}
+					loader.disableMods(toDisable);
+					
+				}else if(Integer.parseInt(choice2) == 3){
+					
+
+					System.out.println("How would you like to uninstall these mods?");
+					System.out.println("1) Delete it");
+					System.out.println("2) Move back to Paste folder");
+					String uchoice = s.nextLine();
+					boolean flag = false;
+					try{
+					if(Integer.parseInt(uchoice) == 1)
+						flag = false;
+					else
+						flag = true;
+					}catch (IllegalArgumentException e){
+						System.err.println("Illegal Index!");
+					}
+						for(int i=0;i<pickedIndecies.length;i++){
+							
+							try{
+								if(loader.isDisabled(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[i])-1))){
+									System.err.println("Mod Must be enabled to uninstall! Mod will be enabled automatically");
+									loader.enableMod(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[i])-1));
+									System.err.println("Enabled!");
+								}
+							toUninstall.push(loader.getInstalledModAtIndex(Integer.parseInt(pickedIndecies[i])-1));
+							}catch (IllegalArgumentException e){
+								System.err.println("Illegal Index Found! Skipping it...");
+							}
+							
+						}
+						loader.uninstallMods(toUninstall,flag);
+					
+					
+				}
 				
 			}
 			
