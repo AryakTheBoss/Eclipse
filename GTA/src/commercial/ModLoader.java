@@ -1,20 +1,13 @@
 package commercial;
 
-import java.util.List;
-
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -291,7 +284,8 @@ private static String getFileExtension(String f) {
 		File dir = new File("C:\\Paste Mods Here");	
 		
 		FilenameFilter filter = new FilenameFilter() {
-	        public boolean accept(File directory, String fileName) {
+	        @Override
+			public boolean accept(File directory, String fileName) {
 	        	
 	           for(String s : supportedFileTypes)
 	        	   if(fileName.endsWith(s))
