@@ -72,6 +72,11 @@ public class ModLoader {
 		return lol;
 		
 	}
+	public void updateInstalledMods(ArrayList<File> al){
+		
+		
+		
+	}
 	public File getInstalledModAtIndex(int i){
 		try{
 		return installedMods.get(i);
