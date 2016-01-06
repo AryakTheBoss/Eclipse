@@ -17,5 +17,6 @@ public class PalinListRunner
 		System.out.println(jk +" is "+(jk.isPalin() ? "":"not")+" a  palinlist");
 		jk.setList("chicken is a chicken");		
 		System.out.println(jk +" is "+(jk.isPalin() ? "":"not")+" a  palinlist");
+	
 	}
 }
