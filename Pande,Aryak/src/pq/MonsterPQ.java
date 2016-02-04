@@ -1,41 +1,41 @@
 //© A+ Computer Science  -  www.apluscompsci.com
 //Name -
-//Date -
+//Date -  
 //Class -
-//Lab  -  
+//Lab  -
 package pq;
-import java.util.Collections;
 import java.util.Queue;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
 import java.util.PriorityQueue;
 
-public class PQTester
+public class MonsterPQ  
 {
-	private PriorityQueue<String> pQueue = new PriorityQueue<String>();
+	private PriorityQueue<Monster> pQueue = new PriorityQueue<Monster>();
 
-	public PQTester()
+	public MonsterPQ()
 	{
+		
+		
 	}
 
-	public PQTester(String list)
+	public void add(Monster obj)
 	{
-		setPQ(list);
-	}
-
-	public void setPQ(String list)
-	{
-		String[] betas = list.split(" ");
-		//System.out.println(Arrays.toString(betas)); 
-		for(int i=0;i<betas.length;i++){
-			pQueue.add(betas[i]);
-		}
+		
+		pQueue.add(obj);
+		
 	}
 	
 	public Object getMin()
 	{
 		return pQueue.peek();
+	}
+	
+	public Object removeMin()
+	{
+		return pQueue.remove();
 	}
 	
 	public String getNaturalOrder()
@@ -46,9 +46,9 @@ public class PQTester
 			output+=pQueue.poll()+" ";
 			
 		}
-		return output;		
+		return output;			
 	}
-	public String toString(){
+    public String toString(){
 		
 		return pQueue.toString();
 		
