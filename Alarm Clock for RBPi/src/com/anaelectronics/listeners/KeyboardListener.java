@@ -13,16 +13,19 @@ public class KeyboardListener implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		Thread thisThread = Thread.currentThread();
+		while(t == thisThread){
 		
+			//Listen for keyboard
+		
+		}
 	}
 	public static void start(){
 		t = new Thread(new KeyboardListener());
 		t.start();
 	}
-	public static void pause() throws InterruptedException{
-		t.wait();
+	public static void stop() throws InterruptedException{
+		t = null;
 	}
-	public static void resume(){
-		
-	}
+	
 }
