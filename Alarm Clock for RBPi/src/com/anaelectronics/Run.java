@@ -3,7 +3,7 @@
  */
 package com.anaelectronics;
 
-import com.anaelectronics.listeners.KeyboardListener;
+
 import com.anaelectronics.listeners.ServerTimeChecker;
 import com.anaelectronics.listeners.TimeCounter;
 
@@ -29,6 +29,7 @@ public class Run {
 		
 		TimeCounter.start();
 		ServerTimeChecker.start();
+		AlarmClock.openUI();
 	}
 	
 }

@@ -52,7 +52,7 @@ public class TimeCounter implements Runnable{
 	}
 	public static void start() throws IOException{
 		getTimeFromServer();
-		t = new Thread(new KeyboardListener());
+		t = new Thread(new TimeCounter());
 		t.start();
 	}
 	public static void stop(){

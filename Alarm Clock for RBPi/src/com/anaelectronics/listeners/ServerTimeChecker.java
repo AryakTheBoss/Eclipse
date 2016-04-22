@@ -44,7 +44,7 @@ public class ServerTimeChecker implements Runnable{
 	
 	public static void start() throws IOException{
 		
-		t = new Thread(new KeyboardListener());
+		t = new Thread(new ServerTimeChecker());
 		t.start();
 	}
 	public static void stop(){
