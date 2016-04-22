@@ -24,7 +24,7 @@ public class KeyboardListener implements Runnable{
 		t = new Thread(new KeyboardListener());
 		t.start();
 	}
-	public static void stop() throws InterruptedException{
+	public static void stop(){
 		t = null;
 	}
 	

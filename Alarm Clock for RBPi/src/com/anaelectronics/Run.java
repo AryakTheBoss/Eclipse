@@ -4,6 +4,8 @@
 package com.anaelectronics;
 
 import com.anaelectronics.listeners.KeyboardListener;
+import com.anaelectronics.listeners.ServerTimeChecker;
+import com.anaelectronics.listeners.TimeCounter;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -24,21 +26,9 @@ public class Run {
 	 */
 	public static void main(String[] args) throws IOException  {
 		// TODO Auto-generated method stub
-		getTimeFromServer();
 		
+		TimeCounter.start();
+		ServerTimeChecker.start();
 	}
-	private static void getTimeFromServer() throws IOException{
-		
-		String TIME_SERVER = "time-c.nist.gov";   
-		NTPUDPClient timeClient = new NTPUDPClient();
-		InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
-		TimeInfo timeInfo = timeClient.getTime(inetAddress);
-		long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
-		Date time = new Date(returnTime);
-		System.out.println(time.toString());
-		String[] ti = time.toString().split(" ")[3].split(":");
-		Globals.time = (Integer.parseInt(ti[0])*100)+(Integer.parseInt(ti[1]));
-		System.out.println(Globals.time);
-		
-	}
+	
 }
