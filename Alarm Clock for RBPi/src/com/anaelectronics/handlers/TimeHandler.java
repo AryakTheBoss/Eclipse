@@ -4,10 +4,10 @@
 package com.anaelectronics.handlers;
 
 import java.io.IOException;
-import java.net.InetAddress;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
 
 
 
@@ -38,6 +38,8 @@ public class TimeHandler implements Runnable{
 		}
 		convertTime();
 		AlarmClock.updateDisplay();
+		AlarmHandler.convertTime();
+		AlarmClock.updateAlarm();
 		//blinkColon();
 	}
 	}
@@ -67,9 +69,10 @@ public class TimeHandler implements Runnable{
 			Globals.PM = true;
 		else
 			Globals.PM = false;
-		
+		if(Globals.hours != 0)			
 		Globals.displayedTime = ""+(Globals.hours >= 12 ? Globals.hours-12 : Globals.hours)+(Globals.displayColon ? ":" : " ")+(Globals.minutes < 10 ? "0"+Globals.minutes : Globals.minutes)+"  "+(Globals.PM ? "PM":"AM");
-		
+		else
+			Globals.displayedTime = ""+(12)+(Globals.displayColon ? ":" : " ")+(Globals.minutes < 10 ? "0"+Globals.minutes : Globals.minutes)+"  "+(Globals.PM ? "PM":"AM");
 	}
 	private static void getTimeFromSystem() throws IOException{
 		

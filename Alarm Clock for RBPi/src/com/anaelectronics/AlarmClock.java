@@ -10,7 +10,7 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
+import com.anaelectronics.handlers.AlarmHandler;
 import com.anaelectronics.listeners.AlarmButtonListener;
 import com.anaelectronics.listeners.AlarmSetListener;
 
@@ -30,9 +31,9 @@ public class AlarmClock {
 	private static JLabel clockDisplay = null;
 	private static JFrame window = new JFrame("Clock");
 	private static JPanel clock = new JPanel();
-	private static JButton setAlarm = new JButton("Set");
-	private static JToggleButton alarmOn = new JToggleButton("On");
-	private static JLabel alarmSetFor = new JLabel("Alarm: 12:00 AM");
+	public static JButton setAlarm = new JButton("Set");
+	public static JToggleButton alarmOn = new JToggleButton("On");
+	private static JLabel alarmSetFor = new JLabel("Alarm: "+Globals.displayedAlarm);
 	private static JPanel statusBar = new JPanel();
 	public static void openUI() throws FontFormatException, IOException{
 		
@@ -55,7 +56,7 @@ public class AlarmClock {
              e.printStackTrace();
         }
          
-         clockDisplay.setFont(new Font("DS-Digital", Font.PLAIN, 95)); 
+         clockDisplay.setFont(new Font("DS-Digital", Font.PLAIN, 90)); 
          clockDisplay.setForeground(Color.RED);
          
         clock.add(clockDisplay,SwingConstants.CENTER);
@@ -74,6 +75,7 @@ public class AlarmClock {
         alarmOn.addActionListener(new AlarmButtonListener());
         setAlarm.addActionListener(new AlarmSetListener());
         window.add(statusBar, BorderLayout.NORTH);
+        AlarmHandler.convertTime();
         window.setVisible(true);
         
         
@@ -88,6 +90,11 @@ public class AlarmClock {
 		
 		clockDisplay.setText(Globals.displayedTime);
 		
+		
+	}
+	public static void updateAlarm(){
+		
+		alarmSetFor.setText(Globals.displayedAlarm);
 		
 	}
 	

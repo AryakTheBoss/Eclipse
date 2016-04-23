@@ -27,7 +27,7 @@ public class Run {
 		// TODO Auto-generated method stub
 		AlarmClock.openUI();
 		TimeHandler.start();
-		AlarmHandler.start();
+		
 		
 		
 	}
