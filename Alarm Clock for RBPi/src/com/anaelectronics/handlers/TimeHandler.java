@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.anaelectronics.listeners;
+package com.anaelectronics.handlers;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -38,9 +38,21 @@ public class TimeHandler implements Runnable{
 		}
 		convertTime();
 		AlarmClock.updateDisplay();
+		//blinkColon();
+	}
+	}
+	public static void blinkColon(){
+		try {
+			Thread.sleep(Globals.blinkDelay);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Globals.displayColon = !Globals.displayColon;
 		
 		}
-	}
+	
+
 	public static void start() throws IOException{
 		
 		t = new Thread(new TimeHandler());
@@ -56,7 +68,7 @@ public class TimeHandler implements Runnable{
 		else
 			Globals.PM = false;
 		
-		Globals.displayedTime = ""+(Globals.hours >= 12 ? Globals.hours-12 : Globals.hours)+":"+(Globals.minutes < 10 ? "0"+Globals.minutes : Globals.minutes)+"  "+(Globals.PM ? "PM":"AM");
+		Globals.displayedTime = ""+(Globals.hours >= 12 ? Globals.hours-12 : Globals.hours)+(Globals.displayColon ? ":" : " ")+(Globals.minutes < 10 ? "0"+Globals.minutes : Globals.minutes)+"  "+(Globals.PM ? "PM":"AM");
 		
 	}
 	private static void getTimeFromSystem() throws IOException{

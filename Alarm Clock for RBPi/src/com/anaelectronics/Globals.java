@@ -20,6 +20,8 @@ public class Globals {
 	public static String displayedAlarm = null;
 	public static final String alarmSymbol = "🔔"; //Symbol that'll be displayed when alarm is enabled
 	public static boolean PM = false;
+	public static boolean displayColon = true;
+	public static int blinkDelay = 600;
 	
 	
 

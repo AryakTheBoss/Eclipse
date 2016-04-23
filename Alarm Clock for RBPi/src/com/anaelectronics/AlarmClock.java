@@ -19,6 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
+import com.anaelectronics.listeners.AlarmButtonListener;
+import com.anaelectronics.listeners.AlarmSetListener;
+
 /**
  * @author ARYAK
  *	Main class which will handle displaying it and will recive commands
@@ -27,8 +30,8 @@ public class AlarmClock {
 	private static JLabel clockDisplay = null;
 	private static JFrame window = new JFrame("Clock");
 	private static JPanel clock = new JPanel();
-	private static JButton setAlarm = new JButton("Set Alarm");
-	private static JToggleButton alarmOn = new JToggleButton(Globals.alarmSymbol);
+	private static JButton setAlarm = new JButton("Set");
+	private static JToggleButton alarmOn = new JToggleButton("On");
 	private static JLabel alarmSetFor = new JLabel("Alarm: 12:00 AM");
 	private static JPanel statusBar = new JPanel();
 	public static void openUI() throws FontFormatException, IOException{
@@ -36,34 +39,49 @@ public class AlarmClock {
 		 window = new JFrame("Clock");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
            
-       // window.add(buttons, BorderLayout.SOUTH);        
-        window.setSize(320, 240);
+               
+        window.setSize(320, 240); //Fullscreen on our little touch screen we will buy (2" 320x240)
+       window.setResizable(false);
        
-        
          clock = new JPanel();
-         clockDisplay = new JLabel("Downloading...");
+         clockDisplay = new JLabel("null");
+         //Add the custom Digital Clock font to the Environment
          try {
              GraphicsEnvironment ge = 
                  GraphicsEnvironment.getLocalGraphicsEnvironment();	//Change path below to "DS-DIGII.TTF" when testing on the Pi
              ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/Users/ARYAK/Downloads/ds_digital/DS-DIGII.TTF")));
-           //  System.out.println(Arrays.toString(ge.getAvailableFontFamilyNames()));
+           
         } catch (IOException|FontFormatException e) {
              e.printStackTrace();
         }
          
-         clockDisplay.setFont(new Font("DS-Digital", Font.PLAIN, 100)); 
+         clockDisplay.setFont(new Font("DS-Digital", Font.PLAIN, 95)); 
          clockDisplay.setForeground(Color.RED);
-         //clockDisplay.setBackground(Color.BLACK);
+         
         clock.add(clockDisplay,SwingConstants.CENTER);
         
         window.setLayout(new BorderLayout());        
         window.add(clock, BorderLayout.SOUTH);
-        //clockDisplay.setLocation(160, 120);
+       
         clock.setBackground(Color.BLACK);
         window.getContentPane().setBackground( Color.BLACK );
+        alarmSetFor.setFont(new Font("DS-Digital",Font.PLAIN,25));
+        alarmSetFor.setForeground(Color.RED);
+        statusBar.setBackground(Color.BLACK);
+        statusBar.add(setAlarm, BorderLayout.EAST);
+        statusBar.add(alarmSetFor, BorderLayout.CENTER);
+        statusBar.add(alarmOn, BorderLayout.WEST);
+        alarmOn.addActionListener(new AlarmButtonListener());
+        setAlarm.addActionListener(new AlarmSetListener());
+        window.add(statusBar, BorderLayout.NORTH);
         window.setVisible(true);
         
         
+	}
+	public static void openSetAlarmDialog(){
+		
+		
+		
 	}
 	public static void updateDisplay(){
 		
