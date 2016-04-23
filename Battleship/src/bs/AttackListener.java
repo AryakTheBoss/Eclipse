@@ -11,6 +11,7 @@ import java.awt.event.*;
 		
 		public void actionPerformed(ActionEvent v)
 		{						
-			Battleship.getPlayers(Battleship.getYou()).humanAttack(v);				
+			Battleship.getPlayers(Battleship.getYou()).humanAttack(v);	
+			
 		}
 	}	

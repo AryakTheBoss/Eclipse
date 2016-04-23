@@ -24,6 +24,7 @@ public class Globals {
 	public static boolean displayColon = true;
 	public static int blinkDelay = 600;
 	public static boolean alarm = false;
+	public static boolean snoozed = false;
 	
 	
 

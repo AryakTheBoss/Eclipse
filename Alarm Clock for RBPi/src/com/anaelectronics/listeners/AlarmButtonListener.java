@@ -29,6 +29,7 @@ public class AlarmButtonListener implements ActionListener{
 		}else{
 			AlarmHandler.off();
 		}
+		
 	}
 
 }

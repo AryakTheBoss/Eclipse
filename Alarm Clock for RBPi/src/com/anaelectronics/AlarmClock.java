@@ -80,19 +80,15 @@ public class AlarmClock {
         
         
 	}
-	public static void openSetAlarmDialog(){
-		
-		
-		
-	}
-	public static void updateDisplay(){
+	
+	public static synchronized void updateDisplay(){
 		
 		
 		clockDisplay.setText(Globals.displayedTime);
 		
 		
 	}
-	public static void updateAlarm(){
+	public static synchronized void updateAlarm(){
 		
 		alarmSetFor.setText(Globals.displayedAlarm);
 		

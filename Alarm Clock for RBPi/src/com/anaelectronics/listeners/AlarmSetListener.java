@@ -25,13 +25,12 @@ public class AlarmSetListener implements ActionListener{
 	private static JComboBox<Integer> hrs = new JComboBox<Integer>();
 	private static JComboBox<String> mins = new JComboBox<String>();
 	private static JComboBox<String> ampm = new JComboBox<String>();
- 
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		//hrs = new JComboBox<Integer>();
-		//mins = new JComboBox<String>();
-		//ampm = new JComboBox<String>();
+		
+		dialog = new JFrame("Set Alarm");
 		hrs.removeAllItems();
 		mins.removeAllItems();
 		ampm.removeAllItems();
@@ -60,6 +59,7 @@ public class AlarmSetListener implements ActionListener{
        dialog.setLocation(dim.width/2-dialog.getSize().width/2, dim.height/2-dialog.getSize().height/2);
        dialog.setAutoRequestFocus(true);
        AlarmHandler.convertTime();
+       
        dialog.setVisible(true);
 		
 	}
@@ -71,16 +71,21 @@ public class AlarmSetListener implements ActionListener{
 			// TODO Auto-generated method stub
 			System.out.println(ampm.getItemAt(ampm.getSelectedIndex()));
 			Globals.aPM = ampm.getItemAt(ampm.getSelectedIndex()).equals("PM");
-			System.out.println(Globals.aPM);
+			
 			Globals.aminutes = Integer.parseInt(mins.getItemAt(mins.getSelectedIndex()));
 			if(!Globals.aPM && hrs.getItemAt(hrs.getSelectedIndex()) == 12)
 				Globals.ahours = 0;
 			else
 			Globals.ahours = (Globals.aPM ? hrs.getItemAt(hrs.getSelectedIndex())+12 : hrs.getItemAt(hrs.getSelectedIndex()));
 			
+			
 			okButton.removeActionListener(this);
-			AlarmHandler.convertTime();
+			
 			dialog.dispose();
+			AlarmHandler.convertTime();
+			//AlarmClock.updateAlarm();
+			
+			
 			
 		}
 		
