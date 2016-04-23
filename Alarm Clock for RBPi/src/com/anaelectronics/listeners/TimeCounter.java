@@ -10,6 +10,7 @@ import java.util.Date;
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
 
+import com.anaelectronics.AlarmClock;
 import com.anaelectronics.Globals;
 
 /**
@@ -48,6 +49,7 @@ public class TimeCounter implements Runnable{
 				Globals.hours = 0;
 			}
 		convertTime();
+		AlarmClock.updateDisplay();
 		}
 	}
 	public static void start() throws IOException{
@@ -65,7 +67,7 @@ public class TimeCounter implements Runnable{
 		else
 			Globals.PM = false;
 		
-		Globals.displayedTime += ""+(Globals.hours >= 12 ? Globals.hours-12 : Globals.hours)+":"+Globals.minutes+"  "+(Globals.PM ? "PM":"AM");
+		Globals.displayedTime = ""+(Globals.hours >= 12 ? Globals.hours-12 : Globals.hours)+":"+Globals.minutes+"  "+(Globals.PM ? "PM":"AM");
 		
 	}
 	private static void getTimeFromServer() throws IOException{

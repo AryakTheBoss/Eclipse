@@ -7,13 +7,9 @@ package com.anaelectronics;
 import com.anaelectronics.listeners.ServerTimeChecker;
 import com.anaelectronics.listeners.TimeCounter;
 
+import java.awt.FontFormatException;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Date;
 
-import org.apache.commons.net.ntp.NTPUDPClient;
-import org.apache.commons.net.ntp.TimeInfo;
 /**
  * @author ARYAK
  *
@@ -23,13 +19,14 @@ public class Run {
 	/**
 	 * @param args
 	 * @throws IOException 
+	 * @throws FontFormatException 
 	 */
-	public static void main(String[] args) throws IOException  {
+	public static void main(String[] args) throws IOException, FontFormatException  {
 		// TODO Auto-generated method stub
-		
+		AlarmClock.openUI();
 		TimeCounter.start();
 		ServerTimeChecker.start();
-		AlarmClock.openUI();
+		
 	}
 	
 }

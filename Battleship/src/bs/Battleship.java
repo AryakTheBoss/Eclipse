@@ -221,10 +221,10 @@ public class Battleship extends JFrame
     		
     	}else{
     		
-    		JOptionPane.showMessageDialog(null, "Your OS is unrecognized! \n the game data will be saved in your documents folder", "OS ERROR!", JOptionPane.ERROR_MESSAGE);
-    		userData = new File("/Users/"+System.getProperty("user.name")+"/Documents/BattleShip/user.dat");
+    		JOptionPane.showMessageDialog(null, "Your OS is unrecognized! \n the game data will be saved next to this JAR", "OS ERROR!", JOptionPane.ERROR_MESSAGE);
+    		userData = new File("Booty/user.dat");
     		
-    		dir = new File("/Users/"+System.getProperty("user.name")+"/Documents/BattleShip");
+    		dir = new File("Booty");
     		
     		
     	}
