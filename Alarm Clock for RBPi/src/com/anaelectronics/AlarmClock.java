@@ -30,6 +30,7 @@ public class AlarmClock {
 	private static JButton setAlarm = new JButton("Set Alarm");
 	private static JToggleButton alarmOn = new JToggleButton(Globals.alarmSymbol);
 	private static JLabel alarmSetFor = new JLabel("Alarm: 12:00 AM");
+	private static JPanel statusBar = new JPanel();
 	public static void openUI() throws FontFormatException, IOException{
 		
 		 window = new JFrame("Clock");

@@ -9,8 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.commons.net.ntp.NTPUDPClient;
-import org.apache.commons.net.ntp.TimeInfo;
+
 
 import com.anaelectronics.AlarmClock;
 import com.anaelectronics.Globals;
