@@ -4,14 +4,20 @@
 package com.anaelectronics;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+import javax.swing.SwingConstants;
 
 /**
  * @author ARYAK
@@ -19,9 +25,11 @@ import javax.swing.JPanel;
  */
 public class AlarmClock {
 	private static JLabel clockDisplay = null;
-	public static JFrame window = new JFrame("Clock");
-	public static JPanel clock = new JPanel();
-	public static Font fon = null;
+	private static JFrame window = new JFrame("Clock");
+	private static JPanel clock = new JPanel();
+	private static JButton setAlarm = new JButton("Set Alarm");
+	private static JToggleButton alarmOn = new JToggleButton(Globals.alarmSymbol);
+	private static JLabel alarmSetFor = new JLabel("Alarm: 12:00 AM");
 	public static void openUI() throws FontFormatException, IOException{
 		
 		 window = new JFrame("Clock");
@@ -33,15 +41,25 @@ public class AlarmClock {
         
          clock = new JPanel();
          clockDisplay = new JLabel("Downloading...");
-         fon = Font.createFont(Font.TRUETYPE_FONT, new File("/Users/ARYAK/Downloads/ds_digital/DS-DIGII.TTF")).deriveFont(45);
-         //WTF? Doesnt Work? Check online
-         clockDisplay.setFont(fon);
-        clock.add(clockDisplay);
+         try {
+             GraphicsEnvironment ge = 
+                 GraphicsEnvironment.getLocalGraphicsEnvironment();	//Change path below to "DS-DIGII.TTF" when testing on the Pi
+             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/Users/ARYAK/Downloads/ds_digital/DS-DIGII.TTF")));
+           //  System.out.println(Arrays.toString(ge.getAvailableFontFamilyNames()));
+        } catch (IOException|FontFormatException e) {
+             e.printStackTrace();
+        }
+         
+         clockDisplay.setFont(new Font("DS-Digital", Font.PLAIN, 100)); 
+         clockDisplay.setForeground(Color.RED);
+         //clockDisplay.setBackground(Color.BLACK);
+        clock.add(clockDisplay,SwingConstants.CENTER);
         
         window.setLayout(new BorderLayout());        
-        window.add(clock);
-        clock.setLocation(160, 120);
-        
+        window.add(clock, BorderLayout.SOUTH);
+        //clockDisplay.setLocation(160, 120);
+        clock.setBackground(Color.BLACK);
+        window.getContentPane().setBackground( Color.BLACK );
         window.setVisible(true);
         
         
