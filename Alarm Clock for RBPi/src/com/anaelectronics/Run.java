@@ -7,6 +7,7 @@ package com.anaelectronics;
 
 
 import java.awt.FontFormatException;
+import java.io.File;
 import java.io.IOException;
 
 import com.anaelectronics.handlers.AlarmHandler;
@@ -25,6 +26,8 @@ public class Run {
 	 */
 	public static void main(String[] args) throws IOException, FontFormatException  {
 		// TODO Auto-generated method stub
+		
+	
 		AlarmClock.openUI();
 		TimeHandler.start();
 		

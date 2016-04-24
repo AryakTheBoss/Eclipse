@@ -36,15 +36,8 @@ public void run() {
 	while(t == thisThread){
 		
 		
-		if(Globals.hours >= Globals.ahours && Globals.minutes >= Globals.aminutes && Globals.PM == Globals.aPM){
-			ring();
-			try {
-				Thread.sleep(11050);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		//Manage when to ring alarm
+		//Display the button punch dialog or snooze once
 		
 	}
 	
@@ -55,12 +48,9 @@ public static void start() throws IOException{
 	t = new Thread(new AlarmHandler());
 	t.start();
 }
-public static void convertTime(){
+public static void convertTime(){ //converts the military time into standard AM/PM time
 	
-//	if(Globals.ahours >= 12)
-//		Globals.aPM = true;
-//	else
-//		Globals.aPM = false;
+
 	
 	if(Globals.ahours != 0)
 	Globals.displayedAlarm = "Alarm: "+(Globals.ahours >= 12 ? Globals.ahours-12 : Globals.ahours)+":"+(Globals.aminutes < 10 ? "0"+Globals.aminutes : Globals.aminutes)+"  "+(Globals.aPM ? "PM":"AM");

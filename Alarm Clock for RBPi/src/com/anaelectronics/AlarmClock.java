@@ -28,6 +28,7 @@ import com.anaelectronics.listeners.AlarmSetListener;
  *	Main class which will handle displaying it and will recive commands
  */
 public class AlarmClock {
+	
 	private static JLabel clockDisplay = null;
 	private static JFrame window = new JFrame("Clock");
 	private static JPanel clock = new JPanel();
@@ -35,6 +36,8 @@ public class AlarmClock {
 	public static JToggleButton alarmOn = new JToggleButton("On");
 	private static JLabel alarmSetFor = new JLabel("Alarm: "+Globals.displayedAlarm);
 	private static JPanel statusBar = new JPanel();
+	
+	
 	public static void openUI() throws FontFormatException, IOException{
 		
 		 window = new JFrame("Clock");
@@ -49,8 +52,8 @@ public class AlarmClock {
          //Add the custom Digital Clock font to the Environment
          try {
              GraphicsEnvironment ge = 
-                 GraphicsEnvironment.getLocalGraphicsEnvironment();	//Change path below to "DS-DIGII.TTF" when testing on the Pi
-             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/Users/ARYAK/Downloads/ds_digital/DS-DIGII.TTF")));
+                 GraphicsEnvironment.getLocalGraphicsEnvironment();	
+             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("DS-DIGII.TTF")));
            
         } catch (IOException|FontFormatException e) {
              e.printStackTrace();
