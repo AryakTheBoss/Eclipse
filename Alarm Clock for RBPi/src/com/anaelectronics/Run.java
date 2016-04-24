@@ -7,10 +7,10 @@ package com.anaelectronics;
 
 
 import java.awt.FontFormatException;
-import java.io.File;
+
 import java.io.IOException;
 
-import com.anaelectronics.handlers.AlarmHandler;
+
 import com.anaelectronics.handlers.TimeHandler;
 
 /**

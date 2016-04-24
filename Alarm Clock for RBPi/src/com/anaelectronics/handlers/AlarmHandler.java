@@ -4,6 +4,8 @@
 package com.anaelectronics.handlers;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import com.anaelectronics.AlarmClock;
 import com.anaelectronics.Globals;
@@ -16,6 +18,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
+import javax.swing.JButton;
 
 /**
  * @author ARYAK
@@ -25,7 +28,13 @@ public class AlarmHandler implements Runnable{
 	
 
 	private static Thread t = null;
-	
+	private static JButton snooze = new JButton("SNOOZE");
+	private static JButton redButton = new JButton();
+	private static JButton greenButton = new JButton();
+	private static JButton blueButton = new JButton();
+	private static JButton yellowButton = new JButton();
+	private static final char[] buttons = {'R','G','B','Y'};
+	private static Queue<Character> buttonPresses = new LinkedList<Character>();
 	
 @Override
 public void run() {
@@ -48,12 +57,15 @@ public static void start() throws IOException{
 	t = new Thread(new AlarmHandler());
 	t.start();
 }
+public static void clearButtonQueue(){
+	buttonPresses.clear();
+}
 public static void convertTime(){ //converts the military time into standard AM/PM time
 	
 
-	
+	//System.out.println(Globals.ahours);
 	if(Globals.ahours != 0)
-	Globals.displayedAlarm = "Alarm: "+(Globals.ahours >= 12 ? Globals.ahours-12 : Globals.ahours)+":"+(Globals.aminutes < 10 ? "0"+Globals.aminutes : Globals.aminutes)+"  "+(Globals.aPM ? "PM":"AM");
+	Globals.displayedAlarm = "Alarm: "+(Globals.ahours > 12 ? Globals.ahours-12 : Globals.ahours)+":"+(Globals.aminutes < 10 ? "0"+Globals.aminutes : Globals.aminutes)+"  "+(Globals.aPM ? "PM":"AM");
 	else
 		Globals.displayedAlarm = "Alarm: "+(12)+":"+(Globals.aminutes < 10 ? "0"+Globals.aminutes : Globals.aminutes)+"  "+(Globals.aPM ? "PM":"AM");
 }

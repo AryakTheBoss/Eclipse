@@ -69,15 +69,21 @@ public class AlarmSetListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			System.out.println(ampm.getItemAt(ampm.getSelectedIndex()));
+			//System.out.println(ampm.getItemAt(ampm.getSelectedIndex()));
 			Globals.aPM = ampm.getItemAt(ampm.getSelectedIndex()).equals("PM");
 			
 			Globals.aminutes = Integer.parseInt(mins.getItemAt(mins.getSelectedIndex()));
 			if(!Globals.aPM && hrs.getItemAt(hrs.getSelectedIndex()) == 12)
 				Globals.ahours = 0;
-			else
+			else{
+				
+				if(hrs.getItemAt(hrs.getSelectedIndex()) == 12 && Globals.aPM)
+					Globals.ahours = 12;
+				else
 			Globals.ahours = (Globals.aPM ? hrs.getItemAt(hrs.getSelectedIndex())+12 : hrs.getItemAt(hrs.getSelectedIndex()));
-			
+				
+			System.out.println(Globals.ahours);
+			}
 			
 			okButton.removeActionListener(this);
 			
