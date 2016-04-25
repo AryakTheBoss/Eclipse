@@ -72,7 +72,7 @@ public void run() {
     blueButton.setOpaque(true);
     orangeButton.setForeground(Color.ORANGE);
     orangeButton.setBackground(Color.ORANGE); 
-    orangeButton.setOpaque(false);
+    orangeButton.setOpaque(true);
     dialog.setLayout(new BorderLayout());
     dialog.add(colorButtons, BorderLayout.SOUTH);
     snooze.setEnabled(!Globals.snoozed);
