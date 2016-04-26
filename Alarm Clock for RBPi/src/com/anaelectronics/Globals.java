@@ -21,6 +21,7 @@ public class Globals {
 	public static final String alarmSymbol = ""; //Symbol that'll be displayed when alarm is enabled
 	public static boolean PM = false; //is it PM or AM
 	public static boolean aPM = false;
+	public static String date = "";
 	public static boolean displayColon = true; //ignore this
 	public static int blinkDelay = 600; //ignore this
 	public static boolean alarm = false; //is alarm on?

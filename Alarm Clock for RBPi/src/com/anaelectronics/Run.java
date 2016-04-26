@@ -7,13 +7,14 @@ package com.anaelectronics;
 
 
 import java.awt.FontFormatException;
-
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.anaelectronics.handlers.TimeHandler;
+import com.anaelectronics.listeners.AlarmSetListener;
 
 /**
  * @author ARYAK
@@ -30,6 +31,9 @@ public class Run {
 		// TODO Auto-generated method stub
 		
 	setLookAndFeel();
+	AlarmSetListener.cal.set(Calendar.HOUR , 12);
+	AlarmSetListener.cal.set(Calendar.AM_PM , Calendar.AM);
+	AlarmSetListener.cal.set(Calendar.MINUTE , 0);
 		AlarmClock.openUI();
 		TimeHandler.start();
 		

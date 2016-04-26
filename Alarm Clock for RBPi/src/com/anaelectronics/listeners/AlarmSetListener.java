@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,6 +27,8 @@ public class AlarmSetListener implements ActionListener{
 	private static JComboBox<Integer> hrs = new JComboBox<Integer>();
 	private static JComboBox<String> mins = new JComboBox<String>();
 	private static JComboBox<String> ampm = new JComboBox<String>();
+	private static SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+	public static Calendar cal = Calendar.getInstance();
 	
 	
 	@Override
@@ -58,7 +62,7 @@ public class AlarmSetListener implements ActionListener{
        Dimension dim = new Dimension(320,240);
        dialog.setLocation(dim.width/2-dialog.getSize().width/2, dim.height/2-dialog.getSize().height/2);
        dialog.setAutoRequestFocus(true);
-       AlarmHandler.convertTime();
+     
        
        dialog.setVisible(true);
 		
@@ -70,25 +74,20 @@ public class AlarmSetListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			//System.out.println(ampm.getItemAt(ampm.getSelectedIndex()));
-			Globals.aPM = ampm.getItemAt(ampm.getSelectedIndex()).equals("PM");
-			
-			Globals.aminutes = Integer.parseInt(mins.getItemAt(mins.getSelectedIndex()));
-			if(!Globals.aPM && hrs.getItemAt(hrs.getSelectedIndex()) == 12)
-				Globals.ahours = 0;
-			else{
-				
-				if(hrs.getItemAt(hrs.getSelectedIndex()) == 12 && Globals.aPM)
-					Globals.ahours = 12;
-				else
-			Globals.ahours = (Globals.aPM ? hrs.getItemAt(hrs.getSelectedIndex())+12 : hrs.getItemAt(hrs.getSelectedIndex()));
-				
-			System.out.println(Globals.ahours);
+			if(ampm.getItemAt(ampm.getSelectedIndex()).equals("PM")){
+				cal.set(Calendar.AM_PM, Calendar.PM);
+			}else{
+				cal.set(Calendar.AM_PM, Calendar.AM);
 			}
+			cal.set(Calendar.HOUR, hrs.getItemAt(hrs.getSelectedIndex()));
+			cal.set(Calendar.MINUTE, Integer.parseInt(mins.getItemAt(mins.getSelectedIndex())));
+			
+			Globals.displayedAlarm = sdf.format(cal.getTime());
 			
 			okButton.removeActionListener(this);
 			
 			dialog.dispose();
-			AlarmHandler.convertTime();
+		//	AlarmHandler.convertTime();
 			//AlarmClock.updateAlarm();
 			
 			

@@ -78,7 +78,7 @@ public class AlarmClock {
         alarmOn.addActionListener(new AlarmButtonListener());
         setAlarm.addActionListener(new AlarmSetListener());
         window.add(statusBar, BorderLayout.NORTH);
-        AlarmHandler.convertTime();
+       
         window.setVisible(true);
         
         
@@ -93,7 +93,7 @@ public class AlarmClock {
 	}
 	public static synchronized void updateAlarm(){
 		
-		alarmSetFor.setText(Globals.displayedAlarm);
+		alarmSetFor.setText("Alarm: "+Globals.displayedAlarm);
 		
 	}
 	

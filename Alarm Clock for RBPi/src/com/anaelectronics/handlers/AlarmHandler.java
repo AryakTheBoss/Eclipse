@@ -4,12 +4,16 @@
 package com.anaelectronics.handlers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
 import com.anaelectronics.AlarmClock;
 import com.anaelectronics.Globals;
+import com.anaelectronics.listeners.AlarmSetListener;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,7 +21,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -30,6 +33,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+//import javax.swing.text.html.HTMLDocument.Iterator;
 
 /**
  * @author ARYAK
@@ -47,6 +51,9 @@ public class AlarmHandler implements Runnable{
 	private static JPanel colorButtons = new JPanel();
 	private static JPanel label = new JPanel();
 	private static Random r = new Random();
+	private static String labels = "";
+	private static SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+	private static Calendar cal = Calendar.getInstance();
 	private static JLabel combos = new JLabel("Generating...");
 	public static JFrame dialog = new JFrame("ALARM");
 	private static final char[] buttons = {'R','G','B','O'};
@@ -92,17 +99,23 @@ public void run() {
     label.add(combos, BorderLayout.CENTER);
    // snooze.addActionListener(new SnoozeListener());
     dialog.add(label);
+    
     clearButtonQueue();
     generateSequence();
-   // dialog.setVisible(true); //Comment out
+    displayCombos();
+ 
 	Thread thisThread = Thread.currentThread();
 	
 	while(t == thisThread){
 		
-		if(Globals.hours >= Globals.ahours && Globals.minutes >= Globals.aminutes && Globals.aPM == Globals.PM){
+		if(cal.after(AlarmSetListener.cal)){
 			//System.out.println("RING! Hours: "+Globals.hours+" Alarm hrs: "+Globals.ahours);
+			while(t == thisThread){
 			dialog.setVisible(true); //User can't close dialog due to the Loop
 			AlarmClock.alarmOn.setEnabled(false);
+			if(buttonPresses.isEmpty())
+				off();
+			}
 		}
 		//Manage when to ring alarm
 		//Display the button punch dialog or snooze once
@@ -116,7 +129,18 @@ public void run() {
 		}
 	}
 	dialog.dispose();
+	AlarmClock.alarmOn.setEnabled(true);
 	
+}
+private static void displayCombos(){
+	
+Iterator<Character> i = buttonPresses.iterator();
+labels = "Press in this Order: ";
+while(i.hasNext()){
+	labels += i.next()+" ";
+}
+    
+    combos.setText(labels);
 }
 private class SnoozeListener implements ActionListener{
 
@@ -146,6 +170,23 @@ private class ColorButtonListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Find source and deal with it accordingly and poll from the queue
 		
+		if(e.getSource() == redButton){
+			if(buttonPresses.peek() == 'R')
+				buttonPresses.poll();
+		}
+		if(e.getSource() == blueButton){
+			if(buttonPresses.peek() == 'B')
+				buttonPresses.poll();
+		}
+		if(e.getSource() == greenButton){
+			if(buttonPresses.peek() == 'G')
+				buttonPresses.poll();
+		}
+		if(e.getSource() == orangeButton){
+			if(buttonPresses.peek() == 'O')
+				buttonPresses.poll();
+		}
+		displayCombos();
 		
 	}
 	
@@ -172,15 +213,7 @@ public static void start() throws IOException{
 public static void clearButtonQueue(){
 	buttonPresses.clear();
 }
-public static void convertTime(){ //converts the military time into standard AM/PM time
-	
 
-	//System.out.println(Globals.ahours);
-	if(Globals.ahours != 0)
-	Globals.displayedAlarm = "Alarm: "+(Globals.ahours > 12 ? Globals.ahours-12 : Globals.ahours)+":"+(Globals.aminutes < 10 ? "0"+Globals.aminutes : Globals.aminutes)+"  "+(Globals.aPM ? "PM":"AM");
-	else
-		Globals.displayedAlarm = "Alarm: "+(12)+":"+(Globals.aminutes < 10 ? "0"+Globals.aminutes : Globals.aminutes)+"  "+(Globals.aPM ? "PM":"AM");
-}
 
 public static void snooze(){
 	Globals.snoozed = true;
