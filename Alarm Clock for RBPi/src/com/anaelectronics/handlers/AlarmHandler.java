@@ -6,6 +6,7 @@ package com.anaelectronics.handlers;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 import com.anaelectronics.AlarmClock;
 import com.anaelectronics.Globals;
@@ -13,6 +14,8 @@ import com.anaelectronics.Globals;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 
@@ -24,7 +27,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * @author ARYAK
@@ -40,6 +45,9 @@ public class AlarmHandler implements Runnable{
 	private static JButton blueButton = new JButton("B");
 	private static JButton orangeButton = new JButton("O");
 	private static JPanel colorButtons = new JPanel();
+	private static JPanel label = new JPanel();
+	private static Random r = new Random();
+	private static JLabel combos = new JLabel("Generating...");
 	public static JFrame dialog = new JFrame("ALARM");
 	private static final char[] buttons = {'R','G','B','O'};
 	private static Queue<Character> buttonPresses = new LinkedList<Character>();
@@ -73,24 +81,87 @@ public void run() {
     orangeButton.setForeground(Color.ORANGE);
     orangeButton.setBackground(Color.ORANGE); 
     orangeButton.setOpaque(true);
+    redButton.addActionListener(new ColorButtonListener());
+    greenButton.addActionListener(new ColorButtonListener());
+    blueButton.addActionListener(new ColorButtonListener());
+    orangeButton.addActionListener(new ColorButtonListener());
     dialog.setLayout(new BorderLayout());
     dialog.add(colorButtons, BorderLayout.SOUTH);
     snooze.setEnabled(!Globals.snoozed);
     dialog.add(snooze, BorderLayout.NORTH);
-    
-    dialog.setVisible(true);
+    label.add(combos, BorderLayout.CENTER);
+   // snooze.addActionListener(new SnoozeListener());
+    dialog.add(label);
+    clearButtonQueue();
+    generateSequence();
+   // dialog.setVisible(true); //Comment out
 	Thread thisThread = Thread.currentThread();
 	
 	while(t == thisThread){
 		
-		
+		if(Globals.hours >= Globals.ahours && Globals.minutes >= Globals.aminutes && Globals.aPM == Globals.PM){
+			//System.out.println("RING! Hours: "+Globals.hours+" Alarm hrs: "+Globals.ahours);
+			dialog.setVisible(true); //User can't close dialog due to the Loop
+			AlarmClock.alarmOn.setEnabled(false);
+		}
 		//Manage when to ring alarm
 		//Display the button punch dialog or snooze once
 		//call dialog.setVisible(true);
-		
+		//730 729
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	dialog.dispose();
 	
+}
+private class SnoozeListener implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Globals.snoozed = true;
+		if(Globals.aminutes+5 > 59){
+			Globals.ahours++;
+			Globals.aminutes += 5;
+			Globals.aminutes -= 60;
+		}else{
+			Globals.aminutes += 5;
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+}
+private class ColorButtonListener implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Find source and deal with it accordingly and poll from the queue
+		
+		
+	}
+	
+	
+	
+	
+}
+
+public static void generateSequence(){
+	
+	for(int i=0;i<6;i++){
+		
+		buttonPresses.add(buttons[r.nextInt(buttons.length)]);
+		
+	}
+	//System.out.println(buttonPresses);
 }
 
 public static void start() throws IOException{
