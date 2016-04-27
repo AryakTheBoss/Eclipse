@@ -108,7 +108,7 @@ public void run() {
 	
 	while(t == thisThread){
 		
-		if(cal.after(AlarmSetListener.cal)){
+		if(true){//TODO
 			//System.out.println("RING! Hours: "+Globals.hours+" Alarm hrs: "+Globals.ahours);
 			while(t == thisThread){
 			dialog.setVisible(true); //User can't close dialog due to the Loop
@@ -146,7 +146,7 @@ private class SnoozeListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		// TODO Re-Implement 
 		Globals.snoozed = true;
 		if(Globals.aminutes+5 > 59){
 			Globals.ahours++;
