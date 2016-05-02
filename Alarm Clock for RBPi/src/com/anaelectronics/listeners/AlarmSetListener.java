@@ -27,7 +27,7 @@ public class AlarmSetListener implements ActionListener{
 	private static JComboBox<Integer> hrs = new JComboBox<Integer>();
 	private static JComboBox<String> mins = new JComboBox<String>();
 	private static JComboBox<String> ampm = new JComboBox<String>();
-	private static SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+	public static SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
 	public static Calendar cal = Calendar.getInstance();
 	
 	

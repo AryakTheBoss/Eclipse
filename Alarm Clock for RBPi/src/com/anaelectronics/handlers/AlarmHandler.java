@@ -43,6 +43,7 @@ public class AlarmHandler implements Runnable{
 	
 
 	private static Thread t = null;
+	private static Thread g = null;
 	private static JButton snooze = new JButton("SNOOZE");
 	private static JButton redButton = new JButton("R");
 	private static JButton greenButton = new JButton("G");
@@ -95,6 +96,7 @@ public void run() {
     dialog.setLayout(new BorderLayout());
     dialog.add(colorButtons, BorderLayout.SOUTH);
     snooze.setEnabled(!Globals.snoozed);
+    snooze.addActionListener(new SnoozeListener());
     dialog.add(snooze, BorderLayout.NORTH);
     label.add(combos, BorderLayout.CENTER);
    // snooze.addActionListener(new SnoozeListener());
@@ -108,13 +110,17 @@ public void run() {
 	
 	while(t == thisThread){
 		
-		if(true){//TODO
+		if(Calendar.getInstance().get(Calendar.HOUR) == AlarmSetListener.cal.get(Calendar.HOUR) && Calendar.getInstance().get(Calendar.MINUTE) == AlarmSetListener.cal.get(Calendar.MINUTE) && Calendar.getInstance().get(Calendar.AM_PM) == AlarmSetListener.cal.get(Calendar.AM_PM)){//TODO
 			//System.out.println("RING! Hours: "+Globals.hours+" Alarm hrs: "+Globals.ahours);
-			while(t == thisThread){
+			g = t;
+			while(g == thisThread){
 			dialog.setVisible(true); //User can't close dialog due to the Loop
 			AlarmClock.alarmOn.setEnabled(false);
-			if(buttonPresses.isEmpty())
+			if(buttonPresses.isEmpty()){
 				off();
+				g=null;
+		//	snooze.setEnabled(true);
+			}
 			}
 		}
 		//Manage when to ring alarm
@@ -147,17 +153,13 @@ private class SnoozeListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Re-Implement 
-		Globals.snoozed = true;
-		if(Globals.aminutes+5 > 59){
-			Globals.ahours++;
-			Globals.aminutes += 5;
-			Globals.aminutes -= 60;
-		}else{
-			Globals.aminutes += 5;
-		}
 		
-		
-		
+		snooze.setEnabled(false);
+	g = null;
+		AlarmSetListener.cal.set(Calendar.MINUTE, AlarmSetListener.cal.get(Calendar.MINUTE)+5);
+		Globals.displayedAlarm = AlarmSetListener.sdf.format(AlarmSetListener.cal.getTime());
+		dialog.dispose();
+		AlarmClock.alarmOn.setEnabled(true);
 	}
 	
 	
@@ -209,6 +211,7 @@ public static void start() throws IOException{
 	
 	t = new Thread(new AlarmHandler());
 	t.start();
+	g=t;
 }
 public static void clearButtonQueue(){
 	buttonPresses.clear();
@@ -224,6 +227,7 @@ public static void stopAlarm(){
 public static void off(){
 	
 	t = null;
+	
 	
 }
 public static void ring(){
