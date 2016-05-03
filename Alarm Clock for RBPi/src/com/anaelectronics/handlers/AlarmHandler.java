@@ -44,7 +44,7 @@ public class AlarmHandler implements Runnable{
 
 	private static Thread t = null;
 	private static Thread g = null;
-	private static JButton snooze = new JButton("SNOOZE");
+	public static JButton snooze = new JButton("SNOOZE");
 	private static JButton redButton = new JButton("R");
 	private static JButton greenButton = new JButton("G");
 	private static JButton blueButton = new JButton("B");
@@ -159,6 +159,12 @@ private class SnoozeListener implements ActionListener{
 		AlarmSetListener.cal.set(Calendar.MINUTE, AlarmSetListener.cal.get(Calendar.MINUTE)+5);
 		Globals.displayedAlarm = AlarmSetListener.sdf.format(AlarmSetListener.cal.getTime());
 		dialog.dispose();
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		AlarmClock.alarmOn.setEnabled(true);
 	}
 	

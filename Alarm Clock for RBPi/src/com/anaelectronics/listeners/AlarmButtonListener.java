@@ -28,6 +28,7 @@ public class AlarmButtonListener implements ActionListener{
 			}
 		}else{
 			AlarmHandler.off();
+			AlarmHandler.snooze.setEnabled(true);
 		}
 		
 	}
