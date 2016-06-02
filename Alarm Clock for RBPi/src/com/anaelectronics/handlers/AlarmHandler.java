@@ -33,6 +33,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineEvent.Type;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 //import javax.swing.text.html.HTMLDocument.Iterator;
 
 /**
@@ -59,7 +69,8 @@ public class AlarmHandler implements Runnable{
 	public static JFrame dialog = new JFrame("ALARM");
 	private static final char[] buttons = {'R','G','B','O'};
 	private static Queue<Character> buttonPresses = new LinkedList<Character>();
-	
+	private static Clip alarmSound;
+	private static int lastFrame;
 @Override
 public void run() {
 	// TODO Auto-generated method stub
@@ -226,9 +237,13 @@ public static void clearButtonQueue(){
 
 public static void snooze(){
 	Globals.snoozed = true;
+	alarmSound.stop();
+	alarmSound.setFramePosition(0); 
 }
 public static void stopAlarm(){
 	Globals.snoozed = false;
+	alarmSound.stop();
+	alarmSound.setFramePosition(0); 
 }
 public static void off(){
 	
@@ -237,56 +252,27 @@ public static void off(){
 	
 }
 public static void ring(){
-	
-	 final int BUFFER_SIZE = 128000;
-     File soundFile = new File("/Users/ARYAK/Downloads/ALARM.wav");
-     AudioInputStream audioStream = null;
-     AudioFormat audioFormat = null;
-     SourceDataLine sourceLine = null;
+	if(alarmSound == null){
+		try {
+			loadClip();
+		} catch (LineUnavailableException | IOException
+				| UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		alarmSound.loop(Clip.LOOP_CONTINUOUSLY); 
+	}
+}
+protected static void loadClip() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
-   // String strFilename = filename;
+	File audioFile = new File("alarm.wav");
+    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
-   
+    AudioFormat format = audioStream.getFormat();
+    DataLine.Info info = new DataLine.Info(Clip.class, format);
+    alarmSound = (Clip) AudioSystem.getLine(info);
+    alarmSound.open(audioStream);
 
-    try {
-        audioStream = AudioSystem.getAudioInputStream(soundFile);
-    } catch (Exception e){
-        e.printStackTrace();
-        System.exit(1);
-    }
-
-    audioFormat = audioStream.getFormat();
-
-    DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-    try {
-        sourceLine = (SourceDataLine) AudioSystem.getLine(info);
-        sourceLine.open(audioFormat);
-    } catch (LineUnavailableException e) {
-        e.printStackTrace();
-        System.exit(1);
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.exit(1);
-    }
-
-    sourceLine.start();
-
-    int nBytesRead = 0;
-    byte[] abData = new byte[BUFFER_SIZE];
-    while (nBytesRead != -1) {
-        try {
-            nBytesRead = audioStream.read(abData, 0, abData.length);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (nBytesRead >= 0) {
-            @SuppressWarnings("unused")
-            int nBytesWritten = sourceLine.write(abData, 0, nBytesRead);
-        }
-    }
-
-    sourceLine.drain();
-    sourceLine.close();
 }
 
 }
