@@ -129,13 +129,17 @@ public void run() {
 			AlarmClock.alarmOn.setEnabled(false);
 			ring();
 			if(buttonPresses.isEmpty()){
-				stopAlarm();
+				
+				if(!Globals.snoozed){
 				off();
+				}
+				stopAlarm();
 				g=null;
 		//	snooze.setEnabled(true);
 			//}
 			}
 		}
+		
 		//Manage when to ring alarm
 		//Display the button punch dialog or snooze once
 		//call dialog.setVisible(true);
@@ -169,6 +173,8 @@ private class SnoozeListener implements ActionListener{
 		
 		snooze.setEnabled(false);
 	g = null;
+	stopAlarm();
+	buttonPresses.clear();
 		AlarmSetListener.cal.set(Calendar.MINUTE, AlarmSetListener.cal.get(Calendar.MINUTE)+5);
 		Globals.displayedAlarm = AlarmSetListener.sdf.format(AlarmSetListener.cal.getTime());
 		dialog.dispose();
