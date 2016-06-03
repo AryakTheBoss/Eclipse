@@ -124,14 +124,16 @@ public void run() {
 		if(Calendar.getInstance().get(Calendar.HOUR) == AlarmSetListener.cal.get(Calendar.HOUR) && Calendar.getInstance().get(Calendar.MINUTE) == AlarmSetListener.cal.get(Calendar.MINUTE) && Calendar.getInstance().get(Calendar.AM_PM) == AlarmSetListener.cal.get(Calendar.AM_PM)){//TODO
 			//System.out.println("RING! Hours: "+Globals.hours+" Alarm hrs: "+Globals.ahours);
 			g = t;
-			while(g == thisThread){
+		//	while(g == thisThread){
 			dialog.setVisible(true); //User can't close dialog due to the Loop
 			AlarmClock.alarmOn.setEnabled(false);
+			ring();
 			if(buttonPresses.isEmpty()){
+				stopAlarm();
 				off();
 				g=null;
 		//	snooze.setEnabled(true);
-			}
+			//}
 			}
 		}
 		//Manage when to ring alarm
@@ -252,7 +254,9 @@ public static void off(){
 	
 }
 public static void ring(){
+	
 	if(alarmSound == null){
+		
 		try {
 			loadClip();
 		} catch (LineUnavailableException | IOException
@@ -260,8 +264,10 @@ public static void ring(){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		alarmSound.loop(Clip.LOOP_CONTINUOUSLY); 
+		
 	}
+	if(!alarmSound.isRunning())
+	alarmSound.loop(Clip.LOOP_CONTINUOUSLY); 
 }
 protected static void loadClip() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 

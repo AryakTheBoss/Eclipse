@@ -59,7 +59,7 @@ public class AlarmClock {
              e.printStackTrace();
         }
          
-         clockDisplay.setFont(new Font("DS-Digital", Font.PLAIN, 90)); 
+         clockDisplay.setFont(new Font("DS-Digital", Font.PLAIN, 65)); 
          clockDisplay.setForeground(Color.RED);
          
         clock.add(clockDisplay,SwingConstants.CENTER);
