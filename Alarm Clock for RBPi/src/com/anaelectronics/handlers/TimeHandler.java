@@ -24,7 +24,7 @@ public class TimeHandler implements Runnable{
 	private static Thread t = null;
 	private static SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
 	//private static SimpleDateFormat d8 = new SimpleDateFormat("Month Day Year");
-	private static Calendar cal = null;
+	public static Calendar cal = null;
 	private static String[] ti = null;
 	@Override
 	public void run() {

@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import com.anaelectronics.AlarmClock;
 import com.anaelectronics.Globals;
 import com.anaelectronics.handlers.AlarmHandler;
+import com.anaelectronics.handlers.TimeHandler;
 
 public class AlarmSetListener implements ActionListener{
 	
@@ -46,7 +47,9 @@ public class AlarmSetListener implements ActionListener{
 			mins.addItem(""+(i<10 ? "0"+i : i));
 		dialog.setLayout(new BorderLayout());
 		  
-        
+       hrs.setSelectedIndex(TimeHandler.cal.get(Calendar.HOUR)-1);  
+       mins.setSelectedIndex(TimeHandler.cal.get(Calendar.MINUTE));  
+       ampm.setSelectedIndex(TimeHandler.cal.get(Calendar.AM_PM));  
         dialog.setSize(270, 140); //Fullscreen on our little touch screen we will buy (2" 320x240)
        dialog.setResizable(false);
        

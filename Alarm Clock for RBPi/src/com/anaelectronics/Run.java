@@ -31,9 +31,9 @@ public class Run {
 		// TODO Auto-generated method stub
 		
 	setLookAndFeel();
-	AlarmSetListener.cal.set(Calendar.HOUR , 12);
-	AlarmSetListener.cal.set(Calendar.AM_PM , Calendar.AM);
-	AlarmSetListener.cal.set(Calendar.MINUTE , 0);
+	//AlarmSetListener.cal.set(Calendar.HOUR , 12);
+	//AlarmSetListener.cal.set(Calendar.AM_PM , Calendar.AM);
+	//AlarmSetListener.cal.set(Calendar.MINUTE , 0);
 		AlarmClock.openUI();
 		TimeHandler.start();
 		

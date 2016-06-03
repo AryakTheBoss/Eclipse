@@ -135,8 +135,7 @@ public void run() {
 				}
 				stopAlarm();
 				g=null;
-		//	snooze.setEnabled(true);
-			//}
+		
 			}
 		}
 		
