@@ -71,6 +71,7 @@ public class AlarmHandler implements Runnable{
 	private static Queue<Character> buttonPresses = new LinkedList<Character>();
 	private static Clip alarmSound;
 	private static int lastFrame;
+	
 @Override
 public void run() {
 	// TODO Auto-generated method stub
@@ -246,11 +247,13 @@ public static void snooze(){
 	Globals.snoozed = true;
 	alarmSound.stop();
 	alarmSound.setFramePosition(0); 
+	
 }
 public static void stopAlarm(){
 	Globals.snoozed = false;
 	alarmSound.stop();
 	alarmSound.setFramePosition(0); 
+	
 }
 public static void off(){
 	
@@ -271,8 +274,10 @@ public static void ring(){
 		}
 		
 	}
-	if(!alarmSound.isRunning())
+	if(!alarmSound.isRunning()){
+		
 	alarmSound.loop(Clip.LOOP_CONTINUOUSLY); 
+	}
 }
 protected static void loadClip() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
