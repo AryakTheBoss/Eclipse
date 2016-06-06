@@ -571,15 +571,15 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		pvp = new JMenuItem("Player vs. Player");		
 		pvp.addActionListener(stuff);
 		mEN.add(pvp);
-	pvc = new JMenuItem("Player vs. Computer");
+	pvc = new JMenuItem("Player vs. AI");
 		pvc.addActionListener(stuff);
 		mEN.add(pvc);
-		cvc = new JMenuItem("Computer vs. Computer");
+		cvc = new JMenuItem("AI vs. AI");
 		cvc.addActionListener(stuff);
 		mEN.add(cvc);
 		
-		pvp.setEnabled(false);
-		cvc.setEnabled(false);
+		//pvp.setEnabled(false);
+		//cvc.setEnabled(false);
 		
 		mEN = new JMenuItem("Rules");
 		mEN.addActionListener(new RulesListener());
@@ -1313,7 +1313,7 @@ public static void openShop() throws Exception{//TODO hjk
 						}					
 					}
 					else
-					{
+					{//TODO PVP LOCAL
 						//gets user to input name
 						if((players[enemy].getUser().equals("Computer"))||(players[enemy].getUser().equals("CPU2"))||(players[enemy].getUser().equals("Unknown")))
 						{							
