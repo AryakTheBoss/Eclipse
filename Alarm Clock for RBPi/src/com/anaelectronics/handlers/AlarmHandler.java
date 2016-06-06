@@ -287,7 +287,7 @@ public static void ring(){
 }
 protected static void loadClip() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
 
-	File audioFile = new File("alarm.wav");
+	File audioFile = new File("/home/pi/Desktop/alarm.wav");
     AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
     AudioFormat format = audioStream.getFormat();

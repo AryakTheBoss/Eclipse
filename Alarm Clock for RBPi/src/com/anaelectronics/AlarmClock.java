@@ -50,10 +50,10 @@ public class AlarmClock {
          clock = new JPanel();
          clockDisplay = new JLabel("null");
          //Add the custom Digital Clock font to the Environment
-         try {
+        try {
              GraphicsEnvironment ge = 
                  GraphicsEnvironment.getLocalGraphicsEnvironment();	
-             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("DS-DIGII.TTF")));
+             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/home/pi/Desktop/DS-DIGII.TTF")));
            
         } catch (IOException|FontFormatException e) {
              e.printStackTrace();
