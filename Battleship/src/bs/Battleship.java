@@ -1251,8 +1251,9 @@ public static void openShop() throws Exception{//TODO hjk
 				
 				gametype = e.getSource();			
 			
-				if (gametype==pvp)
+				if (gametype==pvp)//TODO disable ITEMS menu option
 				{
+					inv.setEnabled(false);
 					if (!selectedValue.equals("no server"))
 					{
 						String[] possibleValues = { "Local", "--"};
@@ -1342,7 +1343,8 @@ public static void openShop() throws Exception{//TODO hjk
 					//ready=1;
 				}
 				else if (gametype==pvc)//Player vs Computer
-				{						
+				{		
+					inv.setEnabled(true);
 					if (!players[you].getUser().equals("CPU1"))
 					{
 						if (players[you].getUser().equals("Stupid"))
