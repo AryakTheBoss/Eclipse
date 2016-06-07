@@ -1255,7 +1255,7 @@ public static void openShop() throws Exception{//TODO hjk
 				{
 					if (!selectedValue.equals("no server"))
 					{
-						String[] possibleValues = { "Local", "Online"};
+						String[] possibleValues = { "Local", "--"};
 						selectedValue = JOptionPane.showInputDialog(null, 
 						"Choose one", "Input", JOptionPane.INFORMATION_MESSAGE, null,
 						possibleValues, possibleValues[0]);
