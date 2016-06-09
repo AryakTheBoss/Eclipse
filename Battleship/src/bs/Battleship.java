@@ -115,7 +115,7 @@ public class Battleship extends JFrame
 	
 	private static int w=0,a=0,s=0,t=0,e=0;//counters to track the use of all ships
 	//private static String[][] shiphit=new String[10][10];
-	private static String user,user2;
+	private static String user,user2,user3;
 	private static Color[] color={Color.cyan,Color.green,Color.yellow,Color.magenta,
 									Color.pink,	Color.orange,	Color.white};		 	
 	private static Object selectedValue=" ",
@@ -571,15 +571,15 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		pvp = new JMenuItem("Player vs. Player");		
 		pvp.addActionListener(stuff);
 		mEN.add(pvp);
-	pvc = new JMenuItem("Player vs. Computer");
+	pvc = new JMenuItem("Player vs. AI");
 		pvc.addActionListener(stuff);
 		mEN.add(pvc);
-		cvc = new JMenuItem("Computer vs. Computer");
+		cvc = new JMenuItem("AI vs. AI");
 		cvc.addActionListener(stuff);
 		mEN.add(cvc);
 		
-		pvp.setEnabled(false);
-		cvc.setEnabled(false);
+		//pvp.setEnabled(false);
+		//cvc.setEnabled(false);
 		
 		mEN = new JMenuItem("Rules");
 		mEN.addActionListener(new RulesListener());
@@ -587,11 +587,11 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 		mEN = new JMenuItem("Statistics");
 		mEN.addActionListener(new StatsListener());		
 		menu.add(mEN);
-		mEN.setEnabled(false);
+		//mEN.setEnabled(false);
 		mEN = new JMenuItem("Options");
 		mEN.addActionListener(new OptionsListener());		
 		menu.add(mEN);
-		mEN.setEnabled(false);
+		//mEN.setEnabled(false);
 		mEN = new JMenuItem("Exit");
 		mEN.addActionListener(new ExitListener());
 		menu.add(mEN);	
@@ -1251,11 +1251,12 @@ public static void openShop() throws Exception{//TODO hjk
 				
 				gametype = e.getSource();			
 			
-				if (gametype==pvp)
+				if (gametype==pvp)//TODO disable ITEMS menu option
 				{
+					inv.setEnabled(false);
 					if (!selectedValue.equals("no server"))
 					{
-						String[] possibleValues = { "Local", "Online"};
+						String[] possibleValues = { "Local", "--"};
 						selectedValue = JOptionPane.showInputDialog(null, 
 						"Choose one", "Input", JOptionPane.INFORMATION_MESSAGE, null,
 						possibleValues, possibleValues[0]);
@@ -1313,19 +1314,26 @@ public static void openShop() throws Exception{//TODO hjk
 						}					
 					}
 					else
-					{
+					{//TODO PVP LOCAL
 						//gets user to input name
 						if((players[enemy].getUser().equals("Computer"))||(players[enemy].getUser().equals("CPU2"))||(players[enemy].getUser().equals("Unknown")))
-						{							
-							user2=JOptionPane.showInputDialog("Enter your name.");					
+						{		
+							user3=JOptionPane.showInputDialog("Enter Player 1's name.");					
+							while ((user3==null)||(user3.equals("")))
+							{				
+								user3=JOptionPane.showInputDialog("You have to input something.");							
+							}	
+							user2=JOptionPane.showInputDialog("Enter Player 2's name.");					
 							while ((user2==null)||(user2.equals("")))
 							{				
 								user2=JOptionPane.showInputDialog("You have to input something.");							
-							}						
+							}		
+							
 						}
 						else
 							user2=players[enemy].getUser();
-						players[enemy]=new Player (user2);	
+						players[enemy]=new Player (user2);
+						players[you] = new Player(user3);
 						b.add(autoBoard(you,enemy),BorderLayout.WEST);																				
 						c.add(autoBoard(enemy,you),BorderLayout.EAST);
 						d.add(whoseBoard(),BorderLayout.NORTH);						
@@ -1335,7 +1343,8 @@ public static void openShop() throws Exception{//TODO hjk
 					//ready=1;
 				}
 				else if (gametype==pvc)//Player vs Computer
-				{						
+				{		
+					inv.setEnabled(true);
 					if (!players[you].getUser().equals("CPU1"))
 					{
 						if (players[you].getUser().equals("Stupid"))
