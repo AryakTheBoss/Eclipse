@@ -118,7 +118,7 @@ public class Battleship extends JFrame
 	private static String user,user2,user3;
 	private static Color[] color={Color.cyan,Color.green,Color.yellow,Color.magenta,
 									Color.pink,	Color.orange,	Color.white};		 	
-	private static Object selectedValue=" ",
+	public static Object selectedValue=" ",
 						  gametype;
 	//private static BattleshipClient me;
 	private static boolean gameover=false;

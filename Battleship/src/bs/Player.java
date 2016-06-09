@@ -396,9 +396,9 @@ public class Player
 				if ((!this.getUser().equals("CPU1"))
 					&&(!this.getUser().equals("CPU2"))){
 					
-					String kl;
+					String kl =null;
 					
-					
+					if(Battleship.gametype == Battleship.pvc){
 						
 						//FIXME
 						
@@ -440,6 +440,7 @@ public class Player
 					JOptionPane.WARNING_MESSAGE);
 				
 					
+				}
 					
 					
 				
@@ -447,7 +448,8 @@ public class Player
 			}
 			else
 			{
-				String kl;
+				String kl =null;
+				if(Battleship.gametype == Battleship.pvc){
 				if(this.boats[f].getName().matches("Carrier")){
 					
 					kl = "You Earned $350!";
@@ -483,7 +485,10 @@ public class Player
 				JOptionPane.showMessageDialog(null,"You sank the "+ //TODO SAME AS ABOVE
 				this.boats[f].getName()+"!\n"+kl,"Good Job!",
 				JOptionPane.INFORMATION_MESSAGE);
-				
+			}
+				JOptionPane.showMessageDialog(null,"You sank the "+ //TODO SAME AS ABOVE
+						this.boats[f].getName()+"!\n","Good Job!",
+						JOptionPane.INFORMATION_MESSAGE);
 				for (int k=0;k<10;k++)
 					for (int m=0;m<10;m++)
 						if(this.boats[f].getName().equals(this.getWhatShip(k
