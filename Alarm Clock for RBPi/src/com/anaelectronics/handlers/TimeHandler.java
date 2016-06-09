@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import java.net.InetAddress;
+import java.util.Date;
 
 
 
@@ -32,12 +34,10 @@ public class TimeHandler implements Runnable{
 		Thread thisThread = Thread.currentThread();
 		while(t == thisThread){
 		
-		try {
+		
 			getTimeFromSystem();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+			
 	//	convertTime();
 		AlarmClock.updateDisplay();
 	//AlarmHandler.convertTime();
@@ -60,6 +60,7 @@ public class TimeHandler implements Runnable{
 	public static void start() throws IOException{
 		
 		t = new Thread(new TimeHandler());
+		
 		t.start();
 	}
 	public static void stop(){
@@ -76,14 +77,24 @@ public class TimeHandler implements Runnable{
 		else
 			Globals.displayedTime = ""+(12)+(Globals.displayColon ? ":" : " ")+(Globals.minutes < 10 ? "0"+Globals.minutes : Globals.minutes)+"  "+(Globals.PM ? "PM":"AM");
 	}*/
-	private static void getTimeFromSystem() throws IOException{
+	/*private static void initTime() throws IOException{
+		 String TIME_SERVER = "time-c.nist.gov";   
+		 NTPUDPClient timeClient = new NTPUDPClient();
+		 InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+		 TimeInfo timeInfo = timeClient.getTime(inetAddress);
+		 long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
+		 Date time = new Date(returnTime);
+		 cal = Calendar.getInstance();
+	cal.setTime(time);
+	        System.out.println("SETTING TIME....");
+		 Globals.displayedTime = sdf.format(time);
+	}*/
+	private static void getTimeFromSystem(){
 		
-		
+		//Insert code for internet time
 		 
 		 cal = Calendar.getInstance();	       
-	      
-	     
-	        
+		
 		 Globals.displayedTime = sdf.format(cal.getTime());
 		
 		
