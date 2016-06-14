@@ -1,5 +1,5 @@
-//Some code used from Andrew Davison's book Killer Game Programming in Java
-//Website of book http://fivedots.coe.psu.ac.th/~ad/jg
+
+
 package pongyyyy;
 import javax.swing.*;
 import java.awt.event.*;
@@ -31,7 +31,7 @@ public class PongFrame extends JFrame implements WindowListener
 
 		createUserInterface(period);
 
-		//I know im going to online have one panel(menu/game) being shown at a time so when a panel is being added I can remove the previous one.
+		
 		getContentPane().addContainerListener(new ContainerListener()
 		{
 			public void componentAdded(ContainerEvent e)
@@ -67,13 +67,10 @@ public class PongFrame extends JFrame implements WindowListener
 					}
 				}
 
-				//We want to make sure that there isn't any of the same panels in the stack
-				//An issue was arising with the back button and the program automatically readding the panel to the stack without making sure there
-				//werent any duplicates which would cause a panel to loop continously. Problem wouldn't have been caught if there weren't more than
-				//2 panels in the stack. Might be a better way to fix this
+				
 				if(menus.search(e.getChild()) == -1)
 				{
-					//System.out.println("No copies of this panel found adding now");
+					
 					menus.push((JPanel) e.getChild());
 				}
 				currentPanel = (JPanel) e.getChild();
@@ -107,7 +104,7 @@ public class PongFrame extends JFrame implements WindowListener
 
 
 
-		//Code from http://www.java2s.com/Code/Java/Swing-JFC/CenterOnScreen.htm
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension frameSize = getSize();
 		setLocation((screenSize.width - frameSize.width) / 2,

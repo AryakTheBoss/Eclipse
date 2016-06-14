@@ -3,7 +3,7 @@ package bs;
 //import java.awt.*;
 import java.awt.event.*;
 //import javax.swing.*;
-
+//jk
 //Listener for the buttons on the board	while playing game
 	public class AttackListener implements ActionListener
 	{	

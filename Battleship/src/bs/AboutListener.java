@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 
 /**
  * @author UnityBoss
- *
+ *lol
  */
 public class AboutListener implements ActionListener{
 	

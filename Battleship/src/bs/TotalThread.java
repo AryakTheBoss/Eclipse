@@ -5,7 +5,7 @@ package bs;
 
 /**
  * @author UnityBoss
- *
+ *gfn
  */
 public class TotalThread implements Runnable{
 

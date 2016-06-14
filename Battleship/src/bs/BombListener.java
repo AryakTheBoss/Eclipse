@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 /**
  * @author UnityBoss
- *
+ *wrg
  */
 public class BombListener implements ActionListener{
 	private static boolean using = false;

@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * @author UnityBoss
- *
+ * @author UniatyBoss
+ *aeg
  */
 public class CrossListener implements ActionListener{
 	private static boolean using = false;

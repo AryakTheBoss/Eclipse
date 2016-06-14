@@ -373,12 +373,15 @@ public static ArrayList<String> read(File f) throws FileNotFoundException{
 				flipYou();	
 			players[playsFirst.getSelectedIndex()].getTimer().start();
 			x=playsFirst.getSelectedIndex();
+			if(gametype==pvp)
+			JOptionPane.showMessageDialog(null,players[x].getUser()+" will "
+					+"go first.","",JOptionPane.PLAIN_MESSAGE);
 		}
 		else
 		{		
 			int rand=(int)(Math.random()*2);					
 			JOptionPane.showMessageDialog(null,players[rand].getUser()+" will "
-			+"go first.","",JOptionPane.PLAIN_MESSAGE);
+			+"go first.","",JOptionPane.PLAIN_MESSAGE);//TODO
 			if (rand!=you)
 				flipYou();	
 			players[rand].getTimer().start();

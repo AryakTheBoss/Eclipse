@@ -7,7 +7,7 @@ package bs;
 
 /**
  * @author UnityBoss
- *
+ *saerg
  */
 public class ShopThread implements Runnable{
 
