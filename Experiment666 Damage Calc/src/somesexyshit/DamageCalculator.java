@@ -12,6 +12,8 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
@@ -146,20 +148,35 @@ public class DamageCalculator {
 		userClass.addItem("Wizard");
 		userClass.addItem("Bandit");
 		JCheckBox spatk = new JCheckBox("is a Speical Attack?");
+		JLabel j = new JLabel("Player");
+		leftPanel.add(j);
 		leftPanel.add(level,JPanel.TOP_ALIGNMENT);
 		leftPanel.add(userClass);
 		leftPanel.add(weaponAttack);
 		leftPanel.add(playerHealth,JPanel.BOTTOM_ALIGNMENT);
 		leftPanel.add(H);
+		leftPanel.add(spatk);
 		leftPanel.add(pAttackButton);
 		//TODO Label This panel as Player HAHAHHAHAHAHAHA
 		main.add(leftPanel);
 		
 		
+		
 		main.add(rightPanel);
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    applyPlayerHealthStat("Soldier", 1);
 		main.setVisible(true);
 		userClass.addItemListener(new TheHandler());
+		pAttackButton.addActionListener(new ActionListener() { 
+			 
+			
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("FART IN MY FACE");
+			} 
+			} );
 	}
 	public static void setLookAndFeel(){
 		try {
