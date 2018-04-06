@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.Format;
 import java.text.NumberFormat;
 
@@ -96,18 +98,38 @@ public class DamageCalculator {
 	}
 	public static int calculateAttackDamage(int weaponDamage) {
 		
-		return rawPlayerHealth;
+		if(!enemyDEF.getText().isEmpty())
+		return (currentScaledStat[ATK]*3*weaponDamage)/Integer.parseInt(enemyDEF.getText());
+		else
+			return -1;
 		
 	}
-	public static int calculateSpAttackDamage(int[] user, int[] enemy, int attackPower,int level) {
+	public static int calculateSpAttackDamage(int attackPower) {
 		
-		return 0;
+		if(!enemyDEF.getText().isEmpty())
+			return (currentScaledStat[SPATK]*3*attackPower)/Integer.parseInt(enemyDEF.getText());
+			else
+				return -1;
 		
 	}
 	public static void updatePlayerHealth() {		
 		displayPlayerHealth = rawPlayerHealth/5;		
 		playerHealth.setValue(displayPlayerHealth);		
 		H.setText("HP: "+displayPlayerHealth+"/"+playerHealth.getMaximum());
+	}
+	public static void updateEnemyHealth() {
+		//rawEnemyHealth will be the value typed into the jtextfield marked "HP"
+		
+		
+		if(rawEnemyHealth < 0) {
+			rawEnemyHealth = 0;
+			enemyHealth.setValue(rawEnemyHealth);
+			EH.setText("HP: "+rawEnemyHealth+"/"+enemyHealth.getMaximum());
+			JOptionPane.showMessageDialog(null, "Enemy is already DED", "Great fucking Job", JOptionPane.WARNING_MESSAGE);
+		}
+		enemyHealth.setValue(rawEnemyHealth);
+		EH.setText("HP: "+rawEnemyHealth+"/"+enemyHealth.getMaximum());
+		
 	}
 	public static void applyPlayerHealth() {
 		rawPlayerHealth = currentScaledStat[HP]*25;
@@ -119,35 +141,42 @@ public class DamageCalculator {
 		
 		//System.out.println(playerHealth.getValue());
 	}
-	public static void updateEnemyHealth() {
+	public static void applyEnemyHealth() {
 		//rawEnemyHealth will be the value typed into the jtextfield marked "HP"
 		
-		
-	
+		if(!enemyHP.getText().isEmpty()) {
+		rawEnemyHealth = Integer.parseInt(enemyHP.getText());
+		}
 		enemyHealth.setMaximum(rawEnemyHealth);
 		enemyHealth.setValue(rawEnemyHealth);
 		EH.setText("HP: "+rawEnemyHealth+"/"+enemyHealth.getMaximum());
 		
 	}
 	
-	public static void doDamageTo(boolean enemy,int[] user,int[] reciever,int weaponDamage,int level) {
+	public static void doDamageTo(boolean enemy,int weaponDamage) {
 		//TODO
-	}
-	public static void doSpecialDamageTo(boolean enemy,int[] user,int[] reciever,int weaponDamage,int level) {
 		if(enemy) {
-			rawEnemyHealth -= calculateSpAttackDamage(user,reciever,weaponDamage,level);
-		}else{
-			rawPlayerHealth -= calculateSpAttackDamage(user,reciever,weaponDamage,level);
+			if(calculateAttackDamage(weaponDamage) != -1) {
+		rawEnemyHealth -= calculateAttackDamage(weaponDamage);
+			}else {
+				JOptionPane.showMessageDialog(null, "You Didn\'t set a fucking enemy DEF Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
+			}
+		updateEnemyHealth();
+		}
+	}
+	public static void doSpecialDamageTo(boolean enemy,int weaponDamage) {
+		//TODO
+		if(enemy) {
+			if(calculateSpAttackDamage(weaponDamage) != -1) {
+		rawEnemyHealth -= calculateSpAttackDamage(weaponDamage);
+			}else {
+				JOptionPane.showMessageDialog(null, "You Didn\'t set a fucking enemy DEF Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
+			}
+		updateEnemyHealth();
 		}
 	}
 	
 	public static void main(String[] args) {
-		
-		/*String[] options = {"User VS Enemy", "Enemy VS User"};
-		int choice = JOptionPane.showOptionDialog(null, "What type of Damage?",
-                "Click a button",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-		*/
 		
 		
 		setLookAndFeel();
@@ -156,7 +185,7 @@ public class DamageCalculator {
 		enemyHealth = new JProgressBar();
 		playerHealth.setSize(200, 80);
 		JFrame main = new JFrame("Damage Calculator");
-		main.setSize(300, 250);
+		main.setSize(300, 280);
 		JPanel leftPanel = new JPanel();
 	//	JPanel rightPanel = new JPanel();
 		leftPanel.setSize(270, 250);
@@ -168,15 +197,15 @@ public class DamageCalculator {
 		JButton pAttackButton = new JButton("Attack");
 		JButton eAttackButton = new JButton("Attack");
 		playerHealth.setMaximum(displayPlayerHealth);
-		//enemyHealth.setMaximum(displayEnemyHealth);
-		//playerHealth.setValue(displayPlayerHealth);
-		//enemyHealth.setValue(displayEnemyHealth);
-		NumberFormat integerFieldFormatter = NumberFormat.getIntegerInstance();
-		enemyHP = new JFormattedTextField(integerFieldFormatter);
-		enemyATK = new JFormattedTextField(integerFieldFormatter);
-		enemySPATK = new JFormattedTextField(integerFieldFormatter);
-		enemyDEF = new JFormattedTextField(integerFieldFormatter);
+		enemyHP = new JFormattedTextField();
+		enemyATK = new JFormattedTextField();
+		enemySPATK = new JFormattedTextField();
+		enemyDEF = new JFormattedTextField();
 		enemyHP.setPreferredSize(new Dimension(50,25));
+		enemyATK.setPreferredSize(new Dimension(50,25));
+		enemySPATK.setPreferredSize(new Dimension(50,25));
+		enemyDEF.setPreferredSize(new Dimension(50,25));
+		
 		
 		for(int i=1;i<=25;i++) {
 			level.addItem(i);
@@ -188,6 +217,7 @@ public class DamageCalculator {
 		userClass.addItem("Wizard");
 		userClass.addItem("Bandit");
 		JCheckBox spatk = new JCheckBox("is a Speical Attack?");
+		JCheckBox spatk2 = new JCheckBox("is a Speical Attack?               ");
 		JLabel j = new JLabel("Level: ");
 		JLabel jj = new JLabel("Class: ");
 		leftPanel.add(j);
@@ -199,9 +229,19 @@ public class DamageCalculator {
 		leftPanel.add(H);
 		leftPanel.add(spatk);
 		leftPanel.add(pAttackButton);
-		leftPanel.add(new JLabel("------------------------ENEMY------------------------"));
+		leftPanel.add(new JLabel("<-----------------------------ENEMY---------------------------->"));
 		leftPanel.add(new JLabel("HP"));
 		leftPanel.add(enemyHP);
+		leftPanel.add(new JLabel("ATK"));
+		leftPanel.add(enemyATK);
+		leftPanel.add(spatk2);
+		leftPanel.add(eAttackButton);
+		leftPanel.add(new JLabel("SPC-ATK"));
+		leftPanel.add(enemySPATK);
+		leftPanel.add(new JLabel("DEF"));
+		leftPanel.add(enemyDEF);
+		leftPanel.add(enemyHealth);
+		leftPanel.add(EH);
 		//leftPanel.add(new JLabel(""));
 		//rightPanel.add(enemyATK);
 		
@@ -215,10 +255,126 @@ public class DamageCalculator {
 		main.setVisible(true);
 		userClass.addItemListener(new TheHandler());
 		level.addItemListener(new TheHandler2());
+		applyEnemyHealth();
+		//This senses you typing a letter in real time, if a letter is typed it deletes it
+		enemyHP.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(!Character.isDigit(arg0.getKeyChar())) {
+					//JOptionPane.showMessageDialog(null, "Stop Typing Letters Bitch!", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					
+					arg0.consume();
+				}
+				
+				
+			}
+			
+		});
+		enemyATK.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(!Character.isDigit(arg0.getKeyChar())) {
+					//JOptionPane.showMessageDialog(null, "Stop Typing Letters Bitch!", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					
+					arg0.consume();
+				}
+				
+					applyEnemyHealth();
+				
+				
+				
+			}
+			
+		});
+		enemySPATK.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(!Character.isDigit(arg0.getKeyChar())) {
+					//JOptionPane.showMessageDialog(null, "Stop Typing Letters Bitch!", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					
+					arg0.consume();
+				}
+				
+					applyEnemyHealth();
+				
+				
+				
+			}
+			
+		});
+		enemyDEF.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(!Character.isDigit(arg0.getKeyChar())) {
+					//JOptionPane.showMessageDialog(null, "Stop Typing Letters Bitch!", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					
+					arg0.consume();
+				}
+				
+					applyEnemyHealth();
+				
+				
+				
+			}
+			
+		});
 		
-		
-		/*JOptionPane.showMessageDialog(null, "Stop Typing Letters Bitch!", "Dumbass", JOptionPane.ERROR_MESSAGE);
-				enemyHP.setText("");*/
 		pAttackButton.addActionListener(new ActionListener() { 
 			 
 			
@@ -226,10 +382,29 @@ public class DamageCalculator {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("FART IN MY FACE");
+				//System.out.println("FART IN MY FACE");
+				if(!spatk.isSelected()) {
+					try {
+						if(!enemyHP.getText().isEmpty())
+					doDamageTo(true, Integer.parseInt(weaponAttack.getText()));
+						else
+							JOptionPane.showMessageDialog(null, "You Didn\'t set a fucking HP", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					}catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, weaponAttack.getText()+" is not a number", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					}
+				}else {
+					try {
+						if(!enemyHP.getText().isEmpty())
+					doSpecialDamageTo(true, Integer.parseInt(weaponAttack.getText()));
+						else
+							JOptionPane.showMessageDialog(null, "You Didn\'t set a fucking HP", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					}catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, weaponAttack.getText()+" is not a number", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			} 
 			} );
-eAttackButton.addActionListener(new ActionListener() { 
+		eAttackButton.addActionListener(new ActionListener() { 
 			 
 			
 
