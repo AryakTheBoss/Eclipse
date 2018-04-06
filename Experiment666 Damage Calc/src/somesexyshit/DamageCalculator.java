@@ -4,23 +4,28 @@
 package somesexyshit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.DocumentFilter;
 
-
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
+import java.text.Format;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 /**
  * @author parya
  *Level 1 Wizard (gains a lot from levelling up)
@@ -50,12 +55,14 @@ public class DamageCalculator {
 	public static int rawPlayerHealth=0;
 	public static int displayPlayerHealth=0;
 	public static int rawEnemyHealth=0;
-	public static int displayEnemyHealth=0;
+//	public static int displayEnemyHealth=0;
 	public static JProgressBar playerHealth;
 	public static JProgressBar enemyHealth;
 	public static JComboBox<Integer> level;
 	public static JComboBox<String> userClass;
 	public static JLabel H = new JLabel();
+	public static JLabel EH = new JLabel();
+	public static JFormattedTextField enemyHP,enemyATK,enemySPATK,enemyDEF;
 	public static int[] currentScaledStat = new int[7];
 	public static int[] enemyStats = new int[7];
 	
@@ -87,9 +94,9 @@ public class DamageCalculator {
 		applyPlayerHealth();
 		
 	}
-	public static int calculateAttackDamage(int[] user, int[] enemy, int weaponDamage,int level) {
+	public static int calculateAttackDamage(int weaponDamage) {
 		
-		return 0;
+		return rawPlayerHealth;
 		
 	}
 	public static int calculateSpAttackDamage(int[] user, int[] enemy, int attackPower,int level) {
@@ -97,21 +104,40 @@ public class DamageCalculator {
 		return 0;
 		
 	}
+	public static void updatePlayerHealth() {		
+		displayPlayerHealth = rawPlayerHealth/5;		
+		playerHealth.setValue(displayPlayerHealth);		
+		H.setText("HP: "+displayPlayerHealth+"/"+playerHealth.getMaximum());
+	}
 	public static void applyPlayerHealth() {
 		rawPlayerHealth = currentScaledStat[HP]*25;
 		displayPlayerHealth = rawPlayerHealth/5;
-	//	System.out.println(displayPlayerHealth);
+	
 		playerHealth.setMaximum(displayPlayerHealth);
 		playerHealth.setValue(displayPlayerHealth);
 		H.setText("HP: "+displayPlayerHealth+"/"+playerHealth.getMaximum());
 		
-		System.out.println(playerHealth.getValue());
+		//System.out.println(playerHealth.getValue());
 	}
+	public static void updateEnemyHealth() {
+		//rawEnemyHealth will be the value typed into the jtextfield marked "HP"
+		
+		
+	
+		enemyHealth.setMaximum(rawEnemyHealth);
+		enemyHealth.setValue(rawEnemyHealth);
+		EH.setText("HP: "+rawEnemyHealth+"/"+enemyHealth.getMaximum());
+		
+	}
+	
 	public static void doDamageTo(boolean enemy,int[] user,int[] reciever,int weaponDamage,int level) {
+		//TODO
+	}
+	public static void doSpecialDamageTo(boolean enemy,int[] user,int[] reciever,int weaponDamage,int level) {
 		if(enemy) {
-			rawEnemyHealth -= calculateAttackDamage(user,reciever,weaponDamage,level);
-		}else {
-			rawPlayerHealth -= calculateAttackDamage(user,reciever,weaponDamage,level);
+			rawEnemyHealth -= calculateSpAttackDamage(user,reciever,weaponDamage,level);
+		}else{
+			rawPlayerHealth -= calculateSpAttackDamage(user,reciever,weaponDamage,level);
 		}
 	}
 	
@@ -130,22 +156,27 @@ public class DamageCalculator {
 		enemyHealth = new JProgressBar();
 		playerHealth.setSize(200, 80);
 		JFrame main = new JFrame("Damage Calculator");
-		main.setSize(540, 250);
+		main.setSize(300, 250);
 		JPanel leftPanel = new JPanel();
-		JPanel rightPanel = new JPanel();
+	//	JPanel rightPanel = new JPanel();
 		leftPanel.setSize(270, 250);
-		rightPanel.setSize(270, 250);
-		//JLabel comboLabel = new JLabel("Player Level");
+	//	rightPanel.setSize(270, 250);
+		
 	
 		JTextField weaponAttack = new JTextField("Power");
 		
 		JButton pAttackButton = new JButton("Attack");
 		JButton eAttackButton = new JButton("Attack");
 		playerHealth.setMaximum(displayPlayerHealth);
-		enemyHealth.setMaximum(displayEnemyHealth);
+		//enemyHealth.setMaximum(displayEnemyHealth);
 		//playerHealth.setValue(displayPlayerHealth);
 		//enemyHealth.setValue(displayEnemyHealth);
-		
+		NumberFormat integerFieldFormatter = NumberFormat.getIntegerInstance();
+		enemyHP = new JFormattedTextField(integerFieldFormatter);
+		enemyATK = new JFormattedTextField(integerFieldFormatter);
+		enemySPATK = new JFormattedTextField(integerFieldFormatter);
+		enemyDEF = new JFormattedTextField(integerFieldFormatter);
+		enemyHP.setPreferredSize(new Dimension(50,25));
 		
 		for(int i=1;i<=25;i++) {
 			level.addItem(i);
@@ -168,17 +199,26 @@ public class DamageCalculator {
 		leftPanel.add(H);
 		leftPanel.add(spatk);
 		leftPanel.add(pAttackButton);
+		leftPanel.add(new JLabel("------------------------ENEMY------------------------"));
+		leftPanel.add(new JLabel("HP"));
+		leftPanel.add(enemyHP);
+		//leftPanel.add(new JLabel(""));
+		//rightPanel.add(enemyATK);
 		
 		main.add(leftPanel);
-		
+		//main.add(rightPanel);
 		
 		levelScaleStats("Soldier", 1);
-		main.add(rightPanel);
+		
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    applyPlayerHealth();
 		main.setVisible(true);
 		userClass.addItemListener(new TheHandler());
 		level.addItemListener(new TheHandler2());
+		
+		
+		/*JOptionPane.showMessageDialog(null, "Stop Typing Letters Bitch!", "Dumbass", JOptionPane.ERROR_MESSAGE);
+				enemyHP.setText("");*/
 		pAttackButton.addActionListener(new ActionListener() { 
 			 
 			
@@ -187,6 +227,16 @@ public class DamageCalculator {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				System.out.println("FART IN MY FACE");
+			} 
+			} );
+eAttackButton.addActionListener(new ActionListener() { 
+			 
+			
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("FART IN MY FACE TWICE");
 			} 
 			} );
 	}
