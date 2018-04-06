@@ -64,7 +64,7 @@ public class DamageCalculator {
 	public static JComboBox<String> userClass;
 	public static JLabel H = new JLabel();
 	public static JLabel EH = new JLabel();
-	public static JFormattedTextField enemyHP,enemyATK,enemySPATK,enemyDEF;
+	public static JFormattedTextField enemyHP,enemyATK,enemySPATK,enemyDEF,enemyATKPW;
 	public static int[] currentScaledStat = new int[7];
 	public static int[] enemyStats = new int[7];
 	
@@ -104,6 +104,15 @@ public class DamageCalculator {
 			return -1;
 		
 	}
+	public static int calculateEnemyAttackDamage(int weaponDamage) {
+		
+		if(!enemyDEF.getText().isEmpty() && !enemyATK.getText().isEmpty())
+		return (Integer.parseInt(enemyATK.getText())*3*weaponDamage)/Integer.parseInt(enemyDEF.getText());
+		else
+			return -1;
+		
+	}
+
 	public static int calculateSpAttackDamage(int attackPower) {
 		
 		if(!enemyDEF.getText().isEmpty())
@@ -112,7 +121,23 @@ public class DamageCalculator {
 				return -1;
 		
 	}
-	public static void updatePlayerHealth() {		
+	public static int calculateEnemySpAttackDamage(int attackPower) {
+		
+		if(!enemyDEF.getText().isEmpty() && !enemySPATK.getText().isEmpty())
+			return (Integer.parseInt(enemySPATK.getText())*3*attackPower)/Integer.parseInt(enemyDEF.getText());
+			else
+				return -1;
+		
+	}
+	
+	public static void updatePlayerHealth() {
+		if(rawPlayerHealth < 0) {
+			rawPlayerHealth = 0;
+			displayPlayerHealth = 0;		
+			playerHealth.setValue(displayPlayerHealth);		
+			H.setText("HP: "+displayPlayerHealth+"/"+playerHealth.getMaximum());
+			JOptionPane.showMessageDialog(null, "You are Fucking DED", "Great fucking Job", JOptionPane.WARNING_MESSAGE);
+		}
 		displayPlayerHealth = rawPlayerHealth/5;		
 		playerHealth.setValue(displayPlayerHealth);		
 		H.setText("HP: "+displayPlayerHealth+"/"+playerHealth.getMaximum());
@@ -154,7 +179,7 @@ public class DamageCalculator {
 	}
 	
 	public static void doDamageTo(boolean enemy,int weaponDamage) {
-		//TODO
+		
 		if(enemy) {
 			if(calculateAttackDamage(weaponDamage) != -1) {
 		rawEnemyHealth -= calculateAttackDamage(weaponDamage);
@@ -162,6 +187,13 @@ public class DamageCalculator {
 				JOptionPane.showMessageDialog(null, "You Didn\'t set a fucking enemy DEF Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
 			}
 		updateEnemyHealth();
+		}else {
+			if(calculateEnemyAttackDamage(weaponDamage) != -1) {
+				rawPlayerHealth -= calculateEnemyAttackDamage(weaponDamage);
+			}else {
+				JOptionPane.showMessageDialog(null, "You Didn\'t set either a fucking enemy DEF or ATK Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
+			}
+			updatePlayerHealth();
 		}
 	}
 	public static void doSpecialDamageTo(boolean enemy,int weaponDamage) {
@@ -173,6 +205,13 @@ public class DamageCalculator {
 				JOptionPane.showMessageDialog(null, "You Didn\'t set a fucking enemy DEF Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
 			}
 		updateEnemyHealth();
+		}else {
+			if(calculateEnemySpAttackDamage(weaponDamage) != -1) {
+				rawPlayerHealth -= calculateEnemySpAttackDamage(weaponDamage);
+			}else {
+				JOptionPane.showMessageDialog(null, "You Didn\'t set either a fucking enemy DEF or ATK Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
+			}
+			updatePlayerHealth();
 		}
 	}
 	
@@ -199,10 +238,12 @@ public class DamageCalculator {
 		playerHealth.setMaximum(displayPlayerHealth);
 		enemyHP = new JFormattedTextField();
 		enemyATK = new JFormattedTextField();
+		enemyATKPW = new JFormattedTextField("Power");
 		enemySPATK = new JFormattedTextField();
 		enemyDEF = new JFormattedTextField();
 		enemyHP.setPreferredSize(new Dimension(50,25));
 		enemyATK.setPreferredSize(new Dimension(50,25));
+		enemyATKPW.setPreferredSize(new Dimension(50,25));
 		enemySPATK.setPreferredSize(new Dimension(50,25));
 		enemyDEF.setPreferredSize(new Dimension(50,25));
 		
@@ -217,7 +258,7 @@ public class DamageCalculator {
 		userClass.addItem("Wizard");
 		userClass.addItem("Bandit");
 		JCheckBox spatk = new JCheckBox("is a Speical Attack?");
-		JCheckBox spatk2 = new JCheckBox("is a Speical Attack?               ");
+		JCheckBox spatk2 = new JCheckBox("is a Speical Attack?");
 		JLabel j = new JLabel("Level: ");
 		JLabel jj = new JLabel("Class: ");
 		leftPanel.add(j);
@@ -229,13 +270,16 @@ public class DamageCalculator {
 		leftPanel.add(H);
 		leftPanel.add(spatk);
 		leftPanel.add(pAttackButton);
+		
 		leftPanel.add(new JLabel("<-----------------------------ENEMY---------------------------->"));
 		leftPanel.add(new JLabel("HP"));
 		leftPanel.add(enemyHP);
 		leftPanel.add(new JLabel("ATK"));
 		leftPanel.add(enemyATK);
 		leftPanel.add(spatk2);
+		leftPanel.add(enemyATKPW);
 		leftPanel.add(eAttackButton);
+		
 		leftPanel.add(new JLabel("SPC-ATK"));
 		leftPanel.add(enemySPATK);
 		leftPanel.add(new JLabel("DEF"));
@@ -375,6 +419,7 @@ public class DamageCalculator {
 			
 		});
 		
+		
 		pAttackButton.addActionListener(new ActionListener() { 
 			 
 			
@@ -411,7 +456,23 @@ public class DamageCalculator {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("FART IN MY FACE TWICE");
+				if(!spatk2.isSelected()) {
+					try {
+						doDamageTo(false, Integer.parseInt(enemyATKPW.getText()));
+					}catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, enemyATKPW.getText()+" is not a number", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					}
+							
+				}else {
+					try {
+						
+					doSpecialDamageTo(false, Integer.parseInt(enemyATKPW.getText()));
+						
+							
+					}catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, enemyATKPW.getText()+" is not a number", "Dumbass", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			} 
 			} );
 	}
