@@ -130,11 +130,11 @@ public class DamageCalculator {
 		enemyHealth = new JProgressBar();
 		playerHealth.setSize(200, 80);
 		JFrame main = new JFrame("Damage Calculator");
-		main.setSize(1000, 500);
+		main.setSize(540, 250);
 		JPanel leftPanel = new JPanel();
 		JPanel rightPanel = new JPanel();
-		leftPanel.setSize(270, 500);
-		rightPanel.setSize(450, 500);
+		leftPanel.setSize(270, 250);
+		rightPanel.setSize(270, 250);
 		//JLabel comboLabel = new JLabel("Player Level");
 	
 		JTextField weaponAttack = new JTextField("Power");
@@ -168,7 +168,7 @@ public class DamageCalculator {
 		leftPanel.add(H);
 		leftPanel.add(spatk);
 		leftPanel.add(pAttackButton);
-		//TODO Label This panel as Player HAHAHHAHAHAHAHA
+		
 		main.add(leftPanel);
 		
 		
