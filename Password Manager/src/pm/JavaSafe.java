@@ -145,11 +145,16 @@ pswds = new ArrayList<String>();
 
 //public static String[][] pswds;
 
-public static void main(String[] args)throws Exception{
+public static void main(String[] args){
 	
 	//System.out.println(Calendar.getInstance().getTime()); 
 	
-	temp();
+	try {
+		temp();
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	 
 	
 }
