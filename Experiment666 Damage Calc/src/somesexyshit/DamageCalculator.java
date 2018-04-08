@@ -107,7 +107,7 @@ public class DamageCalculator {
 	public static int calculateEnemyAttackDamage(int weaponDamage) {
 		
 		if(!enemyDEF.getText().isEmpty() && !enemyATK.getText().isEmpty())
-		return (Integer.parseInt(enemyATK.getText())*3*weaponDamage)/Integer.parseInt(enemyDEF.getText());
+		return (Integer.parseInt(enemyATK.getText())*3*weaponDamage)/currentScaledStat[DEF];
 		else
 			return -1;
 		
@@ -124,13 +124,13 @@ public class DamageCalculator {
 	public static int calculateEnemySpAttackDamage(int attackPower) {
 		
 		if(!enemyDEF.getText().isEmpty() && !enemySPATK.getText().isEmpty())
-			return (Integer.parseInt(enemySPATK.getText())*3*attackPower)/Integer.parseInt(enemyDEF.getText());
+			return (Integer.parseInt(enemySPATK.getText())*3*attackPower)/currentScaledStat[DEF];
 			else
 				return -1;
 		
 	}
 	
-	public static void updatePlayerHealth() {
+	public static void updatePlayerHealth(int before) {
 		if(rawPlayerHealth < 0) {
 			rawPlayerHealth = 0;
 			displayPlayerHealth = 0;		
@@ -138,8 +138,13 @@ public class DamageCalculator {
 			H.setText("HP: "+displayPlayerHealth+"/"+playerHealth.getMaximum());
 			JOptionPane.showMessageDialog(null, "You are Fucking DED", "Great fucking Job", JOptionPane.WARNING_MESSAGE);
 		}
-		displayPlayerHealth = rawPlayerHealth/5;		
-		playerHealth.setValue(displayPlayerHealth);		
+		displayPlayerHealth = rawPlayerHealth/5;
+		
+		
+		playerHealth.setValue(displayPlayerHealth);	
+		
+		
+		
 		H.setText("HP: "+displayPlayerHealth+"/"+playerHealth.getMaximum());
 	}
 	public static void updateEnemyHealth() {
@@ -152,7 +157,7 @@ public class DamageCalculator {
 			EH.setText("HP: "+rawEnemyHealth+"/"+enemyHealth.getMaximum());
 			JOptionPane.showMessageDialog(null, "Enemy is already DED", "Great fucking Job", JOptionPane.WARNING_MESSAGE);
 		}
-		enemyHealth.setValue(rawEnemyHealth);
+		enemyHealth.setValue(rawEnemyHealth);//Make go down slowly
 		EH.setText("HP: "+rawEnemyHealth+"/"+enemyHealth.getMaximum());
 		
 	}
@@ -188,12 +193,13 @@ public class DamageCalculator {
 			}
 		updateEnemyHealth();
 		}else {
+			int before = rawPlayerHealth/5;
 			if(calculateEnemyAttackDamage(weaponDamage) != -1) {
 				rawPlayerHealth -= calculateEnemyAttackDamage(weaponDamage);
 			}else {
 				JOptionPane.showMessageDialog(null, "You Didn\'t set either a fucking enemy DEF or ATK Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
 			}
-			updatePlayerHealth();
+			updatePlayerHealth(before);
 		}
 	}
 	public static void doSpecialDamageTo(boolean enemy,int weaponDamage) {
@@ -206,12 +212,13 @@ public class DamageCalculator {
 			}
 		updateEnemyHealth();
 		}else {
+			int before = rawPlayerHealth/5;
 			if(calculateEnemySpAttackDamage(weaponDamage) != -1) {
 				rawPlayerHealth -= calculateEnemySpAttackDamage(weaponDamage);
 			}else {
 				JOptionPane.showMessageDialog(null, "You Didn\'t set either a fucking enemy DEF or ATK Value", "Dumbass", JOptionPane.ERROR_MESSAGE);
 			}
-			updatePlayerHealth();
+			updatePlayerHealth(before);
 		}
 	}
 	
