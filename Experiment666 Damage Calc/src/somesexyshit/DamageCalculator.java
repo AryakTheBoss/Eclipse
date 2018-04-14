@@ -53,6 +53,7 @@ public class DamageCalculator {
 	public static final int[] doctorBS = {35,28,35,38,25,6,12};
 	public static final int[] wizardBS = {20,15,15,10,30,5,5}; //UPDATED
 	public static final int[] banditBS = {30,40,35,50,20,9,25};//UPDATED
+	public static final int[] hackerBS = {23,19,18,20,20,4,15};
 	public static final int HP=0,ATK=1,DEF=2,INV=3,SPATK=4,MVMT=5,LUCK=6;
 	public static int rawPlayerHealth=0;
 	public static int displayPlayerHealth=0;
@@ -91,6 +92,10 @@ public class DamageCalculator {
 		}else if(classType.equals("Bandit")) {
 			for(int i=0;i<soldierBS.length;i++) {
 				currentScaledStat[i] = (int) (Math.ceil(banditBS[i]*Math.pow(1.10, level-1)));
+			}
+		}else if(classType.equals("Hacker")) {
+			for(int i=0;i<soldierBS.length;i++) {
+				currentScaledStat[i] = (int) (Math.ceil(hackerBS[i]*Math.pow(1.15, level-1)));
 			}
 		}
 		applyPlayerHealth();
@@ -231,7 +236,7 @@ public class DamageCalculator {
 		enemyHealth = new JProgressBar();
 		playerHealth.setSize(200, 80);
 		JFrame main = new JFrame("Damage Calculator");
-		main.setSize(300, 280);
+		main.setSize(280, 280);
 		JPanel leftPanel = new JPanel();
 	//	JPanel rightPanel = new JPanel();
 		leftPanel.setSize(270, 250);
@@ -264,8 +269,9 @@ public class DamageCalculator {
 		userClass.addItem("Doctor");
 		userClass.addItem("Wizard");
 		userClass.addItem("Bandit");
-		JCheckBox spatk = new JCheckBox("is a Speical Attack?");
-		JCheckBox spatk2 = new JCheckBox("is a Speical Attack?");
+		userClass.addItem("Hacker");
+		JCheckBox spatk = new JCheckBox("is a Special Attack?");
+		JCheckBox spatk2 = new JCheckBox("is a Special Attack?");
 		JLabel j = new JLabel("Level: ");
 		JLabel jj = new JLabel("Class: ");
 		leftPanel.add(j);
@@ -278,7 +284,7 @@ public class DamageCalculator {
 		leftPanel.add(spatk);
 		leftPanel.add(pAttackButton);
 		
-		leftPanel.add(new JLabel("<-----------------------------ENEMY---------------------------->"));
+		leftPanel.add(new JLabel("<---------------------------ENEMY-------------------------->"));
 		leftPanel.add(new JLabel("HP"));
 		leftPanel.add(enemyHP);
 		leftPanel.add(new JLabel("ATK"));
@@ -303,6 +309,7 @@ public class DamageCalculator {
 		
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    applyPlayerHealth();
+	    main.setResizable(false);
 		main.setVisible(true);
 		userClass.addItemListener(new TheHandler());
 		level.addItemListener(new TheHandler2());
