@@ -14,7 +14,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class RNG implements Runnable{
 	
-	private int currentRNG = 0;
+	
 	private Random r = new Random();
 	private BlockingQueue<Integer> q = new ArrayBlockingQueue<Integer>(10);
 	
