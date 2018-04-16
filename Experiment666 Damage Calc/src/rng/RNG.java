@@ -7,6 +7,7 @@ import java.util.Random;
 
 /**
  * @author parya
+ * DO NOT CHANGE
  *
  */
 public class RNG implements Runnable{
