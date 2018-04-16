@@ -20,17 +20,19 @@ public class RNG implements Runnable{
 		new Thread(this).start();
 		
 	}
-	public int getCurrentRNG() {
-		return currentRNG;
-	}
+	
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		//System.out.println("Im sexy");
 		for(;;) {
 			currentRNG = r.nextInt(65536);
 		}
 		
+	}
+	public int getCurrentRNG() {
+		return currentRNG;
 	}
 	
 
