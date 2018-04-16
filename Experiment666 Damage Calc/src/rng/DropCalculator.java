@@ -12,7 +12,7 @@ public class DropCalculator {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
 		RNG r = new RNG();
@@ -24,10 +24,7 @@ public class DropCalculator {
 		System.out.println(r.getCurrentRNG());
 		System.out.println(r.getCurrentRNG());
 		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
+		
 
 		
 		System.exit(0); //ALWAYS since the RNG thread is an infinte loop lol
