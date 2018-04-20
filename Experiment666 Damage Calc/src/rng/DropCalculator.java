@@ -15,20 +15,29 @@ public class DropCalculator {
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
-		RNG r = new RNG();
+	
 		
 		//use r.getCurrentRNG() for the current rng lol
 		
-		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
-		System.out.println(r.getCurrentRNG());
+		
 		
 
 		
 		System.exit(0); //ALWAYS since the RNG thread is an infinte loop lol
 
+	}
+	
+	public Drops doDropTest() throws InterruptedException {
+		
+		RNG r = new RNG();
+		int val = r.getCurrentRNG(); // MAX 32767
+		
+		if(val > 0 && val < 800) {
+			return Drops.LEGENDARY;
+		}
+		
+		
+		
 	}
 
 }

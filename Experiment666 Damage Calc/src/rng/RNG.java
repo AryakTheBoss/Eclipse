@@ -31,7 +31,7 @@ public class RNG implements Runnable{
 		//System.out.println("Im sexy");
 		for(;;) {
 			try {
-				q.put(r.nextInt(65536));
+				q.put(r.nextInt(32767));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				
