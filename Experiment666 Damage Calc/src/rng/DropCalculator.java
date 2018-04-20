@@ -115,7 +115,7 @@ public class DropCalculator {
 		
 		if(useDefault) {
 			
-		if(Math.abs(val-val2) < 550) {
+		if(Math.abs(val-val2) < 350) {
 			return Drops.LEGENDARY;
 		}else if(Math.abs(val-val2) < 3500) {
 			return Drops.EPIC;
