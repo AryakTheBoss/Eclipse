@@ -35,7 +35,7 @@ public class Hanoi {
 	}
 	public static void main(String[] args){
 		
-		int n = 9;
+		int n = 15;
 	    
 	   	 String stepsToSolution;
 	    
