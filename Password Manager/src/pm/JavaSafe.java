@@ -5,7 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -102,6 +103,7 @@ public static final String TMOBILE = "@tmomail.net";
 public static final String USCELL = "@email.uscc.net";
 public static final String VERIZON = "@vtext.com";
 public static final String VIRGIN = "@vmobl.com";
+
 private static Encryptor e = new Encryptor();
 private static String nmd;
 private static File userData;
@@ -1237,7 +1239,7 @@ public static void newuser() throws Exception{//TODO newuser
 	 write.println(US);
 	 write.println(e.encrypt(emailt.getText()));
 	 write.println(e.encrypt(new String(passwordField.getPassword())));
-	 write.println("Aluminium");
+	 write.println("Nimbus");
 	 write.println(e.encrypt(textField.getText())); //phone number 
 	 write.println(e.encrypt(carrier.getSelectedItem().toString())); //carrier
 	 write.println(e.encrypt("false"));
@@ -1310,6 +1312,7 @@ public static void newuser() throws Exception{//TODO newuser
 	    }
 	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		JFrame frame = new JFrame(title);
+		JTextField test = new JTextField();
 		JButton changePassword = new JButton("Change Login Password");
 		JButton addNew = new JButton("Add New Password");
 		JButton editAcc = new JButton("Account Settings");
@@ -1326,8 +1329,353 @@ public static void newuser() throws Exception{//TODO newuser
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel jl = new JLabel("Your Password List: ");
-		frame.add(jl); 
+		frame.add(jl);
 		
+		test.addKeyListener(new KeyListener() {
+
+@Override
+
+public void keyPressed(KeyEvent event) {
+	
+
+}
+
+@Override
+
+public void keyReleased(KeyEvent event) {
+
+	
+	   if(event.getKeyCode() == KeyEvent.VK_N) {
+		   //TODO Works
+		   System.out.println("N Pressed");
+		 //System.out.println("memes");
+			//addNew.getModel().setPressed(false); 
+			JPanel panel=new JPanel(); 
+			 
+			   
+			 panel.setLayout(new GridLayout(3,1));  
+			  
+			  
+			 JLabel username=new JLabel("Name (ex. Facebook):"); 
+			 
+			 JLabel user = new JLabel("Username or Email:");
+			  
+			 
+			 JLabel password=new JLabel("Password (Encrypted with AES):");  
+			 
+			 if(TYPE == true){
+			 
+			 JTextField textField=new JTextField(12); 
+			  JTextField usrnm = new JTextField(12);   
+			 
+			 JPasswordField passwordField=new JPasswordField(12);  
+			
+			  
+			 panel.add(username);  
+			  
+			 
+			 panel.add(textField);  
+			 
+			 panel.add(user);
+			 
+			 panel.add(usrnm);
+			  
+			  
+			 panel.add(password);  
+			  
+			
+			 panel.add(passwordField); 
+			 
+			 int a; 
+			 boolean kk = false;
+			 do{
+			 a = JOptionPane.showConfirmDialog(null,panel,"Add New",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE); 
+			 
+			 if(a == JOptionPane.CANCEL_OPTION){
+				 
+				 break;
+				 
+			 }else{
+				 
+				 if(textField.getText() != "" && usrnm.getText() != "" && new String(passwordField.getPassword()).matches("") == false){ 
+				 try {
+				 passwordDataBase.add(textField.getText());
+				 passwordDataBase.add(usrnm.getText()); 
+				 passwordDataBase.add(e.encrypt(new String(passwordField.getPassword())));
+				 write(passwordDataBase,passwords); 
+				 names.add(textField.getText());
+				 usernames.add(usrnm.getText());
+				 pswds.add(e.encrypt(new String(passwordField.getPassword())));
+				 refreshList();
+				 Thread.sleep(20);
+				 }catch(Exception e){
+					 System.err.println("Exception Thrown");
+				 }
+			     listOfPasswords.setListData(
+			    		 names.toArray()); 
+				 kk = true;
+				 }else{
+					 
+					 JOptionPane.showMessageDialog(null, "Fields Cannot Be Empty!", "ERROR!", JOptionPane.ERROR_MESSAGE); 
+					 kk = false;
+					 //klop
+				 }
+			 }
+		}while(kk == false);
+			 }else{
+				 JTextField textField=new JTextField(12);  
+				  JTextField usrnm = new JTextField(12);   
+				 
+				 JTextField passwordField=new JTextField(12);  
+				
+				  
+				 panel.add(username);  
+				  
+				 
+				 panel.add(textField);  
+				 
+				 panel.add(user);
+				 
+				 panel.add(usrnm);
+				  
+				  
+				 panel.add(password);  
+				  
+				
+				 panel.add(passwordField); 
+				 
+				 int a; 
+				 boolean kk = false;
+				 do{
+				 a = JOptionPane.showConfirmDialog(null,panel,"Add New",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE); 
+				 
+				 if(a == JOptionPane.CANCEL_OPTION){
+					 
+					 break;
+					 
+				 }else{
+					 
+					 if(textField.getText() != "" && usrnm.getText() != "" && passwordField.getText().matches("") == false){ 
+					 try {
+					 passwordDataBase.add(textField.getText());
+					 passwordDataBase.add(usrnm.getText()); 
+					 passwordDataBase.add(e.encrypt(passwordField.getText()));
+					 write(passwordDataBase,passwords); 
+					 names.add(textField.getText());
+					 usernames.add(usrnm.getText());
+					 pswds.add(e.encrypt(passwordField.getText()));
+					 refreshList();
+					 Thread.sleep(20);
+					 }catch(Exception e) {
+						 
+					 }
+				     listOfPasswords.setListData(
+				    		 names.toArray()); 
+					 kk = true;
+					 }else{
+						 
+						 JOptionPane.showMessageDialog(null, "Fields Cannot Be Empty!", "ERROR!", JOptionPane.ERROR_MESSAGE); 
+						 kk = false;
+						 
+					 }
+				 }
+			}while(kk == false);
+				 
+			 }
+	   }
+	   if(event.getKeyCode() == KeyEvent.VK_V) {
+		  
+			if(TYPE == true){
+			JFrame checkFrame = new JFrame("Account Information");
+			checkFrame.setSize(500,210);
+			JPanel buttonPane = new JPanel();
+			JButton decrypt = new JButton("Show Password");
+			JButton ok = new JButton("OK");
+			buttonPane.add(decrypt);
+			buttonPane.add(ok);
+			checkFrame.add(buttonPane, BorderLayout.SOUTH); 
+			
+			int jc=0;
+			try {
+				jc = e.decrypt(pswds.get(INDEX)).length();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			String ps = "";
+			for(int s=1;s<=jc;s++){
+				ps+="*";
+			}
+			
+			JLabel display = new JLabel("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+ps+"<br/>If you would like to see the Password, press \"Show Password\".</html>"); 
+			display.setHorizontalAlignment((int) JLabel.CENTER_ALIGNMENT);
+			checkFrame.add(display); 
+			checkFrame.setVisible(true); 
+			for(;;){
+				try {
+					Thread.sleep(25);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(ok.getModel().isPressed() == true){
+					
+					ok.getModel().setPressed(false);
+					checkFrame.setVisible(false); 
+					break;
+				}
+				if(decrypt.getModel().isPressed() == true){
+					int v =0;
+					decrypt.getModel().setPressed(false); 
+					
+					try {
+						if(e.decrypt(loginData.get(SHOW)).matches("true")){
+						
+						JPanel pan = new JPanel();
+						
+						pan.setLayout(new GridLayout(2,1));
+						
+						JLabel pswd = new JLabel("Please Confirm Your Password: ");
+						JPasswordField jpf = new JPasswordField(12);
+						
+						pan.add(pswd);
+						pan.add(jpf);
+						
+						int yy = JOptionPane.showConfirmDialog(null,pan,"Confirm Password",JOptionPane.OK_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE);
+						
+						if(yy == JOptionPane.CANCEL_OPTION){
+							
+							continue;
+							
+						}else{
+							
+							if(new String(jpf.getPassword()).matches(e.decrypt(loginData.get(PASSWORD)))){
+								
+							 v = JOptionPane.showConfirmDialog(null, "Do you still want to see the Password?", "WARNING!", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); 
+								
+							}else{
+								
+							JOptionPane.showMessageDialog(null, "Invalid Password!", "Invalid!", JOptionPane.ERROR_MESSAGE);  	
+								continue;
+							}
+							
+						}
+						
+						
+						}
+					} catch (HeadlessException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					if(v == JOptionPane.NO_OPTION){
+						
+						continue;
+						
+					}else{
+						//JOptionPane.showMessageDialog(null, "For Saftey, the dialog with the password shown will self destruct in 10 seconds.", "Notice", JOptionPane.WARNING_MESSAGE); 
+						try {
+							display.setText("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+e.decrypt(pswds.get(INDEX))+"</html>");
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} 
+						//Thread.sleep(10000);
+						decrypt.setEnabled(false); 
+						for(int co = 10000;co>=0;co--){
+							try {
+								Thread.sleep(1);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+							if(ok.getModel().isPressed()==true){
+								ok.getModel().setPressed(false);
+								break;
+								
+							}
+						if(co <= 7000){
+						try {
+							display.setText("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+e.decrypt(pswds.get(INDEX))+"<br/>Self Destruct in: "+co/1000+"s"+"</html>");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						}
+						}
+						display.setText("SELF DESTRUCT!");
+						
+						checkFrame.dispose();
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						break;
+						
+					}
+				}
+				
+			}
+			}else{ // normal mode
+				
+				JFrame checkFrame = new JFrame("Account Information");
+				checkFrame.setSize(500,210);
+				JPanel buttonPane = new JPanel();
+				
+				JButton ok = new JButton("OK");
+				
+				buttonPane.add(ok);
+				checkFrame.add(buttonPane, BorderLayout.SOUTH); 
+				
+				
+				
+				JLabel display=null;
+				try {
+					display = new JLabel("<html>Account Name: "+names.get(INDEX)+"<br/>Username or Email: "+usernames.get(INDEX)+"<br/>Password: "+e.decrypt(pswds.get(INDEX))+"<br/>Click OK when Finished</html>");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				display.setHorizontalAlignment((int) JLabel.CENTER_ALIGNMENT);
+				checkFrame.add(display); 
+				checkFrame.setVisible(true); 
+				for(;;){
+					try {
+						Thread.sleep(25);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if(ok.getModel().isPressed() == true){
+						
+						ok.getModel().setPressed(false);
+						checkFrame.dispose();
+						break;
+					}
+					
+					
+				}
+				
+			}
+			
+	   }
+
+}
+
+@Override
+
+public void keyTyped(KeyEvent event) {
+
+    
+
+}});
 		
 		 listOfPasswords = new JList<Object>();
 		
@@ -1340,7 +1688,7 @@ public static void newuser() throws Exception{//TODO newuser
 		JPanel pane = new JPanel();
         pane.add(changePassword);
         pane.add(logout);
-        pane.add(addNew);
+        pane.add(addNew);//TODO addnew
         pane.add(editAcc);
         pane.add(edit);
         pane.add(check);
@@ -1349,6 +1697,7 @@ public static void newuser() throws Exception{//TODO newuser
         pane.add(chgTheme);
         pane.add(swich);
         pane.add(erase);
+        pane.add(test);
         if(passwordDataBase.isEmpty() == false){
         	
         	for(int t=1;t<passwordDataBase.size();){
@@ -1411,9 +1760,9 @@ public static void newuser() throws Exception{//TODO newuser
 		//	System.out.println(INDEX);
 			if(INDEX == -1){
 				
-				edit.setEnabled(false); 
-				delete.setEnabled(false); 
-				check.setEnabled(false); 
+				edit.setEnabled(true); 
+				delete.setEnabled(true); 
+				check.setEnabled(true); 
 				
 			}else{
 				
@@ -2038,8 +2387,8 @@ public static void newuser() throws Exception{//TODO newuser
 				 }while(bnm == false);
 			 }
 			
-			if(addNew.getModel().isPressed() == true){
-				
+			if(addNew.getModel().isPressed() == true){//TODO addnew
+				//System.out.println("memes");
 				addNew.getModel().setPressed(false); 
 				JPanel panel=new JPanel(); 
 				 
@@ -2169,7 +2518,8 @@ public static void newuser() throws Exception{//TODO newuser
 				 }
 			}
 			
-			if(check.getModel().isPressed() == true && INDEX != -1){
+			if(check.getModel().isPressed() == true && INDEX != -1){//TODO CHECK
+			
 				
 				check.getModel().setPressed(false);
 				if(TYPE == true){
