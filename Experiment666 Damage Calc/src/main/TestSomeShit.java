@@ -1,7 +1,7 @@
 /**
  * 
  */
-package somesexyshit;
+package main;
 
 /**
  * @author parya
