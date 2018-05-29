@@ -7,7 +7,7 @@ package main;
  * @author parya
  *
  */
-public class TestSomeShit {
+public class TestSome {
 
 	/**
 	 * @param args
